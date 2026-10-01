@@ -3,83 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f6f8ff">
+<meta name="theme-color" content="#fff5fb">
 <title>Vocabulary Games · Tiếng Anh lớp 1</title>
 <style>
-:root{--navy:#172033;--muted:#667085;--line:#e7eaf2;--soft:#eef2ff;--bg:#f6f8ff}
+:root{--navy:#172033;--muted:#667085;--line:#e7eaf2;--soft:#eef2ff;--bg:#f6f8ff;--pink:#f56fa8;--pink2:#ff9bc4;--pinkDark:#df4f8f}
 *{box-sizing:border-box}html,body{margin:0;min-height:100vh}body{background:var(--bg);color:var(--navy);font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:#fff;border-right:1px solid var(--line);padding:18px 12px;z-index:20;overflow:auto}
-.brand{display:block;text-decoration:none;color:var(--navy);font-weight:850;font-size:21px;padding:8px 10px 18px}.brand span{font-size:26px;margin-right:6px}
-.nav-label{font-size:11px;font-weight:800;color:#98a2b3;text-transform:uppercase;letter-spacing:.08em;padding:0 10px 7px}.nav{display:grid;gap:4px}
-.grade-toggle{display:flex;align-items:center;gap:9px;padding:10px;border-radius:12px;color:#475467;font-weight:700;cursor:pointer}.grade-toggle.active{background:#eef2ff;color:var(--navy)}
-.icon{width:24px;text-align:center;font-size:18px}.chev{margin-left:auto;color:#98a2b3}.subnav{display:none;margin:1px 0 5px 15px;padding-left:13px;border-left:1px solid var(--line)}.subnav.open{display:grid;gap:3px}
-.subnav a{display:block;text-decoration:none;color:#667085;font-weight:650;font-size:14px;padding:8px 9px;border-radius:9px}.subnav a:hover{background:#f8faff}.subnav a.active{background:var(--navy);color:#fff}
-.course-list{display:grid;gap:2px;margin:0 0 4px 12px;padding-left:12px;border-left:1px dashed #d7dce5}.course-list a{font-size:13px;font-weight:700}.course-list a.active{background:#f0f3ff;color:var(--navy)}
-.main{margin-left:260px;min-height:100vh;padding:18px 22px 42px}.wrap{max-width:760px;margin:auto}.mobile-btn{display:none;border:0;background:#fff;color:var(--navy);width:44px;height:44px;border-radius:13px;font-size:23px;box-shadow:0 4px 15px #17203312;cursor:pointer}.overlay{display:none}
-.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 12px 34px #17203312;overflow:hidden}.top{padding:22px 22px 12px}.breadcrumb{font-size:13px;color:var(--muted);text-align:center;margin:0 0 8px}.title{text-align:center;margin:0 0 4px;font-size:32px}.subtitle{text-align:center;color:var(--muted);margin:0;line-height:1.45}
-.gameTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px 0}.gameTab{border:0;background:var(--soft);color:var(--muted);border-radius:14px;padding:13px;font:inherit;font-weight:750}.gameTab.active{background:var(--navy);color:#fff}
-.panel{padding:20px}.hidden{display:none!important}.section{background:#f8faff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}.section h2{margin:0 0 8px;font-size:20px}.muted{color:var(--muted)}
-.kid{background:linear-gradient(180deg,#eef5ff,#fff);border-radius:24px;padding:20px;text-align:center;border:1px solid #dbe5ff}.game-title{font-size:27px;margin:2px 0 5px}.game-instruction{color:var(--muted);margin:0 0 18px}
-.progress{height:8px;background:#e4e7ec;border-radius:99px;overflow:hidden;margin-bottom:18px}.progress i{display:block;height:100%;background:#4f6fd8;width:0}
-.picture{font-size:64px;min-height:84px;display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.target{font-size:34px;font-weight:800;letter-spacing:.08em;margin:12px 0 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
-.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.letter{width:54px;height:54px;border:2px solid #cbd5f5;background:#fff;border-radius:16px;font-size:24px;font-weight:800;color:var(--navy)}.letter:active,.extra:active{transform:scale(.96)}
-.feedback{min-height:32px;margin:14px 0 4px;font-size:18px;font-weight:750}.good{color:#067647}.bad{color:#b42318}.next{width:100%;margin-top:12px}.score{font-size:16px;color:var(--muted)}
-.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.mode.active{background:var(--navy);color:#fff}.extra{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:58px;padding:0 10px;border:2px solid #cbd5f5;border-radius:16px;background:#fff;font-size:28px;font-weight:850;cursor:pointer}
-.source-note{margin-top:12px;font-size:13px;color:var(--muted);text-align:center}.word-count{font-weight:800;color:var(--navy)}
-@media(max-width:760px){.sidebar{transform:translateX(-105%);transition:transform .22s ease;width:270px;box-shadow:12px 0 35px #17203322}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#17203355;z-index:15}.main{margin-left:0;padding:12px 12px 35px}.mobile-btn{display:block;margin-bottom:10px}.title{font-size:28px}.panel{padding:16px}.target{font-size:30px}}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:#fff;border-right:1px solid var(--line);padding:18px 12px;z-index:20;overflow:auto}.brand{display:block;text-decoration:none;color:var(--navy);font-weight:850;font-size:21px;padding:8px 10px 18px}.brand span{font-size:26px;margin-right:6px}.nav-label{font-size:11px;font-weight:800;color:#98a2b3;text-transform:uppercase;letter-spacing:.08em;padding:0 10px 7px}.nav{display:grid;gap:4px}.grade-toggle{display:flex;align-items:center;gap:9px;padding:10px;border-radius:12px;color:#475467;font-weight:700;cursor:pointer}.grade-toggle.active{background:#eef2ff;color:var(--navy)}.icon{width:24px;text-align:center;font-size:18px}.chev{margin-left:auto;color:#98a2b3}.subnav{display:none;margin:1px 0 5px 15px;padding-left:13px;border-left:1px solid var(--line)}.subnav.open{display:grid;gap:3px}.subnav a{display:block;text-decoration:none;color:#667085;font-weight:650;font-size:14px;padding:8px 9px;border-radius:9px}.subnav a:hover{background:#f8faff}.subnav a.active{background:var(--navy);color:#fff}.course-list{display:grid;gap:2px;margin:0 0 4px 12px;padding-left:12px;border-left:1px dashed #d7dce5}.course-list a{font-size:13px;font-weight:700}.course-list a.active{background:#f0f3ff;color:var(--navy)}
+.main{margin-left:260px;min-height:100vh;padding:18px 22px 42px}.wrap{max-width:760px;margin:auto}.mobile-btn{display:none;border:0;background:#fff;color:var(--navy);width:44px;height:44px;border-radius:13px;font-size:23px;box-shadow:0 4px 15px #17203312;cursor:pointer}.overlay{display:none}.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 12px 34px #17203312;overflow:hidden}.top{padding:22px 22px 12px}.breadcrumb{font-size:13px;color:var(--muted);text-align:center;margin:0 0 8px}.title{text-align:center;margin:0 0 4px;font-size:32px}.subtitle{text-align:center;color:var(--muted);margin:0;line-height:1.45}.gameTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px 0}.gameTab{border:0;background:var(--soft);color:var(--muted);border-radius:14px;padding:13px;font:inherit;font-weight:750}.gameTab.active{background:var(--navy);color:#fff}.panel{padding:20px}.hidden{display:none!important}.section{background:#f8faff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}.section h2{margin:0 0 8px;font-size:20px}.muted{color:var(--muted)}
+.kid{background:linear-gradient(180deg,#eef5ff,#fff);border-radius:24px;padding:20px;text-align:center;border:1px solid #dbe5ff}.game-title{font-size:27px;margin:2px 0 5px}.game-instruction{color:var(--muted);margin:0 0 18px}.progress{height:8px;background:#e4e7ec;border-radius:99px;overflow:hidden;margin-bottom:18px}.progress i{display:block;height:100%;background:#4f6fd8;width:0}.picture{font-size:64px;min-height:84px;display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.target{font-size:34px;font-weight:800;letter-spacing:.08em;margin:12px 0 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.letter{width:54px;height:54px;border:2px solid #cbd5f5;background:#fff;border-radius:16px;font-size:24px;font-weight:800;color:var(--navy)}.letter:active,.extra:active{transform:scale(.96)}.feedback{min-height:32px;margin:14px 0 4px;font-size:18px;font-weight:750}.good{color:#067647}.bad{color:#b42318}.score{font-size:16px;color:var(--muted)}.extra{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:58px;padding:0 10px;border:2px solid #cbd5f5;border-radius:16px;background:#fff;font-size:28px;font-weight:850;cursor:pointer}
+/* Kid-friendly next button */
+.btn{font:inherit;cursor:pointer;border:0}.next{position:relative;width:100%;margin-top:16px;min-height:64px;padding:14px 58px;border-radius:22px;background:linear-gradient(180deg,var(--pink2),var(--pink));color:#fff;font-size:22px;font-weight:850;letter-spacing:.01em;box-shadow:0 7px 0 var(--pinkDark),0 12px 24px rgba(223,79,143,.22);transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}.next::before{content:'⭐';position:absolute;left:20px;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:27px;filter:drop-shadow(0 2px 1px rgba(0,0,0,.08))}.next::after{content:'♥  ✦';position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:22px;letter-spacing:5px;color:#fff;opacity:.95}.next:active{transform:translateY(5px) scale(.985);box-shadow:0 2px 0 var(--pinkDark),0 7px 15px rgba(223,79,143,.18)}.next:hover{filter:saturate(1.06) brightness(1.02)}
+@media(max-width:760px){.sidebar{transform:translateX(-105%);transition:transform .22s ease;width:270px;box-shadow:12px 0 35px #17203322}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#17203355;z-index:15}.main{margin-left:0;padding:12px 12px 35px}.mobile-btn{display:block;margin-bottom:10px}.title{font-size:28px}.panel{padding:16px}.target{font-size:30px}.next{min-height:62px;font-size:21px;border-radius:20px}.next::before{left:16px;font-size:24px}.next::after{right:13px;font-size:19px}}
 </style>
 </head>
 <body>
-<aside id="sidebar" class="sidebar">
-<a class="brand" href="index.html?home=1"><span>🎓</span>Learning Hub</a>
-<div class="nav-label">Lớp học</div><nav class="nav" id="gradeNav"></nav>
-</aside>
+<aside id="sidebar" class="sidebar"><a class="brand" href="index.html?home=1"><span>🎓</span>Learning Hub</a><div class="nav-label">Lớp học</div><nav class="nav" id="gradeNav"></nav></aside>
 <div id="overlay" class="overlay" onclick="toggleNav()"></div>
-<main class="main">
-<button class="mobile-btn" onclick="toggleNav()" aria-label="Mở menu">☰</button>
-<div class="wrap"><div class="card">
+<main class="main"><button class="mobile-btn" onclick="toggleNav()" aria-label="Mở menu">☰</button><div class="wrap"><div class="card">
 <div class="top"><p class="breadcrumb">Lớp 1 · Tiếng Anh · Vocabulary Games</p><h1 class="title">🌈 Vocabulary Games</h1><p class="subtitle">Học từ vựng tiếng Anh lớp 1 bằng trò chơi tương tác</p></div>
 <div class="gameTabs"><button id="missingMode" class="gameTab active">🔤 Thiếu chữ</button><button id="extraMode" class="gameTab">🗑️ Xóa chữ thừa</button></div>
-<section id="childPanel" class="panel">
-<div id="loading" class="section"><h2>Đang tải từ vựng…</h2><p class="muted">Đang đọc danh sách từ từ Learning Hub.</p></div>
-<div id="errorPanel" class="section hidden"><h2>Không tải được từ vựng</h2><p id="errorText" class="muted"></p><button class="btn" onclick="loadVocabulary()">Thử lại</button></div>
-<div id="gamePanel" class="kid hidden">
-<div class="score"><span id="qNo">1</span> / <span id="qTotal">0</span> · ⭐ <span id="score">0</span></div>
-<div class="progress"><i id="progressBar"></i></div>
-<h2 id="gameTitle" class="game-title">Hoàn thành từ</h2>
-<p id="gameInstruction" class="game-instruction">Chọn chữ cái còn thiếu.</p>
-<div id="picture" class="picture"></div><div id="target" class="target"></div><div id="choices" class="letters"></div>
-<div id="feedback" class="feedback"></div><button id="nextBtn" class="btn primary next hidden">Tiếp theo →</button>
-</div>
-</section></div></div></main>
+<section id="childPanel" class="panel"><div id="loading" class="section"><h2>Đang tải từ vựng…</h2><p class="muted">Đang đọc danh sách từ từ Learning Hub.</p></div><div id="errorPanel" class="section hidden"><h2>Không tải được từ vựng</h2><p id="errorText" class="muted"></p><button class="btn" onclick="loadVocabulary()">Thử lại</button></div>
+<div id="gamePanel" class="kid hidden"><div class="score"><span id="qNo">1</span> / <span id="qTotal">0</span> · ⭐ <span id="score">0</span></div><div class="progress"><i id="progressBar"></i></div><h2 id="gameTitle" class="game-title">Hoàn thành từ</h2><p id="gameInstruction" class="game-instruction">Chọn chữ cái còn thiếu.</p><div id="picture" class="picture"></div><div id="target" class="target"></div><div id="choices" class="letters"></div><div id="feedback" class="feedback"></div><button id="nextBtn" class="btn next hidden">Tiếp theo →</button></div></section>
+</div></div></main>
 <script>
-const VOCAB_URL='data/grade1/english/vocabulary.json';
-const LAST_KEY='learningLastAccess';
-const state={words:[],queue:[],index:0,score:0,mode:'missing',answered:false,missingIndex:-1,extraChars:[]};
-const $=id=>document.getElementById(id);
-function remember(){localStorage.setItem(LAST_KEY,JSON.stringify({href:'english.html',title:'Vocabulary Games',grade:1,subject:'english',course:'vocabulary-games',time:Date.now()}))}
-function toggleNav(){$('sidebar').classList.toggle('open');$('overlay').classList.toggle('show')}
+const VOCAB_URL='data/grade1/english/vocabulary.json';const LAST_KEY='learningLastAccess';const state={words:[],queue:[],index:0,score:0,mode:'missing',answered:false,missingIndex:-1,extraChars:[]};const $=id=>document.getElementById(id);
+function remember(){localStorage.setItem(LAST_KEY,JSON.stringify({href:'english.html',title:'Vocabulary Games',grade:1,subject:'english',course:'vocabulary-games',time:Date.now()}))}function toggleNav(){$('sidebar').classList.toggle('open');$('overlay').classList.toggle('show')}
 function renderNav(){const nav=$('gradeNav');nav.innerHTML=Array.from({length:12},(_,i)=>{const g=i+1,open=g===1;return '<div><div class="grade-toggle '+(open?'active':'')+'" onclick="toggleGrade('+g+')"><span class="icon">'+(open?'📂':'📁')+'</span><span>Lớp '+g+'</span><span class="chev">'+(open?'⌃':'›')+'</span></div><div id="sub-'+g+'" class="subnav '+(open?'open':'')+'"><a href="class.html?grade='+g+'">🏫 Tổng quan</a>'+(g===1?'<a href="english.html">🔤🌈 Tiếng Anh</a><div class="course-list"><a class="active" href="english.html">↳ Vocabulary Games</a></div><a href="class.html?grade=1#math">➗ Toán tư duy</a><a href="#">📖 Tiếng Việt</a>':'<a href="class.html?grade='+g+'">📚 Môn học</a>')+'</div></div>'}).join('')}
-function toggleGrade(g){document.getElementById('sub-'+g)?.classList.toggle('open')}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-const emojiMap={desk:'🪑',poster:'🖼️',window:'🪟',one:'1️⃣',two:'2️⃣',three:'3️⃣',four:'4️⃣',five:'5️⃣',six:'6️⃣',seven:'7️⃣',eight:'8️⃣',nine:'9️⃣',ten:'🔟'};
-function emojiFor(w){return emojiMap[w]||'✨'}
-function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-function normalizeWords(items){return [...new Set(items.map(x=>typeof x==='string'?x:x?.word).map(x=>String(x||'').trim().toLowerCase()).filter(x=>/^[a-z]+$/.test(x)))]}
-async function loadVocabulary(){
- $('loading').classList.remove('hidden');$('errorPanel').classList.add('hidden');$('gamePanel').classList.add('hidden');
- try{
-  const res=await fetch(VOCAB_URL+'?v='+Date.now(),{cache:'no-store'});
-  if(!res.ok)throw new Error('HTTP '+res.status);
-  const data=await res.json();
-  state.words=normalizeWords(data.words||[]);
-  if(!state.words.length)throw new Error('Danh sách từ vựng đang trống.');
-  $('loading').classList.add('hidden');$('gamePanel').classList.remove('hidden');startGame();
- }catch(e){$('loading').classList.add('hidden');$('errorPanel').classList.remove('hidden');$('errorText').textContent='Không thể đọc data/grade1/english/vocabulary.json. '+e.message}}
-$('missingMode').onclick=()=>{state.mode='missing';$('missingMode').classList.add('active');$('extraMode').classList.remove('active');if(state.words.length)startGame()};
-$('extraMode').onclick=()=>{state.mode='extra';$('extraMode').classList.add('active');$('missingMode').classList.remove('active');if(state.words.length)startGame()};
-$('nextBtn').onclick=nextQuestion;
-function startGame(){state.queue=shuffle(state.words);state.index=0;state.score=0;renderQuestion()}
+function toggleGrade(g){document.getElementById('sub-'+g)?.classList.toggle('open')}const emojiMap={desk:'🪑',poster:'🖼️',window:'🪟',one:'1️⃣',two:'2️⃣',three:'3️⃣',four:'4️⃣',five:'5️⃣',six:'6️⃣',seven:'7️⃣',eight:'8️⃣',nine:'9️⃣',ten:'🔟'};function emojiFor(w){return emojiMap[w]||'✨'}function shuffle(a){return [...a].sort(()=>Math.random()-.5)}function normalizeWords(items){return [...new Set(items.map(x=>typeof x==='string'?x:x?.word).map(x=>String(x||'').trim().toLowerCase()).filter(x=>/^[a-z]+$/.test(x)))]}
+async function loadVocabulary(){$('loading').classList.remove('hidden');$('errorPanel').classList.add('hidden');$('gamePanel').classList.add('hidden');try{const res=await fetch(VOCAB_URL+'?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();state.words=normalizeWords(data.words||[]);if(!state.words.length)throw new Error('Danh sách từ vựng đang trống.');$('loading').classList.add('hidden');$('gamePanel').classList.remove('hidden');startGame()}catch(e){$('loading').classList.add('hidden');$('errorPanel').classList.remove('hidden');$('errorText').textContent='Không thể đọc data/grade1/english/vocabulary.json. '+e.message}}
+$('missingMode').onclick=()=>{state.mode='missing';$('missingMode').classList.add('active');$('extraMode').classList.remove('active');if(state.words.length)startGame()};$('extraMode').onclick=()=>{state.mode='extra';$('extraMode').classList.add('active');$('missingMode').classList.remove('active');if(state.words.length)startGame()};$('nextBtn').onclick=nextQuestion;
+function startGame(){$('nextBtn').textContent='Tiếp theo →';$('nextBtn').onclick=nextQuestion;state.queue=shuffle(state.words);state.index=0;state.score=0;renderQuestion()}
 function renderQuestion(){state.answered=false;state.missingIndex=-1;state.extraChars=[];$('nextBtn').classList.add('hidden');$('score').textContent=state.score;$('qNo').textContent=state.index+1;$('qTotal').textContent=state.queue.length;$('progressBar').style.width=(state.index/state.queue.length*100)+'%';const word=state.queue[state.index];state.mode==='missing'?renderMissing(word):renderExtra(word);$('feedback').textContent='';$('feedback').className='feedback'}
 function renderMissing(word){$('gameTitle').textContent='Hoàn thành từ';$('gameInstruction').textContent='Chọn chữ cái còn thiếu.';$('picture').textContent=emojiFor(word);const letters=[...word];state.missingIndex=Math.floor(Math.random()*letters.length);$('target').textContent=letters.map((c,i)=>i===state.missingIndex?'_':c.toUpperCase()).join(' ');let options=[letters[state.missingIndex].toLowerCase()];while(options.length<4){const c=String.fromCharCode(97+Math.floor(Math.random()*26));if(!options.includes(c))options.push(c)}$('choices').innerHTML=shuffle(options).map(c=>'<button class="letter" onclick="chooseMissing(\''+c+'\')">'+c.toUpperCase()+'</button>').join('')}
 function chooseMissing(c){if(state.answered)return;const word=state.queue[state.index],needed=word[state.missingIndex].toLowerCase();if(c===needed){state.score++;state.answered=true;$('feedback').textContent='🎉 Chính xác!';$('feedback').className='feedback good';$('target').textContent=word.toUpperCase();$('choices').innerHTML='';$('nextBtn').classList.remove('hidden')}else{$('feedback').textContent='Thử lại nhé!';$('feedback').className='feedback bad'}}

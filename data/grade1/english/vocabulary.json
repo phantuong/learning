@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "grade": 1,
+  "subject": "english",
+  "course": "vocabulary-games",
+  "words": [
+    { "word": "desk" },
+    { "word": "poster" },
+    { "word": "window" },
+    { "word": "one" },
+    { "word": "two" },
+    { "word": "three" },
+    { "word": "four" },
+    { "word": "five" },
+    { "word": "six" },
+    { "word": "seven" },
+    { "word": "eight" },
+    { "word": "nine" },
+    { "word": "ten" }
+  ]
+}

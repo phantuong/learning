@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f8ff">
+<title>English · Lớp 1 · Learning</title>
+<style>
+:root{font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f6f8ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}.wrap{max-width:760px;margin:auto;padding:18px 16px 42px}
+.card{background:#fff;border:1px solid #e7eaf2;border-radius:28px;box-shadow:0 12px 34px #17203312;overflow:hidden}.top{padding:22px 22px 12px}.back{color:#667085;text-decoration:none;font-weight:650}.title{text-align:center;margin:12px 0 4px;font-size:32px}.subtitle{text-align:center;color:#667085;margin:0;line-height:1.45}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px 0}.tab{border:0;background:#eef2ff;color:#667085;border-radius:14px;padding:13px;font:inherit;font-weight:750}.tab.active{background:#172033;color:#fff}
+.panel{padding:20px}.hidden{display:none!important}.section{background:#f8faff;border:1px solid #e7eaf2;border-radius:20px;padding:18px;margin-bottom:14px}.section h2{margin:0 0 8px;font-size:20px}.muted{color:#667085}.label{display:block;font-weight:700;margin:12px 0 6px}input,textarea,select{width:100%;font:inherit;border:1px solid #d0d5dd;border-radius:14px;padding:12px 14px;background:#fff}textarea{min-height:110px;resize:vertical}.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}.btn{border:0;border-radius:14px;padding:13px 16px;font:inherit;font-weight:750;cursor:pointer}.primary{background:#172033;color:#fff}.secondary{background:#eef2ff;color:#172033}.danger{background:#fff1f2;color:#b42318}.word-list{display:grid;gap:8px;margin-top:12px}.word-item{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:11px 12px}.word{font-weight:750;font-size:18px}.small{font-size:13px;color:#667085}
+.kid{background:linear-gradient(180deg,#eef5ff,#fff);border-radius:24px;padding:20px;text-align:center;border:1px solid #dbe5ff}.game-title{font-size:27px;margin:2px 0 5px}.game-instruction{color:#667085;margin:0 0 18px}.progress{height:8px;background:#e4e7ec;border-radius:99px;overflow:hidden;margin-bottom:18px}.progress i{display:block;height:100%;background:#4f6fd8;width:0}.picture{font-size:54px;min-height:72px;display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.target{font-size:34px;font-weight:800;letter-spacing:.08em;margin:12px 0 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.letter{width:54px;height:54px;border:2px solid #cbd5f5;background:#fff;border-radius:16px;font-size:24px;font-weight:800;color:#172033}.letter:active{transform:scale(.96)}.feedback{min-height:32px;margin:14px 0 4px;font-size:18px;font-weight:750}.good{color:#067647}.bad{color:#b42318}.next{width:100%;margin-top:12px}.score{font-size:16px;color:#667085}.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.mode.active{background:#172033;color:#fff}.extra{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:58px;padding:0 10px;border:2px solid #cbd5f5;border-radius:16px;background:#fff;font-size:28px;font-weight:850;cursor:pointer}.extra:active{transform:scale(.96)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{padding:7px 10px;border-radius:99px;background:#eef2ff;font-size:13px;font-weight:700}
+@media(max-width:520px){.title{font-size:28px}.panel{padding:16px}.row{flex-direction:column}.row>*{width:100%}.target{font-size:30px}}
+</style>
+</head>
+<body>
+<main class="wrap"><div class="card">
+<div class="top"><a class="back" href="class.html?grade=1">← Lớp 1</a><h1 class="title">🌈 English Learning</h1><p class="subtitle">Lớp 1 · Học từ vựng bằng trò chơi tương tác</p></div>
+<div class="tabs"><button id="childTab" class="tab active">👧 Bé học</button><button id="parentTab" class="tab">👨‍👩‍👧 Parent</button></div>
+<section id="childPanel" class="panel">
+<div id="emptyChild" class="section"><h2>Chưa có từ vựng</h2><p class="muted">Parent hãy thêm từ vựng ở tab Parent trước nhé.</p><button class="btn primary" onclick="requestParent()">Mở Parent</button></div>
+<div id="gamePanel" class="kid hidden">
+<div class="score"><span id="qNo">1</span> / <span id="qTotal">0</span> · ⭐ <span id="score">0</span></div>
+<div class="progress"><i id="progressBar"></i></div>
+<div class="mode-row"><button id="missingMode" class="btn secondary mode active">🔤 Thiếu chữ</button><button id="extraMode" class="btn secondary mode">🗑️ Xóa chữ thừa</button></div>
+<h2 id="gameTitle" class="game-title">Hoàn thành từ</h2><p id="gameInstruction" class="game-instruction">Chọn chữ cái còn thiếu.</p>
+<div id="picture" class="picture"></div><div id="target" class="target"></div><div id="choices" class="letters"></div><div id="feedback" class="feedback"></div><button id="nextBtn" class="btn primary next hidden">Tiếp theo →</button>
+</div>
+</section>
+<section id="parentPanel" class="panel hidden">
+<div class="section"><h2>👨‍👩‍👧 Danh sách từ vựng</h2><p class="muted">Nhập các từ bé đang học. Mỗi dòng một từ. Dữ liệu được lưu trên thiết bị này.</p><label class="label" for="wordsInput">Từ vựng</label><textarea id="wordsInput" placeholder="desk\nbook\ncat\napple"></textarea><div class="row" style="margin-top:10px"><button id="saveBtn" class="btn primary">💾 Lưu từ vựng</button><button id="clearBtn" class="btn danger">Xóa tất cả</button></div><div id="saveMsg" class="small" style="margin-top:8px"></div></div>
+<div class="section"><h2>📚 Từ đang học</h2><div id="wordList" class="word-list"></div></div>
+<div class="section"><h2>🎮 Cách bé luyện tập</h2><div class="chips"><span class="chip">Chọn chữ còn thiếu</span><span class="chip">Xóa chữ thừa</span><span class="chip">Random câu hỏi</span><span class="chip">Tính điểm</span></div></div>
+</section>
+</div></main>
+<script>
+const KEY='grade1EnglishWords';
+const state={words:[],queue:[],index:0,score:0,mode:'missing',answered:false,missingIndex:-1,extraChars:[]};
+const $=id=>document.getElementById(id);
+function loadWords(){try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+function saveWords(){localStorage.setItem(KEY,JSON.stringify(state.words));renderList();renderChildState()}
+function normalizeWords(text){return [...new Set(text.split(/\n|,|;/).map(x=>x.trim().toLowerCase()).filter(x=>/^[a-z][a-z -]*$/.test(x)))].slice(0,300)}
+function renderList(){const el=$("wordList");if(!state.words.length){el.innerHTML='<div class="muted">Chưa có từ nào.</div>';return}el.innerHTML=state.words.map((w,i)=>`<div class="word-item"><span class="word">${esc(w)}</span><button class="btn danger" onclick="removeWord(${i})">Xóa</button></div>`).join('')}
+function removeWord(i){state.words.splice(i,1);saveWords()}
+function requestParent(){const p=prompt('Nhập mật khẩu Parent');if(p==='111')showParent();else if(p!==null)alert('Mật khẩu không đúng.')}
+function showParent(){$('childPanel').classList.add('hidden');$('parentPanel').classList.remove('hidden');$('childTab').classList.remove('active');$('parentTab').classList.add('active');$('wordsInput').value=state.words.join('\n')}
+function showChild(){$('parentPanel').classList.add('hidden');$('childPanel').classList.remove('hidden');$('parentTab').classList.remove('active');$('childTab').classList.add('active');renderChildState()}
+$('parentTab').onclick=requestParent;$('childTab').onclick=showChild;
+$('saveBtn').onclick=()=>{const ws=normalizeWords($('wordsInput').value);state.words=ws;state.queue=[];saveWords();$('saveMsg').textContent=`Đã lưu ${ws.length} từ.`;setTimeout(()=>$('saveMsg').textContent='',1800)};
+$('clearBtn').onclick=()=>{if(confirm('Xóa toàn bộ từ vựng?')){state.words=[];state.queue=[];saveWords();$('wordsInput').value='';$('saveMsg').textContent='Đã xóa.'}};
+$('missingMode').onclick=()=>{state.mode='missing';$('missingMode').classList.add('active');$('extraMode').classList.remove('active');startGame()};
+$('extraMode').onclick=()=>{state.mode='extra';$('extraMode').classList.add('active');$('missingMode').classList.remove('active');startGame()};
+$('nextBtn').onclick=nextQuestion;
+function renderChildState(){if(!state.words.length){$('emptyChild').classList.remove('hidden');$('gamePanel').classList.add('hidden');return}$('emptyChild').classList.add('hidden');$('gamePanel').classList.remove('hidden');if(!state.queue.length)startGame()}
+function startGame(){if(!state.words.length)return;state.queue=[...state.words].sort(()=>Math.random()-.5);state.index=0;state.score=0;state.answered=false;$('nextBtn').textContent='Tiếp theo →';$('nextBtn').onclick=nextQuestion;renderQuestion()}
+function renderQuestion(){state.answered=false;state.missingIndex=-1;state.extraChars=[];$('nextBtn').classList.add('hidden');$('score').textContent=state.score;$('qNo').textContent=state.index+1;$('qTotal').textContent=state.queue.length;$('progressBar').style.width=(state.index/state.queue.length*100)+'%';const word=state.queue[state.index];if(state.mode==='missing')renderMissing(word);else renderExtra(word);$('feedback').textContent='';$('feedback').className='feedback'}
+function renderMissing(word){$('gameTitle').textContent='Hoàn thành từ';$('gameInstruction').textContent='Chọn chữ cái còn thiếu để hoàn thành từ.';$('picture').textContent=emojiFor(word);const letters=[...word];state.missingIndex=Math.floor(Math.random()*letters.length);const target=letters.map((c,i)=>i===state.missingIndex?'_':c.toUpperCase()).join(' ');$('target').textContent=target;let options=[letters[state.missingIndex].toLowerCase()];while(options.length<4){const c=String.fromCharCode(97+Math.floor(Math.random()*26));if(!options.includes(c))options.push(c)}options.sort(()=>Math.random()-.5);$('choices').innerHTML=options.map(c=>`<button class="letter" onclick="chooseMissing('${c}')">${c.toUpperCase()}</button>`).join('')}
+function chooseMissing(c){if(state.answered)return;const word=state.queue[state.index];const needed=word[state.missingIndex].toLowerCase();if(c===needed){state.score++;state.answered=true;$('feedback').textContent='🎉 Chính xác!';$('feedback').className='feedback good';$('target').textContent=word.toUpperCase();$('choices').innerHTML='';$('nextBtn').classList.remove('hidden')}else{$('feedback').textContent='Gần đúng! Thử lại nhé.';$('feedback').className='feedback bad'}}
+function renderExtra(word){$('gameTitle').textContent='Xóa chữ thừa';$('gameInstruction').textContent='Có một chữ cái thừa. Chạm vào chữ cái cần xóa.';$('picture').textContent=emojiFor(word);$('choices').innerHTML='';const pos=Math.floor(Math.random()*(word.length+1));let extra=String.fromCharCode(97+Math.floor(Math.random()*26));if(Math.random()<.15)extra=word[Math.floor(Math.random()*word.length)];const chars=[...word];chars.splice(pos,0,extra);state.extraChars=chars;$('target').innerHTML=chars.map((c,i)=>`<button class="extra" data-index="${i}" onclick="chooseExtra(${i})">${c.toUpperCase()}</button>`).join('')}
+function chooseExtra(i){if(state.answered)return;const word=state.queue[state.index];const chars=state.extraChars.slice();chars.splice(i,1);if(chars.join('').toLowerCase()===word.toLowerCase()){state.score++;state.answered=true;$('feedback').textContent='🎉 Chính xác!';$('feedback').className='feedback good';$('target').textContent=word.toUpperCase();$('nextBtn').classList.remove('hidden')}else{$('feedback').textContent='Chưa đúng, thử chữ khác nhé!';$('feedback').className='feedback bad'}}
+function nextQuestion(){state.index++;if(state.index>=state.queue.length){$('progressBar').style.width='100%';$('gameTitle').textContent='🎉 Hoàn thành!';$('gameInstruction').textContent=`Bé được ${state.score} / ${state.queue.length} điểm.`;$('picture').textContent='🏆';$('target').textContent='';$('choices').innerHTML='';$('feedback').textContent='';$('nextBtn').textContent='Chơi lại';$('nextBtn').classList.remove('hidden');$('nextBtn').onclick=startGame;return}$('nextBtn').textContent='Tiếp theo →';$('nextBtn').onclick=nextQuestion;renderQuestion()}
+function emojiFor(w){const m={cat:'🐱',dog:'🐶',apple:'🍎',banana:'🍌',book:'📚',desk:'🪑',pen:'🖊️',pencil:'✏️',school:'🏫',teacher:'👩‍🏫',boy:'👦',girl:'👧',sun:'☀️',moon:'🌙',star:'⭐',car:'🚗',bus:'🚌',ball:'⚽',fish:'🐟',bird:'🐦',milk:'🥛',water:'💧',house:'🏠',tree:'🌳',flower:'🌸',red:'🔴',blue:'🔵',green:'🟢',yellow:'🟡'};return m[w]||'✨'}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+state.words=loadWords();renderList();renderChildState();
+</script>
+</body></html>

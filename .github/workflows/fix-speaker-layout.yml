@@ -1,0 +1,33 @@
+name: Fix English speaker layout
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-speaker-layout.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move speaker beside progress bar
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('english.html')
+          s = p.read_text()
+          old = '.speak-inline{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:50px;height:50px;min-width:50px;font-size:26px;z-index:2}'
+          new = '.speak-inline{position:absolute;right:0;top:-46px;transform:none;width:50px;height:50px;min-width:50px;font-size:26px;z-index:2}'
+          s = s.replace(old, new)
+          old2 = '@media(max-width:760px){.target-area{min-height:54px}.speak-inline{right:2px;width:48px;height:48px;min-width:48px;font-size:24px}}'
+          new2 = '@media(max-width:760px){.target-area{min-height:54px}.speak-inline{right:0;top:-44px;width:48px;height:48px;min-width:48px;font-size:24px}}'
+          s = s.replace(old2, new2)
+          p.write_text(s)
+          PY
+      - name: Commit change
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add english.html
+          git diff --cached --quiet || git commit -m 'Move speaker above vocabulary word'
+          git push

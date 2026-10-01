@@ -1,0 +1,37 @@
+name: Fix English display
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix lowercase letters and pronunciation label
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('english.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('🔊 Nghe lại', '🔊 Nghe')
+          s = s.replace('.toUpperCase()', '.toLowerCase()')
+          p.write_text(s, encoding='utf-8')
+          PY
+          if git diff --quiet -- english.html; then
+            echo 'No changes needed.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add english.html
+          git commit -m 'Fix English learning letter case and audio label'
+          git push
+          rm -f .github/workflows/fix-english-display.yml
+          git add .github/workflows/fix-english-display.yml
+          git commit -m 'Remove temporary display fix workflow'
+          git push

@@ -1,0 +1,37 @@
+name: Fix English navigation
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-english-nav.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add Vocabulary List to English navigation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('english.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<div class="course-list"><a class="active" href="english.html">↳ Vocabulary Games</a></div>'
+          new = '<div class="course-list"><a class="active" href="english.html">↳ Vocabulary Games</a><a href="vocabulary-list.html">↳ Vocabulary List</a></div>'
+          if old not in s:
+              raise SystemExit('Expected navigation markup was not found; no changes made.')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+
+      - name: Commit navigation fix and remove temporary workflow
+        run: |
+          rm -f .github/workflows/fix-english-nav.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add english.html .github/workflows/fix-english-nav.yml
+          git commit -m 'Fix English navigation course list'
+          git push

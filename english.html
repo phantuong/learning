@@ -6,18 +6,39 @@
 <meta name="theme-color" content="#f6f8ff">
 <title>English · Lớp 1 · Learning</title>
 <style>
-:root{font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f6f8ff}
-*{box-sizing:border-box}body{margin:0;min-height:100vh}.wrap{max-width:760px;margin:auto;padding:18px 16px 42px}
-.card{background:#fff;border:1px solid #e7eaf2;border-radius:28px;box-shadow:0 12px 34px #17203312;overflow:hidden}.top{padding:22px 22px 12px}.back{color:#667085;text-decoration:none;font-weight:650}.title{text-align:center;margin:12px 0 4px;font-size:32px}.subtitle{text-align:center;color:#667085;margin:0;line-height:1.45}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px 0}.tab{border:0;background:#eef2ff;color:#667085;border-radius:14px;padding:13px;font:inherit;font-weight:750}.tab.active{background:#172033;color:#fff}
-.panel{padding:20px}.hidden{display:none!important}.section{background:#f8faff;border:1px solid #e7eaf2;border-radius:20px;padding:18px;margin-bottom:14px}.section h2{margin:0 0 8px;font-size:20px}.muted{color:#667085}.label{display:block;font-weight:700;margin:12px 0 6px}input,textarea,select{width:100%;font:inherit;border:1px solid #d0d5dd;border-radius:14px;padding:12px 14px;background:#fff}textarea{min-height:110px;resize:vertical}.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}.btn{border:0;border-radius:14px;padding:13px 16px;font:inherit;font-weight:750;cursor:pointer}.primary{background:#172033;color:#fff}.secondary{background:#eef2ff;color:#172033}.danger{background:#fff1f2;color:#b42318}.word-list{display:grid;gap:8px;margin-top:12px}.word-item{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:11px 12px}.word{font-weight:750;font-size:18px}.small{font-size:13px;color:#667085}
-.kid{background:linear-gradient(180deg,#eef5ff,#fff);border-radius:24px;padding:20px;text-align:center;border:1px solid #dbe5ff}.game-title{font-size:27px;margin:2px 0 5px}.game-instruction{color:#667085;margin:0 0 18px}.progress{height:8px;background:#e4e7ec;border-radius:99px;overflow:hidden;margin-bottom:18px}.progress i{display:block;height:100%;background:#4f6fd8;width:0}.picture{font-size:54px;min-height:72px;display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.target{font-size:34px;font-weight:800;letter-spacing:.08em;margin:12px 0 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.letter{width:54px;height:54px;border:2px solid #cbd5f5;background:#fff;border-radius:16px;font-size:24px;font-weight:800;color:#172033}.letter:active{transform:scale(.96)}.feedback{min-height:32px;margin:14px 0 4px;font-size:18px;font-weight:750}.good{color:#067647}.bad{color:#b42318}.next{width:100%;margin-top:12px}.score{font-size:16px;color:#667085}.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.mode.active{background:#172033;color:#fff}.extra{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:58px;padding:0 10px;border:2px solid #cbd5f5;border-radius:16px;background:#fff;font-size:28px;font-weight:850;cursor:pointer}.extra:active{transform:scale(.96)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{padding:7px 10px;border-radius:99px;background:#eef2ff;font-size:13px;font-weight:700}
-@media(max-width:520px){.title{font-size:28px}.panel{padding:16px}.row{flex-direction:column}.row>*{width:100%}.target{font-size:30px}}
+:root{font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f6f8ff;--navy:#172033;--muted:#667085;--line:#e7eaf2;--soft:#eef2ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100vh}body{background:#f6f8ff}
+.layout{min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:236px;background:#fff;border-right:1px solid var(--line);padding:22px 14px;z-index:20;box-shadow:8px 0 28px #1720330a}.brand{display:block;text-decoration:none;color:var(--navy);font-weight:850;font-size:21px;padding:7px 10px 22px}.brand span{font-size:27px;margin-right:7px}.nav-label{font-size:11px;font-weight:800;color:#98a2b3;text-transform:uppercase;letter-spacing:.08em;padding:0 11px 7px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:11px;padding:12px 11px;border-radius:13px;text-decoration:none;color:#475467;font-weight:700}.nav a:hover{background:#f8faff}.nav a.active{background:var(--navy);color:#fff}.nav .icon{width:25px;text-align:center;font-size:19px}.nav-divider{height:1px;background:var(--line);margin:15px 10px}
+.main{margin-left:236px;min-height:100vh;padding:18px 22px 42px}.wrap{max-width:760px;margin:auto}.mobile-nav-btn{display:none;border:0;background:#fff;color:var(--navy);width:44px;height:44px;border-radius:13px;font-size:23px;box-shadow:0 4px 15px #17203312;cursor:pointer}.overlay{display:none}
+.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 12px 34px #17203312;overflow:hidden}.top{padding:22px 22px 12px}.title{text-align:center;margin:12px 0 4px;font-size:32px}.subtitle{text-align:center;color:var(--muted);margin:0;line-height:1.45}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px 0}.tab{border:0;background:var(--soft);color:var(--muted);border-radius:14px;padding:13px;font:inherit;font-weight:750}.tab.active{background:var(--navy);color:#fff}
+.panel{padding:20px}.hidden{display:none!important}.section{background:#f8faff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}.section h2{margin:0 0 8px;font-size:20px}.muted{color:var(--muted)}.label{display:block;font-weight:700;margin:12px 0 6px}input,textarea,select{width:100%;font:inherit;border:1px solid #d0d5dd;border-radius:14px;padding:12px 14px;background:#fff}textarea{min-height:110px;resize:vertical}.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}.btn{border:0;border-radius:14px;padding:13px 16px;font:inherit;font-weight:750;cursor:pointer}.primary{background:var(--navy);color:#fff}.secondary{background:var(--soft);color:var(--navy)}.danger{background:#fff1f2;color:#b42318}.word-list{display:grid;gap:8px;margin-top:12px}.word-item{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:11px 12px}.word{font-weight:750;font-size:18px}.small{font-size:13px;color:var(--muted)}
+.kid{background:linear-gradient(180deg,#eef5ff,#fff);border-radius:24px;padding:20px;text-align:center;border:1px solid #dbe5ff}.game-title{font-size:27px;margin:2px 0 5px}.game-instruction{color:var(--muted);margin:0 0 18px}.progress{height:8px;background:#e4e7ec;border-radius:99px;overflow:hidden;margin-bottom:18px}.progress i{display:block;height:100%;background:#4f6fd8;width:0}.picture{font-size:54px;min-height:72px;display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0}.target{font-size:34px;font-weight:800;letter-spacing:.08em;margin:12px 0 20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.letter{width:54px;height:54px;border:2px solid #cbd5f5;background:#fff;border-radius:16px;font-size:24px;font-weight:800;color:var(--navy)}.letter:active{transform:scale(.96)}.feedback{min-height:32px;margin:14px 0 4px;font-size:18px;font-weight:750}.good{color:#067647}.bad{color:#b42318}.next{width:100%;margin-top:12px}.score{font-size:16px;color:var(--muted)}.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.mode.active{background:var(--navy);color:#fff}.extra{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:58px;padding:0 10px;border:2px solid #cbd5f5;border-radius:16px;background:#fff;font-size:28px;font-weight:850;cursor:pointer}.extra:active{transform:scale(.96)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{padding:7px 10px;border-radius:99px;background:var(--soft);font-size:13px;font-weight:700}
+@media(max-width:760px){.sidebar{transform:translateX(-105%);transition:transform .22s ease;width:250px;box-shadow:12px 0 35px #17203322}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#17203355;z-index:15}.main{margin-left:0;padding:12px 12px 35px}.mobile-nav-btn{display:block;margin-bottom:10px}.card{border-radius:26px}.title{font-size:28px}.panel{padding:16px}.row{flex-direction:column}.row>*{width:100%}.target{font-size:30px}}
 </style>
 </head>
 <body>
-<main class="wrap"><div class="card">
-<div class="top"><a class="back" href="class.html?grade=1">← Lớp 1</a><h1 class="title">🌈 English Learning</h1><p class="subtitle">Lớp 1 · Học từ vựng bằng trò chơi tương tác</p></div>
+<div class="layout">
+<aside id="sidebar" class="sidebar" aria-label="Điều hướng">
+<a class="brand" href="index.html"><span>🎓</span>Learning Hub</a>
+<div class="nav-label">Điều hướng</div>
+<nav class="nav">
+<a href="index.html"><span class="icon">🏠</span>Trang chủ</a>
+<a href="class.html?grade=1"><span class="icon">📚</span>Lớp 1</a>
+<a class="active" href="english.html" aria-current="page"><span class="icon">🇬🇧</span>Tiếng Anh</a>
+<a href="class.html?grade=1#math"><span class="icon">➗</span>Toán</a>
+</nav>
+<div class="nav-divider"></div>
+<div class="nav-label">Công cụ</div>
+<nav class="nav">
+<a href="https://phantuong.github.io/vocab-recall/"><span class="icon">🧠</span>Vocab Recall</a>
+</nav>
+</aside>
+<div id="overlay" class="overlay" onclick="toggleNav()"></div>
+<main class="main">
+<button class="mobile-nav-btn" onclick="toggleNav()" aria-label="Mở menu">☰</button>
+<div class="wrap"><div class="card">
+<div class="top"><h1 class="title">🌈 English Learning</h1><p class="subtitle">Lớp 1 · Học từ vựng bằng trò chơi tương tác</p></div>
 <div class="tabs"><button id="childTab" class="tab active">👧 Bé học</button><button id="parentTab" class="tab">👨‍👩‍👧 Parent</button></div>
 <section id="childPanel" class="panel">
 <div id="emptyChild" class="section"><h2>Chưa có từ vựng</h2><p class="muted">Parent hãy thêm từ vựng ở tab Parent trước nhé.</p><button class="btn primary" onclick="requestParent()">Mở Parent</button></div>
@@ -34,8 +55,10 @@
 <div class="section"><h2>📚 Từ đang học</h2><div id="wordList" class="word-list"></div></div>
 <div class="section"><h2>🎮 Cách bé luyện tập</h2><div class="chips"><span class="chip">Chọn chữ còn thiếu</span><span class="chip">Xóa chữ thừa</span><span class="chip">Random câu hỏi</span><span class="chip">Tính điểm</span></div></div>
 </section>
-</div></main>
+</div></div>
+</main></div>
 <script>
+function toggleNav(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
 const KEY='grade1EnglishWords';
 const state={words:[],queue:[],index:0,score:0,mode:'missing',answered:false,missingIndex:-1,extraChars:[]};
 const $=id=>document.getElementById(id);

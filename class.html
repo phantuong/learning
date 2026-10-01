@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fb">
+  <title>Chọn môn học · Learning Hub</title>
+  <style>
+    :root{--navy:#182033;--muted:#68738a;--bg:#f4f6fb;--card:#fff;--line:#e2e6ee;--purple:#7c3aed;--pink:#ec4899}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    .page{max-width:900px;margin:0 auto;padding:18px 18px 45px}
+    .back{display:inline-block;color:#5e6a80;text-decoration:none;font-size:15px;margin:5px 0 18px}
+    .back:hover{text-decoration:underline}
+    header{text-align:center;margin-bottom:24px}
+    .emoji{font-size:42px;margin-bottom:8px}
+    h1{font-size:34px;margin:0 0 7px;letter-spacing:-.8px}
+    .subtitle{margin:0;color:var(--muted);font-size:17px}
+    .subjects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .subject{display:block;text-decoration:none;color:var(--navy);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:25px;min-height:175px;box-shadow:0 7px 20px rgba(24,32,51,.055);transition:transform .15s,box-shadow .15s,border-color .15s}
+    .subject:hover,.subject:active{transform:translateY(-2px);box-shadow:0 11px 28px rgba(24,32,51,.1);border-color:#c9d0dc}
+    .subject .icon{font-size:38px;margin-bottom:13px}
+    .subject h2{font-size:22px;margin:0 0 7px}
+    .subject p{margin:0;color:var(--muted);line-height:1.45;font-size:15px}
+    .coming{opacity:.7}
+    .badge{display:inline-block;margin-top:13px;padding:5px 9px;border-radius:999px;background:#eef1f7;color:#667187;font-size:12px;font-weight:650}
+    @media(max-width:560px){.page{padding:14px 14px 35px}.subjects{grid-template-columns:1fr}.subject{min-height:145px}h1{font-size:30px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="index.html">← Quay lại Learning Hub</a>
+    <header>
+      <div class="emoji">🎓</div>
+      <h1 id="gradeTitle">Lớp học</h1>
+      <p class="subtitle">Chọn môn học bạn muốn học</p>
+    </header>
+
+    <section class="subjects" aria-label="Danh sách môn học">
+      <a class="subject" id="english" href="#">
+        <div class="icon">🇬🇧</div>
+        <h2>Tiếng Anh</h2>
+        <p>Học tiếng Anh theo chương trình của từng lớp.</p>
+        <span class="badge">Sắp triển khai</span>
+      </a>
+      <a class="subject" id="vietnamese" href="#">
+        <div class="icon">📖</div>
+        <h2>Tiếng Việt</h2>
+        <p>Đọc, viết, từ ngữ và kiến thức Tiếng Việt.</p>
+        <span class="badge">Sắp triển khai</span>
+      </a>
+      <a class="subject" id="math" href="#">
+        <div class="icon">➗</div>
+        <h2>Toán</h2>
+        <p>Học Toán theo từng lớp với bài học và luyện tập tương tác.</p>
+        <span class="badge">Sắp triển khai</span>
+      </a>
+      <a class="subject" id="math-en" href="#">
+        <div class="icon">🔢</div>
+        <h2>Math</h2>
+        <p>Mathematics learning in English, organized by grade.</p>
+        <span class="badge">Sắp triển khai</span>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const grade = params.get('grade') || '1';
+    document.title = `Lớp ${grade} · Learning Hub`;
+    document.getElementById('gradeTitle').textContent = `Lớp ${grade}`;
+  </script>
+</body>
+</html>

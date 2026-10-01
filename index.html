@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fb">
+  <title>Learning Hub</title>
+  <style>
+    :root{--navy:#182033;--muted:#68738a;--bg:#f4f6fb;--card:#fff;--line:#e2e6ee;--purple:#7c3aed;--pink:#ec4899}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    .page{max-width:980px;margin:0 auto;padding:28px 18px 48px}
+    header{text-align:center;padding:22px 8px 30px}
+    .logo{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin:0 0 8px}
+    .subtitle{margin:0;color:var(--muted);font-size:18px;line-height:1.5}
+    .hero{background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;border-radius:28px;padding:30px 28px;margin-bottom:28px;box-shadow:0 14px 35px rgba(124,58,237,.16)}
+    .hero h1{margin:0 0 8px;font-size:30px;letter-spacing:-.5px}
+    .hero p{margin:0;line-height:1.6;font-size:16px;opacity:.96}
+    .section-title{font-size:23px;margin:0 0 16px}
+    .grades{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .grade{display:flex;align-items:center;justify-content:center;min-height:104px;background:var(--card);border:1px solid var(--line);border-radius:20px;color:var(--navy);text-decoration:none;font-size:24px;font-weight:750;box-shadow:0 5px 16px rgba(24,32,51,.05);transition:transform .15s,box-shadow .15s,border-color .15s}
+    .grade:hover,.grade:active{transform:translateY(-2px);box-shadow:0 9px 22px rgba(24,32,51,.1);border-color:#c9d0dc}
+    .grade span{font-size:14px;color:var(--muted);font-weight:500;margin-left:6px}
+    footer{text-align:center;color:#8a93a5;margin-top:34px;font-size:14px}
+    @media(max-width:700px){.grades{grid-template-columns:repeat(3,1fr)}.logo{font-size:38px}.hero{padding:25px 22px}}
+    @media(max-width:460px){.page{padding:18px 14px 35px}.grades{grid-template-columns:repeat(2,1fr);gap:12px}.grade{min-height:92px;font-size:22px}.hero{border-radius:23px}.hero h1{font-size:26px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1 class="logo">📚 Learning Hub</h1>
+      <p class="subtitle">Nền tảng học tập từ lớp 1 đến lớp 12</p>
+    </header>
+
+    <section class="hero">
+      <h1>Học tập theo từng lớp</h1>
+      <p>Chọn lớp học để khám phá các môn học. Nội dung sẽ được mở rộng dần theo từng môn và từng chương trình.</p>
+    </section>
+
+    <section aria-labelledby="grade-title">
+      <h2 id="grade-title" class="section-title">Chọn lớp</h2>
+      <div class="grades">
+        <a class="grade" href="class.html?grade=1">Lớp 1</a>
+        <a class="grade" href="class.html?grade=2">Lớp 2</a>
+        <a class="grade" href="class.html?grade=3">Lớp 3</a>
+        <a class="grade" href="class.html?grade=4">Lớp 4</a>
+        <a class="grade" href="class.html?grade=5">Lớp 5</a>
+        <a class="grade" href="class.html?grade=6">Lớp 6</a>
+        <a class="grade" href="class.html?grade=7">Lớp 7</a>
+        <a class="grade" href="class.html?grade=8">Lớp 8</a>
+        <a class="grade" href="class.html?grade=9">Lớp 9</a>
+        <a class="grade" href="class.html?grade=10">Lớp 10</a>
+        <a class="grade" href="class.html?grade=11">Lớp 11</a>
+        <a class="grade" href="class.html?grade=12">Lớp 12</a>
+      </div>
+    </section>
+
+    <footer>Learning Hub · Học tập từ lớp 1 đến lớp 12</footer>
+  </main>
+</body>
+</html>

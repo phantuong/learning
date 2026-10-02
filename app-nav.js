@@ -37,8 +37,7 @@
   function enhanceLevel5(){
     if(!document.querySelector('.sort-area') || typeof sortState==='undefined' || typeof qs==='undefined')return;
     const quiz=document.querySelector('#quiz');
-    if(!quiz || quiz.dataset.level5Enhanced==='1')return;
-    quiz.dataset.level5Enhanced='1';
+    if(!quiz)return;
 
     if(!document.getElementById('level5-touch-style')){
       const style=document.createElement('style');

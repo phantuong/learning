@@ -8,6 +8,27 @@
     nav.innerHTML=`<div><button type="button" class="grade-toggle grade" data-grade="1">📂 <span>Lớp 1</span><span class="chev">⌃</span></button><div class="subnav sub open" id="shared-grade-1">${course('english.html','Tiếng Anh','🔤🌈')}<div class="course-list courses">${course('english.html','Vocabulary Games','↳')}${course('vocabulary-list.html','Vocabulary List','↳')}</div>${course('math.html','Toán','➕')}<div class="course-list courses">${course('cong-tru-10.html','Cộng Trừ Phạm Vi 10','↳')}${course('so-sanh.html','So sánh','↳')}${course('hinh-phang.html','Hình phẳng','↳')}</div><a href="class.html?grade=1" class="${current==='class.html'?'active':''}">📚 Các môn học</a></div></div>${Array.from({length:11},(_,i)=>{const g=i+2;return `<div><a href="class.html?grade=${g}">📁 Lớp ${g}</a></div>`}).join('')}`;
     nav.querySelector('[data-grade]')?.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
+  function ensureFlatShapeLevels(){
+    if(current!=='hinh-phang.html')return;
+    const host=document.getElementById('levels');
+    if(!host || host.children.length)return;
+    const levels=[['1','Nhận biết hình','🔎'],['2','Hình quanh bé','🏠'],['3','Đoán theo đặc điểm','🧠'],['4','Đúng hay sai','🤔'],['5','Ghép hình','🧩'],['6','Chia hình','✂️'],['7','Đếm hình thông minh','🔢'],['8','Mảnh ghép còn thiếu','🧱'],['9','Hình mở & kín','🔓'],['10','Thử thách tổng hợp','🌟']];
+    let selected=1;
+    try{selected=Math.min(10,Math.max(1,Number(localStorage.getItem('flatShapeLevel')||1)))}catch(e){}
+    host.innerHTML='';
+    levels.forEach(([n,label,icon])=>{
+      const b=document.createElement('button');
+      b.type='button';b.className='choice'+(+n===selected?' on':'');
+      b.innerHTML=`<span style="font-size:20px">${icon}</span> Level ${n}<br><small>${label}</small>`;
+      b.addEventListener('click',()=>{
+        selected=+n;
+        try{localStorage.setItem('flatShapeLevel',selected)}catch(e){}
+        host.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));
+        b.classList.add('on');
+      });
+      host.appendChild(b);
+    });
+  }
   function enhanceLevel5(){
     if(!document.querySelector('.sort-area') || typeof sortState==='undefined' || typeof qs==='undefined')return;
     const quiz=document.querySelector('#quiz'); if(!quiz)return;
@@ -58,5 +79,5 @@
     observer.observe(quiz,{childList:true,subtree:true});
     if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button();}
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{build();watchLevel5()});else{build();watchLevel5()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{build();ensureFlatShapeLevels();watchLevel5()});else{build();ensureFlatShapeLevels();watchLevel5()}
 })();

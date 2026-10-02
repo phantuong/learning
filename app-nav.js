@@ -23,9 +23,45 @@
     function start(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();e.stopImmediatePropagation();const source=this,value=source.dataset.value||source.textContent.trim(),sx=e.clientX,sy=e.clientY;let active=false,ghost=null;const move=ev=>{if(!active){if(Math.hypot(ev.clientX-sx,ev.clientY-sy)<4)return;active=true;ghost=document.createElement('div');ghost.className='sort-touch-ghost';ghost.textContent=value;document.body.appendChild(ghost);source.classList.add('dragging');}ghost.style.left=ev.clientX+'px';ghost.style.top=ev.clientY+'px';};const end=ev=>{document.removeEventListener('pointermove',move,true);document.removeEventListener('pointerup',end,true);document.removeEventListener('pointercancel',end,true);if(ghost)ghost.remove();source.classList.remove('dragging');if(!active)return;moveToSlot(value,document.elementFromPoint(ev.clientX,ev.clientY));};document.addEventListener('pointermove',move,true);document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true);}
     bind();
   }
-  function enforceLevel5Button(){if(!document.querySelector('.sort-area'))return;const answer=document.querySelector('#sortAnswer'),next=document.querySelector('#nx');if(answer){answer.textContent='Trả lời';answer.className='sort-answer';answer.style.display='';answer.disabled=sortState.some(x=>x===null)||!!answered;}if(next){next.classList.remove('show');next.style.display='none';}}
-  function showLevel5Next(){const answer=document.querySelector('#sortAnswer');if(!answer)return;document.querySelectorAll('#nx').forEach(n=>n.remove());const next=document.createElement('button');next.id='nx';next.className='sort-answer';next.textContent='Tiếp theo →';next.onclick=()=>{if(typeof window.next==='function')window.next()};answer.replaceWith(next);}
-  function patchSortFlow(){if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;const patched=function(){if(!document.querySelector('.sort-area'))return;if(sortState.some(x=>x===null)||answered)return;answered=true;const q=qs[pos],ok=sortState.join(',')===q.answer,fb=document.querySelector('#fb');if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}showLevel5Next()};patched.__patched=true;window.checkSort=patched;}
-  function watchLevel5(){const quiz=document.querySelector('#quiz');if(!quiz)return;const observer=new MutationObserver(()=>{if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();if(!answered)enforceLevel5Button();}});observer.observe(quiz,{childList:true,subtree:true});if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button();}}
+  function enforceLevel5Button(){
+    if(!document.querySelector('.sort-area'))return;
+    const answer=document.querySelector('#sortAnswer');
+    const next=document.querySelector('#nx');
+    if(answer){answer.textContent='Trả lời';answer.className='sort-answer';answer.style.display='';answer.disabled=sortState.some(x=>x===null)||!!answered;}
+    if(next){next.classList.remove('show');next.style.display='none';}
+  }
+  function showLevel5Next(){
+    const answer=document.querySelector('#sortAnswer');
+    if(!answer)return;
+    const next=document.createElement('button'); next.id='nx'; next.className='sort-answer'; next.textContent='Tiếp theo →'; next.onclick=()=>{if(typeof window.next==='function')window.next()};
+    answer.replaceWith(next);
+  }
+  function patchSortFlow(){
+    if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;
+    const original=window.checkSort;
+    const patched=function(){
+      if(!document.querySelector('.sort-area'))return original();
+      if(sortState.some(x=>x===null)||answered)return;
+      answered=true;
+      const q=qs[pos],ok=sortState.join(',')===q.answer;
+      const fb=document.querySelector('#fb');
+      if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}
+      showLevel5Next();
+    };
+    patched.__patched=true; window.checkSort=patched;
+  }
+  function watchLevel5(){
+    const quiz=document.querySelector('#quiz'); if(!quiz)return;
+    const observer=new MutationObserver(()=>{
+      if(document.querySelector('.sort-area')){
+        enhanceLevel5();
+        patchSortFlow();
+        // Do not call enforceLevel5Button here: it changes text/DOM and would
+        // trigger this observer again indefinitely, freezing the page.
+      }
+    });
+    observer.observe(quiz,{childList:true,subtree:true});
+    if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button();}
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{build();watchLevel5()});else{build();watchLevel5()}
 })();

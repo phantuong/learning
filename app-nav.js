@@ -164,27 +164,21 @@
     if(document.querySelector('.sort-area'))enhanceLevel5();
   }
 
-  /* Level 5 answer flow: always keep a hidden Next button in the quiz and
-     reveal it after the sorting answer has been checked. This is more robust
-     on mobile Safari than creating the button only after the answer callback. */
+  /* Level 5 answer flow: after checking, replace the pink "Trả lời" button
+     with the pink "Tiếp theo" button in exactly the same position. */
   function ensureSortNextButton(){
     const quiz=document.querySelector('#quiz');
     if(!quiz || !document.querySelector('.sort-area'))return;
-    if(!document.querySelector('#sortAnswer'))return;
-    if(!document.querySelector('#nx')){
-      const b=document.createElement('button');
-      b.id='nx';
-      b.className='next';
-      b.textContent='Tiếp theo →';
-      b.onclick=()=>{if(typeof next==='function')next()};
-      const tip=quiz.querySelector('.tip');
-      if(tip)quiz.insertBefore(b,tip);else quiz.appendChild(b);
-    }
     const answerBtn=document.querySelector('#sortAnswer');
-    const nextBtn=document.querySelector('#nx');
-    if(answerBtn && answerBtn.disabled && typeof answered!=='undefined' && answered){
-      nextBtn.classList.add('show');
-    }
+    if(!answerBtn || typeof answered==='undefined' || !answered)return;
+    if(document.querySelector('#nx'))return;
+
+    const nextBtn=document.createElement('button');
+    nextBtn.id='nx';
+    nextBtn.className='sort-answer';
+    nextBtn.textContent='Tiếp theo →';
+    nextBtn.onclick=()=>{if(typeof next==='function')next()};
+    answerBtn.replaceWith(nextBtn);
   }
 
   if(document.readyState==='loading'){

@@ -34,11 +34,7 @@
     grade&&grade.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
 
-  /* Level 5: mobile-friendly drag and drop.
-     The original implementation used native HTML drag events plus a pointer fallback.
-     On iPhone/iPad this could feel like a tap-and-drop because there was no visual item
-     following the finger. This enhancement provides a real floating tile and keeps the
-     source row and destination row in sync. */
+  /* Level 5: mobile-friendly drag and drop. */
   function enhanceLevel5(){
     if(!document.querySelector('.sort-area') || typeof sortState==='undefined' || typeof qs==='undefined')return;
     const quiz=document.querySelector('#quiz');
@@ -51,7 +47,6 @@
       style.textContent=`
         .sort-tile,.sort-slot{touch-action:none;-webkit-touch-callout:none}
         .sort-tile{transition:transform .12s,box-shadow .12s,opacity .12s}
-        .sort-tile.touch-used{display:none!important}
         .sort-slot.filled{background:#fff0f7!important;border-color:#ec8fbc!important;color:#d44b8c!important;box-shadow:0 3px 9px #ec5fa422}
         .sort-slot.filled{font-size:25px;font-weight:950}
         .sort-touch-ghost{position:fixed;z-index:99999;pointer-events:none;width:58px;height:58px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#ffb7d7;border:2px solid #ec5fa4;color:#29243b;font-size:25px;font-weight:950;box-shadow:0 12px 28px #ec5fa455;transform:translate(-50%,-50%) scale(1.08)}
@@ -67,9 +62,10 @@
       const slots=document.querySelector('#slots');
       if(!pool||!slots)return;
       const used=new Set(sortState.filter(v=>v!==null).map(String));
-      pool.innerHTML=q.pool.filter(n=>!used.has(String(n))).map((n,i)=>tile(String(n),'pool',i)).join('');
+      pool.innerHTML=q.pool.filter(n=>!used.has(String(n))).map(n=>tile(String(n),'pool')).join('');
       slots.innerHTML=q.nums.map((_,i)=>`<div class="sort-slot ${sortState[i]!==null?'filled':''}" data-slot="${i}">${sortState[i]!==null?sortState[i]:''}</div>`).join('');
-      document.querySelector('#sortAnswer').disabled=sortState.some(x=>x===null);
+      const answer=document.querySelector('#sortAnswer');
+      if(answer)answer.disabled=sortState.some(x=>x===null);
       bind();
     }
 
@@ -82,7 +78,6 @@
       if(old>=0)sortState[old]=null;
       const occupant=sortState[slot];
       if(occupant!==null && occupant!==undefined){
-        if(old===slot)return;
         const empty=sortState.findIndex(x=>x===null);
         if(empty>=0)sortState[empty]=occupant;
         else return;
@@ -164,26 +159,32 @@
     if(document.querySelector('.sort-area'))enhanceLevel5();
   }
 
-  /* Level 5 answer flow: always keep a hidden Next button in the quiz and
-     reveal it after the sorting answer has been checked. This is more robust
-     on mobile Safari than creating the button only after the answer callback. */
+  /* Level 5 answer flow: reuse the exact same button position.
+     After checking, the pink "Trả lời" button becomes the dark "Tiếp theo →"
+     button, so the UI never shows two buttons stacked one above another. */
   function ensureSortNextButton(){
     const quiz=document.querySelector('#quiz');
-    if(!quiz || !document.querySelector('.sort-area'))return;
-    if(!document.querySelector('#sortAnswer'))return;
-    if(!document.querySelector('#nx')){
-      const b=document.createElement('button');
-      b.id='nx';
-      b.className='next';
-      b.textContent='Tiếp theo →';
-      b.onclick=()=>{if(typeof next==='function')next()};
-      const tip=quiz.querySelector('.tip');
-      if(tip)quiz.insertBefore(b,tip);else quiz.appendChild(b);
-    }
     const answerBtn=document.querySelector('#sortAnswer');
+    if(!quiz || !document.querySelector('.sort-area') || !answerBtn)return;
+
     const nextBtn=document.querySelector('#nx');
-    if(answerBtn && answerBtn.disabled && typeof answered!=='undefined' && answered){
-      nextBtn.classList.add('show');
+    if(nextBtn)nextBtn.classList.remove('show');
+
+    if(typeof answered!=='undefined' && answered){
+      answerBtn.disabled=false;
+      answerBtn.textContent='Tiếp theo →';
+      answerBtn.style.background='var(--ink)';
+      answerBtn.style.color='#fff';
+      answerBtn.style.boxShadow='none';
+      answerBtn.onclick=()=>{if(typeof next==='function')next()};
+      answerBtn.setAttribute('aria-label','Tiếp theo');
+    }else{
+      answerBtn.textContent='Trả lời';
+      answerBtn.style.background='';
+      answerBtn.style.color='';
+      answerBtn.style.boxShadow='';
+      answerBtn.onclick=()=>{if(typeof checkSort==='function')checkSort()};
+      answerBtn.removeAttribute('aria-label');
     }
   }
 

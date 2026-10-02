@@ -8,26 +8,18 @@
     nav.innerHTML=`<div><button type="button" class="grade-toggle grade" data-grade="1">📂 <span>Lớp 1</span><span class="chev">⌃</span></button><div class="subnav sub open" id="shared-grade-1">${course('english.html','Tiếng Anh','🔤🌈')}<div class="course-list courses">${course('english.html','Vocabulary Games','↳')}${course('vocabulary-list.html','Vocabulary List','↳')}</div>${course('math.html','Toán','➕')}<div class="course-list courses">${course('cong-tru-10.html','Cộng Trừ Phạm Vi 10','↳')}${course('so-sanh.html','So sánh','↳')}${course('hinh-phang.html','Hình phẳng','↳')}</div><a href="class.html?grade=1" class="${current==='class.html'?'active':''}">📚 Các môn học</a></div></div>${Array.from({length:11},(_,i)=>{const g=i+2;return `<div><a href="class.html?grade=${g}">📁 Lớp ${g}</a></div>`}).join('')}`;
     nav.querySelector('[data-grade]')?.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
+  function loadFlatShapesRuntime(){
+    if(current!=='hinh-phang.html'||window.__flatShapesRuntime)return;
+    const s=document.createElement('script'); s.src='hinh-phang-runtime.js'; s.async=false; document.body.appendChild(s);
+  }
   function ensureFlatShapeLevels(){
     if(current!=='hinh-phang.html')return;
     const host=document.getElementById('levels');
     if(!host || host.children.length)return;
     const levels=[['1','Nhận biết hình','🔎'],['2','Hình quanh bé','🏠'],['3','Đoán theo đặc điểm','🧠'],['4','Đúng hay sai','🤔'],['5','Ghép hình','🧩'],['6','Chia hình','✂️'],['7','Đếm hình thông minh','🔢'],['8','Mảnh ghép còn thiếu','🧱'],['9','Hình mở & kín','🔓'],['10','Thử thách tổng hợp','🌟']];
-    let selected=1;
-    try{selected=Math.min(10,Math.max(1,Number(localStorage.getItem('flatShapeLevel')||1)))}catch(e){}
+    let selected=1;try{selected=Math.min(10,Math.max(1,Number(localStorage.getItem('flatShapeLevel')||1)))}catch(e){}
     host.innerHTML='';
-    levels.forEach(([n,label,icon])=>{
-      const b=document.createElement('button');
-      b.type='button';b.className='choice'+(+n===selected?' on':'');
-      b.innerHTML=`<span style="font-size:20px">${icon}</span> Level ${n}<br><small>${label}</small>`;
-      b.addEventListener('click',()=>{
-        selected=+n;
-        try{localStorage.setItem('flatShapeLevel',selected)}catch(e){}
-        host.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));
-        b.classList.add('on');
-      });
-      host.appendChild(b);
-    });
+    levels.forEach(([n,label,icon])=>{const b=document.createElement('button');b.type='button';b.className='choice'+(+n===selected?' on':'');b.innerHTML=`<span style="font-size:20px">${icon}</span> Level ${n}<br><small>${label}</small>`;b.addEventListener('click',()=>{selected=+n;try{localStorage.setItem('flatShapeLevel',selected)}catch(e){};host.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));b.classList.add('on')});host.appendChild(b)});
   }
   function enhanceLevel5(){
     if(!document.querySelector('.sort-area') || typeof sortState==='undefined' || typeof qs==='undefined')return;
@@ -44,40 +36,10 @@
     function start(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();e.stopImmediatePropagation();const source=this,value=source.dataset.value||source.textContent.trim(),sx=e.clientX,sy=e.clientY;let active=false,ghost=null;const move=ev=>{if(!active){if(Math.hypot(ev.clientX-sx,ev.clientY-sy)<4)return;active=true;ghost=document.createElement('div');ghost.className='sort-touch-ghost';ghost.textContent=value;document.body.appendChild(ghost);source.classList.add('dragging');}ghost.style.left=ev.clientX+'px';ghost.style.top=ev.clientY+'px';};const end=ev=>{document.removeEventListener('pointermove',move,true);document.removeEventListener('pointerup',end,true);document.removeEventListener('pointercancel',end,true);if(ghost)ghost.remove();source.classList.remove('dragging');if(!active)return;moveToSlot(value,document.elementFromPoint(ev.clientX,ev.clientY));};document.addEventListener('pointermove',move,true);document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true);}
     bind();
   }
-  function enforceLevel5Button(){
-    if(!document.querySelector('.sort-area'))return;
-    const answer=document.querySelector('#sortAnswer');
-    const next=document.querySelector('#nx');
-    if(answer){answer.textContent='Trả lời';answer.className='sort-answer';answer.style.display='';answer.disabled=sortState.some(x=>x===null)||!!answered;}
-    if(next){next.classList.remove('show');next.style.display='none';}
-  }
-  function showLevel5Next(){
-    const answer=document.querySelector('#sortAnswer');
-    if(!answer)return;
-    const next=document.createElement('button'); next.id='nx'; next.className='sort-answer'; next.textContent='Tiếp theo →'; next.onclick=()=>{if(typeof window.next==='function')window.next()};
-    answer.replaceWith(next);
-  }
-  function patchSortFlow(){
-    if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;
-    const original=window.checkSort;
-    const patched=function(){
-      if(!document.querySelector('.sort-area'))return original();
-      if(sortState.some(x=>x===null)||answered)return;
-      answered=true;
-      const q=qs[pos],ok=sortState.join(',')===q.answer;
-      const fb=document.querySelector('#fb');
-      if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}
-      showLevel5Next();
-    };
-    patched.__patched=true; window.checkSort=patched;
-  }
-  function watchLevel5(){
-    const quiz=document.querySelector('#quiz'); if(!quiz)return;
-    const observer=new MutationObserver(()=>{
-      if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();}
-    });
-    observer.observe(quiz,{childList:true,subtree:true});
-    if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button();}
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{build();ensureFlatShapeLevels();watchLevel5()});else{build();ensureFlatShapeLevels();watchLevel5()}
+  function enforceLevel5Button(){if(!document.querySelector('.sort-area'))return;const answer=document.querySelector('#sortAnswer'),next=document.querySelector('#nx');if(answer){answer.textContent='Trả lời';answer.className='sort-answer';answer.style.display='';answer.disabled=sortState.some(x=>x===null)||!!answered}if(next){next.classList.remove('show');next.style.display='none'}}
+  function showLevel5Next(){const answer=document.querySelector('#sortAnswer');if(!answer)return;const next=document.createElement('button');next.id='nx';next.className='sort-answer';next.textContent='Tiếp theo →';next.onclick=()=>{if(typeof window.next==='function')window.next()};answer.replaceWith(next)}
+  function patchSortFlow(){if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;const original=window.checkSort;const patched=function(){if(!document.querySelector('.sort-area'))return original();if(sortState.some(x=>x===null)||answered)return;answered=true;const q=qs[pos],ok=sortState.join(',')===q.answer,fb=document.querySelector('#fb');if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}showLevel5Next()};patched.__patched=true;window.checkSort=patched}
+  function watchLevel5(){const quiz=document.querySelector('#quiz');if(!quiz)return;const observer=new MutationObserver(()=>{if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow()}});observer.observe(quiz,{childList:true,subtree:true});if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button()}}
+  function init(){build();ensureFlatShapeLevels();loadFlatShapesRuntime();watchLevel5()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

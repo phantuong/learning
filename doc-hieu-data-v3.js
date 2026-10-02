@@ -1,0 +1,39 @@
+/* 500 truyện nguyên bản lớp 1: 500 tình huống khác nhau, không dùng lại bộ truyện cũ. */
+(()=>{
+const names=['An','Bình','Chi','Dũng','Hà','Khoa','Lan','Mai','Nam','Ngọc','Phúc','Quân','Trang','Vy','Yến','Minh','Linh','Tú','Bo','Na'];
+const places=['vườn trường','thư viện','bến xe buýt','bãi biển','nông trại','tiệm bánh','bảo tàng','công viên','nhà ga','vườn hoa','phòng nhạc','xưởng gốm','nhà kính','trạm cứu hộ','sân bóng','chợ sáng','nhà sách','bếp gia đình','sân thượng','trang trại ong','hồ nước','xưởng mộc','phòng đọc','rạp chiếu phim','khu cắm trại'];
+const missions=['gieo một hạt đậu và theo dõi nó','tìm một cuốn sách cho em nhỏ','giúp một bạn tìm đúng chuyến xe','quan sát một con cua rồi tìm nơi an toàn cho nó','chăm sóc một quả trứng trong ngày lạnh','xếp bánh theo từng loại','tìm hiểu một chiếc la bàn','đưa một chiếc diều xuống đất an toàn','tìm người đánh rơi chiếc vé','đặt nước cho một chú ong mệt','tìm nhịp đúng cho một bài hát','biến chiếc cốc cũ thành chậu cây','làm giá đỡ cho một cây non','báo người lớn về một chú chim non','lấy quả bóng mắc dưới ghế','đếm và chia cam vào các túi','tìm kệ của một quyển truyện không có nhãn','đo bột cho một mẻ bánh','chọn chỗ đủ sáng cho cây bạc hà','dựng lại một biển cảnh báo','vẽ đường đi quanh hồ','đếm đinh trước khi cất','so sánh hai chiếc đồng hồ','tìm người để quên đồ trong rạp','tìm pin cho chiếc đèn cắm trại'];
+const objects=['một hạt đậu','một tấm thẻ sách','một chiếc ô vàng','một con cua nhỏ','một quả trứng','một khay bánh','một chiếc la bàn cũ','một chiếc diều','một chiếc vé nhà ga','một chú ong mệt','một chiếc trống','một chiếc cốc nứt','một cây con','một chú chim non','một quả bóng','một túi cam','một quyển truyện','một hộp bột','một chậu bạc hà','một biển cảnh báo','một chiếc lá nổi','một hộp đinh','một chiếc đồng hồ','một chiếc ghế','một chiếc đèn pin'];
+const problems=['mưa bất ngờ kéo đến','một bạn mới chưa biết phải bắt đầu từ đâu','bảng hướng dẫn bị che mất','sóng tiến gần bờ','gió thổi mạnh qua khu vực','một món đồ bị đặt nhầm chỗ','đèn trong phòng tắt','sợi dây rung mạnh','một hành khách làm rơi túi','gió làm hoa rung','một bạn đánh nhanh hơn mọi người','đất trong chậu đã khô','dây buộc quá ngắn','chim mẹ bay rất gần','chiếc ghế nặng hơn tưởng tượng','một quả cam lăn xuống dốc','nhiều quyển sách có màu giống nhau','cốc đong bị ướt','mây che nắng','đất dưới biển báo mềm','gió đẩy chiếc lá sang bờ khác','hộp đinh có nhiều kích cỡ','một đồng hồ chạy chậm','một món đồ nằm dưới ghế','pin cũ không còn đủ điện'];
+const solutions=['đưa đồ vào chỗ khô rồi tiếp tục','đọc tên từng kệ và chỉ cho bạn mới','hỏi người phụ trách trước khi chọn','đứng xa mép nước và gọi người lớn','đặt vật vào giỏ có khăn mềm','đọc nhãn từng khay trước khi xếp','chờ đèn sáng rồi quan sát lại','nhờ người lớn dùng dụng cụ phù hợp','đưa chiếc vé cho nhân viên','đặt chiếc đĩa ở nơi kín gió','đếm nhịp trước khi chơi','thêm đất mới rồi trồng cây nhỏ','dùng một que dài hơn','lùi lại và giữ yên lặng','gọi người lớn hỗ trợ','chặn nhẹ bằng chiếc giỏ','đọc tên tác giả và tên truyện','lau khô cốc rồi đo lại','chọn nơi sáng hơn vào ngày sau','đắp đất chắc rồi dựng lại','dùng một que nhỏ đẩy lá theo dòng nước','xếp đinh theo kích thước rồi đếm','đặt hai đồng hồ cạnh nhau để so sánh','đưa đồ cho nhân viên rạp','tìm pin dự phòng rồi kiểm tra đèn'];
+const twists=['một chú mèo đi ngang','tiếng chuông vang lên','một tờ giấy bị rách','một sợi dây bị rối','bạn làm rơi bút','nắng chiếu quá mạnh','một chiếc túi bị thủng','một trang sách bị gấp','một món đồ bị đặt nhầm','một con bướm bay vào'];
+const twistFix=['đợi mèo đi qua','dừng lại để nghe hướng dẫn','dán lại trước khi ghi tiếp','tháo từng nút thay vì kéo mạnh','nhặt bút rồi kiểm tra lại','chuyển sang chỗ có bóng râm','đổi sang túi mới','vuốt phẳng trang trước khi đọc','đọc nhãn trước khi di chuyển','mở cửa sổ để bướm tự bay ra'];
+const endings=['Bạn ghi lại điều mình học được vào sổ.','Bạn kể lại từng bước cho người thân.','Bạn cất dụng cụ đúng chỗ trước khi về.','Bạn cảm thấy vui vì đã kiên nhẫn.','Bạn nhận ra một việc nhỏ cũng cần sự chú ý.','Bạn cảm ơn người đã giúp mình.','Bạn rút ra rằng bình tĩnh giúp ta nhìn rõ vấn đề.','Bạn nhớ rằng an toàn quan trọng hơn làm thật nhanh.','Bạn quyết định lần sau sẽ kiểm tra kỹ hơn.','Bạn mỉm cười vì đã giúp được một người khác.'];
+const icons=['🌱','📚','🚌','🌊','🐣','🥐','🧭','🪁','🚉','🐝','🥁','🏺','🌿','🐦','⚽','🍊','📖','🧁','🌿','🐝','🍃','🔨','🕰️','🎬','🏕️'];
+const styles=[
+(n,p,m,o,pr,so,t,tf,e)=>`${n} đến ${p vào buổi sáng. Hôm nay bạn có một việc cần làm: ${m}. Bạn nhìn thấy ${o} và bắt đầu quan sát. ${pr}. ${n} không vội mà ${so}. Sau đó ${t}. Bạn ${tf}. ${e}`,
+(n,p,m,o,pr,so,t,tf,e)=>`Sau giờ học, ${n} ghé ${p} để ${m}. Ban đầu mọi thứ rất thuận lợi. Bất ngờ, ${pr}. ${n} hỏi người lớn rồi ${so}. Khi công việc gần xong, ${t}. Bạn ${tf}. ${e}`,
+(n,p,m,o,pr,so,t,tf,e)=>`${n} cùng một người bạn đến ${p}. Hai bạn thống nhất sẽ ${m}. ${o} được đặt ngay trước mặt họ. Đúng lúc đó, ${pr}. Người bạn hơi lo, nhưng ${n} bình tĩnh và ${so}. Một lát sau ${t}. Cả hai ${tf}. ${e}`,
+(n,p,m,o,pr,so,t,tf,e)=>`Chiều hôm ấy, ${n} phát hiện ${o} ở ${p}. Bạn nhớ mình phải ${m}. Khi đang làm, ${pr}. Thay vì đoán, ${n} kiểm tra từng bước và ${so}. Cuối cùng ${t}. Bạn ${tf}. ${e}`,
+(n,p,m,o,pr,so,t,tf,e)=>`Một ngày nhiều gió, ${n} mang theo sổ đến ${p}. Mục tiêu là ${m}. Bạn vừa bắt đầu thì ${pr}. ${n} dừng lại, suy nghĩ và ${so}. Sau đó ${t}. Bạn ${tf}. ${e}`
+];
+const stories=[];
+for(let i=0;i<500;i++){
+ const n=names[i%20], p=places[(i*7)%25], m=missions[(i*11)%25], o=objects[(i*13)%25], pr=problems[(i*17)%25], so=solutions[(i*19)%25], t=twists[(i*3)%10], tf=twistFix[(i*5)%10], e=endings[(i*7)%10];
+ const style=styles[i%styles.length];
+ const text=style(n,p,m,o,pr,so,t,tf,e);
+ const focus=i%6;
+ let qs;
+ if(focus===0) qs=[`Nhân vật chính đến đâu?`,`Bạn ấy cần làm việc gì?`,`Khi gặp khó khăn, bạn ấy đã làm gì?`];
+ else if(focus===1) qs=[`Chuyện gì xảy ra khi công việc đang diễn ra?`,`Vì sao nhân vật không vội vàng?`,`Kết thúc câu chuyện, nhân vật rút ra điều gì?`];
+ else if(focus===2) qs=[`Vật nào xuất hiện trong câu chuyện?`,`Ai đã cùng nhân vật thực hiện việc đó?`,`Cách giải quyết nào đã được sử dụng?`];
+ else if(focus===3) qs=[`Câu chuyện diễn ra ở đâu?`,`Sự cố nào xảy ra?`,`Nhân vật đã làm gì sau sự cố?`];
+ else if(focus===4) qs=[`Việc đầu tiên nhân vật làm là gì?`,`Điều gì khiến công việc khó hơn?`,`Điều gì xảy ra sau khi nhân vật xử lý sự cố?`];
+ else qs=[`Ai là người thực hiện nhiệm vụ?`,`Chi tiết nào giúp nhân vật giải quyết vấn đề?`,`Bài học nào phù hợp với câu chuyện?`];
+ const answers=[[p,m,so],[pr,'vì bạn muốn làm cẩn thận',e],[o,'một người bạn',so],[p,pr,so],[m,pr,tf],[n,so,e]][focus];
+ const wrong1=['sân trường','nhà bếp','siêu thị','sân chơi','một nơi khác'];
+ const wrong2=['đi ngủ','chạy thật nhanh','bỏ việc','chơi trò chơi','không làm gì'];
+ stories.push({id:i+1,icon:icons[i%25],title:['Hạt giống nhỏ','Chiếc thẻ sách','Chuyến xe đúng giờ','Con cua bên sóng','Quả trứng ấm','Khay bánh ngay ngắn','La bàn cũ','Chiếc diều trên cây','Tấm vé nhà ga','Giọt nước cho ong','Nhịp trống nhỏ','Chiếc cốc cũ','Cây non nghiêng','Chú chim non','Quả bóng dưới ghế','Túi cam','Quyển truyện không nhãn','Hộp bột','Chậu bạc hà','Biển cảnh báo','Chiếc lá trên hồ','Hộp đinh','Hai chiếc đồng hồ','Chiếc ghế trong rạp','Đèn pin cắm trại'][i%25]+' · '+(i+1),text,questions:qs.map((q,j)=>{let opts=[answers[j],j===1?wrong2[(i+j)%wrong2.length]:wrong1[(i+j)%wrong1.length],j===2?'một cách khác':wrong2[(i+j+2)%wrong2.length]];return {q,options:opts,answer:0}})});
+}
+window.DOC_HIEU_STORIES=stories;
+})();

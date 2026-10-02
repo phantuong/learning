@@ -1,33 +1,37 @@
 (function(){
-  if(window.__flatShapesRuntime)return; window.__flatShapesRuntime=true;
-  const LEVELS=[['1','Nhận biết hình','🔎'],['2','Hình quanh bé','🏠'],['3','Đoán theo đặc điểm','🧠'],['4','Đúng hay sai','🤔'],['5','Ghép hình','🧩'],['6','Chia hình','✂️'],['7','Đếm hình thông minh','🔢'],['8','Mảnh ghép còn thiếu','🧱'],['9','Hình mở & kín','🔓'],['10','Thử thách tổng hợp','🌟']];
-  const NAME={circle:'hình tròn',triangle:'hình tam giác',square:'hình vuông',rectangle:'hình chữ nhật'}, TYPES=Object.keys(NAME);
-  const COLORS={circle:['#ffd9ec','#ec5fa4'],triangle:['#ffe6a8','#e3a72f'],square:['#dce8ff','#6d88c7'],rectangle:['#d9f5e5','#35a874']};
-  let level=Math.min(10,Math.max(1,Number(localStorage.getItem('flatShapeLevel')||1))),questions=[],pos=0,score=0,answered=false;
-  const $=id=>document.getElementById(id), rnd=n=>Math.floor(Math.random()*n), pick=()=>TYPES[rnd(TYPES.length)], shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){let j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
-  function svg(c){return `<svg viewBox="0 0 720 300" role="img">${c}</svg>`}
-  function shape(t,x,y,w,h,fill,stroke){let c=COLORS[t],f=fill||c[0],s=stroke||c[1];if(t==='circle')return `<circle cx="${x+w/2}" cy="${y+h/2}" r="${Math.min(w,h)*.37}" fill="${f}" stroke="${s}" stroke-width="5"/>`;if(t==='triangle')return `<polygon points="${x+w/2},${y+5} ${x+8},${y+h-8} ${x+w-8},${y+h-8}" fill="${f}" stroke="${s}" stroke-width="5" stroke-linejoin="round"/>`;if(t==='square'){const size=Math.min(w,h);const ox=x+(w-size)/2,oy=y+(h-size)/2;return `<rect x="${ox+7}" y="${oy+7}" width="${size-14}" height="${size-14}" rx="8" fill="${f}" stroke="${s}" stroke-width="5"/>`}return `<rect x="${x+7}" y="${y+7}" width="${w-14}" height="${h-14}" rx="3" fill="${f}" stroke="${s}" stroke-width="5"/>`}
-  function mascot(x,y,e){return `<text x="${x}" y="${y}" font-size="42">${e}</text>`}
-  function base(t,rot){const isSquare=t==='square';const w=isSquare?200:250,h=isSquare?200:155,x=(720-w)/2,y=(300-h)/2;return svg(`<g transform="rotate(${rot||0} 360 150)">${shape(t,x,y,w,h)}</g>${mascot(35,65,'😊')}${mascot(640,250,'⭐')}`)}
-  function q1(){let t=pick();return{prompt:'🔎 Đây là hình gì?',visual:base(t,[-18,-7,0,9,18][rnd(5)]),answer:NAME[t],opts:shuffle(TYPES.map(x=>NAME[x]))}}
-  function q2(){let t=pick(),n=2+rnd(3),others=[];for(let i=0;i<5;i++)others.push(TYPES.filter(x=>x!==t)[rnd(3)]);let items=shuffle(Array(n).fill(t).concat(others)),c='<rect x="0" y="235" width="720" height="65" fill="#b9e7bd"/><circle cx="65" cy="55" r="27" fill="#ffd35c"/><text x="25" y="105" font-size="34">☁️</text><text x="650" y="95" font-size="34">☁️</text>';items.forEach((x,i)=>c+=shape(x,75+(i%5)*130,75+Math.floor(i/5)*125,80,80));return{prompt:`🏠 Có bao nhiêu ${NAME[t]} trong bức tranh?`,visual:svg(c),answer:String(n),opts:shuffle([String(n),String(n-1),String(n+1),String(n+2)].filter((v,i,a)=>v>0&&a.indexOf(v)===i)).slice(0,4),count:n}}
-  function q3(){let t=pick(),p=t==='circle'?'không có cạnh thẳng và không có góc':t==='triangle'?'có đúng 3 cạnh và 3 góc':t==='square'?'có 4 cạnh bằng nhau':'có 4 cạnh, hai cạnh dài và hai cạnh ngắn';return{prompt:`🧠 Tôi là hình ${p}. Tôi là hình gì?`,visual:svg(`${TYPES.map((x,i)=>shape(x,45+i*165,100,105,105)).join('')}${mascot(35,65,'💡')}`),answer:NAME[t],opts:shuffle(TYPES.map(x=>NAME[x]))}}
-  function q4(){let t=pick(),truth=Math.random()<.5,st=t==='square'?(truth?'Hình vuông có 4 cạnh bằng nhau.':'Hình vuông có 3 cạnh.'):t==='rectangle'?(truth?'Hình chữ nhật có 4 cạnh.':'Hình chữ nhật không có góc.'):t==='triangle'?(truth?'Xoay hình tam giác thì nó vẫn là hình tam giác.':'Hình tam giác có 4 góc.'):truth?'Hình tròn không có góc.':'Hình tròn có 4 cạnh thẳng.';return{prompt:`🤔 ${st}`,visual:base(t,truth?12:-12),answer:truth?'Đúng':'Sai',opts:['Đúng','Sai']}}
-  function q5(){let k=rnd(3),c,a;if(k===0){c=shape('triangle',105,65,180,175)+shape('triangle',285,65,180,175,'#dce8ff','#6d88c7');a='hình tam giác'}else if(k===1){c=shape('square',150,65,170,170)+shape('square',320,65,170,170,'#dce8ff','#6d88c7');a='hình chữ nhật'}else{c=shape('square',170,35,130,130)+shape('square',300,35,130,130,'#dce8ff','#6d88c7')+shape('square',170,165,130,130,'#ffe6a8','#e3a72f')+shape('square',300,165,130,130,'#d9f5e5','#35a874');a='hình vuông'}return{prompt:'🧩 Các mảnh màu ghép lại tạo thành hình gì?',visual:svg(c+mascot(40,70,'🤖')),answer:a,opts:shuffle(TYPES.map(x=>NAME[x]))}}
-  function q6(){let t=Math.random()<.5?'circle':'rectangle',n=Math.random()<.5?2:4,c=t==='circle'?`<circle cx="360" cy="150" r="105" fill="#ffd9ec" stroke="#ec5fa4" stroke-width="5"/>${n===2?'<path d="M360 45V255" stroke="#6d88c7" stroke-width="5"/>':'<path d="M360 45V255M255 150H465" stroke="#6d88c7" stroke-width="5"/>`}`:`<rect x="235" y="55" width="250" height="190" rx="8" fill="#dce8ff" stroke="#6d88c7" stroke-width="5"/>${n===2?'<path d="M360 55V245" stroke="#ec5fa4" stroke-width="5"/>':'<path d="M360 55V245M235 150H485" stroke="#ec5fa4" stroke-width="5"/>`}`;return{prompt:'✂️ Hình được chia thành mấy phần bằng nhau?',visual:svg(c+mascot(35,65,'✂️')),answer:String(n),opts:['2','3','4','5'],count:n}}
-  function q7(){let n=2+rnd(2),s=135,start=155,c=`<rect x="${start}" y="${start}" width="${n*s}" height="${n*s}" fill="#fff0f7"/>`;for(let i=0;i<=n;i++){let p=start+i*s;c+=`<path d="M${p} ${start}V${start+n*s}M${start} ${p}H${start+n*s}" stroke="#6d88c7" stroke-width="4"/>`}let ans=n===2?5:14;return{prompt:`🔢 Trong lưới ${n}×${n} có tất cả bao nhiêu hình vuông?`,visual:svg(c+mascot(45,70,n===2?'🦊':'🦁')),answer:String(ans),opts:n===2?['4','5','6','7']:['9','12','14','16'],count:ans}}
-  function q8(){let t=pick(),c='',others=TYPES.filter(x=>x!==t);others.forEach((x,i)=>c+=shape(x,95+(i%2)*260,55+Math.floor(i/2)*125,100,100));c+=`<rect x="355" y="180" width="100" height="100" rx="14" fill="#fff" stroke="#ec5fa4" stroke-width="4" stroke-dasharray="8 7"/><text x="405" y="246" text-anchor="middle" font-size="38" fill="#ec5fa4">?</text>`;return{prompt:'🧱 Hình nào cần thêm để đủ 4 hình cơ bản?',visual:svg(c+mascot(35,65,'🧸')),answer:NAME[t],opts:shuffle(TYPES.map(x=>NAME[x]))}}
-  function q9(){let closed=Math.random()<.5,c=closed?'<path d="M180 150 L250 65 L390 85 L480 175 L370 235 L220 215 Z" fill="#ffd9ec" stroke="#ec5fa4" stroke-width="6"/>':'<path d="M175 160 L245 70 L390 95 L465 205" fill="none" stroke="#ec5fa4" stroke-width="7" stroke-linecap="round"/>';return{prompt:'🔓 Hình này là hình kín hay hình mở?',visual:svg(c+mascot(35,65,closed?'😊':'😯')),answer:closed?'Hình kín':'Hình mở',opts:['Hình kín','Hình mở']}}
-  function q10(){if(Math.random()<.5)return{prompt:'🌟 Có tất cả bao nhiêu hình chữ nhật trong hình?',visual:svg('<rect x="180" y="60" width="360" height="190" fill="#dce8ff" stroke="#6d88c7" stroke-width="5"/><path d="M360 60V250M180 155H540" stroke="#ec5fa4" stroke-width="5"/>'+mascot(45,70,'🦁')),answer:'9',opts:['5','7','9','10'],count:9};return{prompt:'🌟 Có tất cả bao nhiêu hình vuông trong hình?',visual:svg('<rect x="210" y="40" width="300" height="220" fill="#ffd9ec" stroke="#ec5fa4" stroke-width="5"/><path d="M360 40V260M210 150H510" stroke="#6d88c7" stroke-width="5"/>'+mascot(45,70,'🦁')),answer:'5',opts:['3','4','5','6'],count:5}}
-  const GEN=[q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
-  function make(){return GEN[level-1]()} function verify(q){if(!q||!q.prompt||!q.visual||!Array.isArray(q.opts))return false;let o=q.opts.map(String),a=String(q.answer);return (o.length===2||o.length===4)&&new Set(o).size===o.length&&o.includes(a)&&(!q.count||Number(q.count)===Number(a))}
-  function renderLevels(){let box=$('levels');if(!box)return;box.innerHTML='';LEVELS.forEach(([n,l,ic])=>{let b=document.createElement('button');b.type='button';b.className='choice'+(+n===level?' on':'');b.innerHTML=`<span style="font-size:20px">${ic}</span> Level ${n}<br><small>${l}</small>`;b.addEventListener('click',()=>{level=+n;localStorage.setItem('flatShapeLevel',level);renderLevels()});box.appendChild(b)})}
-  function build(){questions=[];let seen=new Set();for(let i=0;i<10;i++){let q=null;for(let t=0;t<100&&!q;t++){let x=make(),sig=x.prompt+'|'+x.answer;if(verify(x)&&!seen.has(sig)){seen.add(sig);q=x}}if(!q)q=make();questions.push(q)}pos=0;score=0}
-  function render(){let q=questions[pos];answered=false;$('quiz').innerHTML=`<div class="top"><span>Câu ${pos+1}/10</span><span>⭐ ${score}</span></div><div class="bar"><i style="width:${pos*10}%"></i></div><div class="question">${q.prompt}</div><div class="visual">${q.visual}</div><div class="answers">${q.opts.map((x,i)=>`<button type="button" class="ans" data-i="${i}">${x}</button>`).join('')}</div><div class="feedback" id="fb"></div><button type="button" class="next" id="next">Tiếp theo →</button>`;$('quiz').querySelectorAll('.ans').forEach((b,i)=>b.addEventListener('click',()=>answer(i)));$('next').addEventListener('click',next)}
-  function answer(i){if(answered)return;answered=true;let q=questions[pos],ok=String(q.opts[i])===String(q.answer);$('quiz').querySelectorAll('.ans').forEach((b,j)=>{b.disabled=true;if(String(q.opts[j])===String(q.answer))b.classList.add('correct')});if(!ok)$('quiz').querySelectorAll('.ans')[i].classList.add('wrong');else score++;let fb=$('fb');fb.textContent=ok?'🎉 Chính xác!':`💪 Gần đúng rồi! Đáp án là: ${q.answer}`;fb.style.color=ok?'#087443':'#b4232e';$('next').classList.add('show')}
-  function next(){if(pos<9){pos++;render();window.scrollTo({top:0,behavior:'smooth'})}else result()}
-  function result(){$('quiz').innerHTML=`<div class="result"><div class="stars">${score>=9?'🌟🌟🌟':score>=7?'🌟🌟':'🌟'}</div><div class="badge">Level ${level} hoàn thành</div><h2>Giỏi lắm! 🎉</h2><p>Bé trả lời đúng <b>${score}/10</b> câu.</p><button type="button" class="again" id="again">Luyện lại ✨</button></div>`;$('again').addEventListener('click',start)}
-  function start(){build();$('setup').classList.add('hide');$('quiz').classList.add('show');render();window.scrollTo({top:0,behavior:'smooth'})}
-  function wire(){renderLevels();let old=$('startBtn');if(!old)return;let b=old.cloneNode(true);old.replaceWith(b);b.addEventListener('click',start);}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);else wire();
+  if(window.__flatShapesRuntime)return;
+  window.__flatShapesRuntime=true;
+
+  function patchShape(){
+    if(typeof window.shape!=='function') return;
+    const COLORS={circle:['#ffd9ec','#ec5fa4'],triangle:['#ffe6a8','#e3a72f'],square:['#dce8ff','#6d88c7'],rectangle:['#d9f5e5','#35a874']};
+    window.shape=function(t,x,y,w,h,fill,stroke,extra=''){
+      const c=COLORS[t]||COLORS.rectangle, f=fill||c[0], s=stroke||c[1];
+      if(t==='circle') return `<circle class="tile" cx="${x+w/2}" cy="${y+h/2}" r="${Math.min(w,h)*.38}" fill="${f}" stroke="${s}" stroke-width="4" ${extra}/>`;
+      if(t==='triangle') return `<polygon class="tile" points="${x+w/2},${y+h*.08} ${x+w*.08},${y+h*.9} ${x+w*.92},${y+h*.9}" fill="${f}" stroke="${s}" stroke-width="4" stroke-linejoin="round" ${extra}/>`;
+      if(t==='square'){
+        const size=Math.min(w,h),ox=x+(w-size)/2,oy=y+(h-size)/2;
+        return `<rect class="tile" x="${ox+size*.08}" y="${oy+size*.08}" width="${size*.84}" height="${size*.84}" rx="7" fill="${f}" stroke="${s}" stroke-width="4" ${extra}/>`;
+      }
+      return `<rect class="tile" x="${x+w*.08}" y="${y+h*.08}" width="${w*.84}" height="${h*.84}" rx="3" fill="${f}" stroke="${s}" stroke-width="4" ${extra}/>`;
+    };
+  }
+
+  function bindStart(){
+    const btn=document.getElementById('startBtn');
+    if(!btn || typeof window.startQuiz!=='function')return false;
+    const fresh=btn.cloneNode(true);
+    btn.replaceWith(fresh);
+    fresh.addEventListener('click',function(e){e.preventDefault();window.startQuiz();});
+    return true;
+  }
+
+  function init(){
+    patchShape();
+    bindStart();
+    if(typeof window.renderLevels==='function') window.renderLevels();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();

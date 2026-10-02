@@ -34,11 +34,6 @@
     grade&&grade.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
 
-  /* Level 5: mobile-friendly drag and drop.
-     The original implementation used native HTML drag events plus a pointer fallback.
-     On iPhone/iPad this could feel like a tap-and-drop because there was no visual item
-     following the finger. This enhancement provides a real floating tile and keeps the
-     source row and destination row in sync. */
   function enhanceLevel5(){
     if(!document.querySelector('.sort-area') || typeof sortState==='undefined' || typeof qs==='undefined')return;
     const quiz=document.querySelector('#quiz');
@@ -69,7 +64,8 @@
       const used=new Set(sortState.filter(v=>v!==null).map(String));
       pool.innerHTML=q.pool.filter(n=>!used.has(String(n))).map((n,i)=>tile(String(n),'pool',i)).join('');
       slots.innerHTML=q.nums.map((_,i)=>`<div class="sort-slot ${sortState[i]!==null?'filled':''}" data-slot="${i}">${sortState[i]!==null?sortState[i]:''}</div>`).join('');
-      document.querySelector('#sortAnswer').disabled=sortState.some(x=>x===null);
+      const answer=document.querySelector('#sortAnswer');
+      if(answer)answer.disabled=sortState.some(x=>x===null);
       bind();
     }
 
@@ -120,7 +116,6 @@
       const value=source.dataset.value || source.textContent.trim();
       const startX=e.clientX,startY=e.clientY;
       let active=false,ghost=null;
-
       const move=ev=>{
         if(!active){
           if(Math.hypot(ev.clientX-startX,ev.clientY-startY)<4)return;
@@ -148,7 +143,6 @@
       document.addEventListener('pointerup',end,true);
       document.addEventListener('pointercancel',end,true);
     }
-
     bind();
   }
 
@@ -164,14 +158,16 @@
     if(document.querySelector('.sort-area'))enhanceLevel5();
   }
 
-  /* Level 5 answer flow: after checking, replace the pink "Trả lời" button
-     with the pink "Tiếp theo" button in exactly the same position. */
+  /* Level 5: after the answer is checked, remove the old hidden Next button
+     and replace the pink Trả lời button in-place with one pink Tiếp theo button. */
   function ensureSortNextButton(){
     const quiz=document.querySelector('#quiz');
     if(!quiz || !document.querySelector('.sort-area'))return;
     const answerBtn=document.querySelector('#sortAnswer');
     if(!answerBtn || typeof answered==='undefined' || !answered)return;
-    if(document.querySelector('#nx'))return;
+
+    const oldNext=document.querySelector('#nx');
+    if(oldNext)oldNext.remove();
 
     const nextBtn=document.createElement('button');
     nextBtn.id='nx';

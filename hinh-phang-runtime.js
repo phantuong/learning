@@ -17,19 +17,33 @@
     };
   }
 
+  function getStart(){
+    return typeof window.startQuiz==='function' ? window.startQuiz :
+           typeof window.start==='function' ? window.start :
+           typeof window.startPractice==='function' ? window.startPractice : null;
+  }
+
   function bindStart(){
     const btn=document.getElementById('startBtn');
-    if(!btn || typeof window.startQuiz!=='function')return false;
-    const fresh=btn.cloneNode(true);
-    btn.replaceWith(fresh);
-    fresh.addEventListener('click',function(e){e.preventDefault();window.startQuiz();});
+    const start=getStart();
+    if(!btn || !start)return false;
+    if(btn.__flatStartBound)return true;
+    btn.__flatStartBound=true;
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      try{ start(); }catch(err){ console.error('Flat shapes start failed:',err); }
+    });
     return true;
   }
 
   function init(){
     patchShape();
-    bindStart();
     if(typeof window.renderLevels==='function') window.renderLevels();
+    bindStart();
+    if(!getStart()){
+      setTimeout(bindStart,50);
+      setTimeout(bindStart,200);
+    }
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});

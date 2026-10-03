@@ -13,26 +13,21 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          files = ['class.html','math.html','so-sanh.html','english.html','cong-tru-10.html']
-          tag = '<script src="app-nav.js"></script>'
-          changed = []
-          for name in files:
-              p = Path(name)
-              if not p.exists():
-                  continue
-              s = p.read_text(encoding='utf-8')
+          tag = '<script src="navigation-v2.js?v=20261004"></script>'
+          changed=[]
+          for p in Path('.').glob('*.html'):
+              s=p.read_text(encoding='utf-8')
               if tag not in s:
-                  marker = '</body>'
-                  if marker in s:
-                      s = s.replace(marker, tag + marker, 1)
-                      p.write_text(s, encoding='utf-8')
-                      changed.append(name)
-          print('Updated:', changed)
+                  if '</body>' in s:
+                      s=s.replace('</body>',tag+'</body>',1)
+                      p.write_text(s,encoding='utf-8')
+                      changed.append(p.name)
+          print('Updated:',changed)
           PY
       - name: Commit changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add class.html math.html so-sanh.html english.html cong-tru-10.html app-nav.js
-          git diff --cached --quiet || git commit -m 'Use shared navigation across learning pages'
+          git add '*.html' navigation-v2.js
+          git diff --cached --quiet || git commit -m 'Apply unified three-level navigation to all pages'
           git push

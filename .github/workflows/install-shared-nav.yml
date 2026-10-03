@@ -15,12 +15,13 @@ jobs:
           from pathlib import Path
           import re
           tag = '<script src="navigation-v2.js?v=20261005"></script>'
+          pattern = r'\s*<script\s+src=["\']navigation-v2\.js\?v=[^"\']+["\']></script>'
           changed=[]
           for p in Path('.').glob('*.html'):
               s=p.read_text(encoding='utf-8')
-              updated=re.sub(r'<script\s+src=["\']navigation-v2\.js\?v=[^"\']+["\']></script>',tag,s)
-              if updated==s and '</body>' in s:
-                  updated=s.replace('</body>',tag+'</body>',1)
+              updated=re.sub(pattern,'',s)
+              if '</body>' in updated:
+                  updated=updated.replace('</body>',tag+'</body>',1)
               if updated!=s:
                   p.write_text(updated,encoding='utf-8')
                   changed.append(p.name)

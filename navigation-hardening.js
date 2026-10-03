@@ -19,3 +19,4 @@
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true}); else install();
 })();
+// Shared navigation hardening: fixed menu position and isolated icon sizing on every page.

@@ -38,4 +38,4 @@ $('list').addEventListener('click',e=>{const star=e.target.closest('[data-star]'
 $('search').addEventListener('input',render);$('selectAll').onclick=()=>setAll(true);$('clearAll').onclick=()=>setAll(false);$('selectedFilter').onclick=()=>{showSelectedOnly=!showSelectedOnly;render()};renderNav();
 async function load(){try{const r=await fetch(VOCAB_URL,{cache:'no-store'});if(!r.ok)throw new Error('Không tải được vocabulary.json');const j=await r.json();words=[...new Set((j.words||[]).map(x=>String(typeof x==='string'?x:x.word||'').trim().toLowerCase()).filter(w=>data[w]))];loadSelection();render();localStorage.setItem('learningLastAccess',JSON.stringify({href:'vocabulary-list.html',title:'Vocabulary List',grade:1,subject:'english',course:'vocabulary-list',time:Date.now()}))}catch(e){$('count').textContent='Không tải được danh sách từ vựng';$('list').innerHTML='<div class="empty">'+e.message+'</div>'}}
 load();
-</script><script src="navigation-v2.js?v=20261005"></script></body></html>
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

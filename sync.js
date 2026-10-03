@@ -17,5 +17,4 @@ async function save(patch={}){const local={...localProgress(),...patch,updated_a
 async function load(){try{const cloud=await loadCloudProgress();if(!cloud)return localProgress();const merged=mergeProgress(localProgress(),cloud);saveLocalProgress(merged);return merged}catch(e){console.warn('Could not load cloud progress.',e);return localProgress()}}
 async function initLearningSync(){await ensureClient();return load()}
 window.LearningSync={init:initLearningSync,signInOrSignUp,getUser,loadCloudProgress,saveCloudProgress,sync:save,save,load,getLocal:localProgress};
-// Backward-compatible alias used by existing learning pages.
-window.learningSync={getUser,signInOrSignUp,load,save,sync:save,getLocal:localProgress};
+window.learningSync={getUser,user:getUser,signInOrSignUp,load,save,sync:save,getLocal:localProgress};

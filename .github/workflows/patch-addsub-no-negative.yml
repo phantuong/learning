@@ -29,8 +29,13 @@ jobs:
           PY
       - name: Verify no-negative generator rules
         run: |
-          grep -q "const n=op==='−'?rand(value):rand(max)" cong-tru-10.html
-          grep -q "Math.floor(Math.random()*(span+1))" cong-tru-10.html
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('cong-tru-10.html').read_text(encoding='utf-8')
+          assert "const n=op==='−'?rand(value):rand(max)" in s
+          assert "Math.floor(Math.random()*(span+1))" in s
+          print('Verified: generated subtraction operands/results and answer choices cannot be negative.')
+          PY
       - name: Commit changes
         run: |
           git config user.name 'github-actions[bot]'

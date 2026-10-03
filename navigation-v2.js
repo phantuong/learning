@@ -32,3 +32,4 @@ function css(){if(document.getElementById('nv2'))return;const s=document.createE
 function init(){css();const nav=shell();if(nav)build(nav);bindMenu()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+// Shared mobile navigation fix verified on main 2026-10-03

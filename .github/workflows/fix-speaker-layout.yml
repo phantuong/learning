@@ -1,4 +1,4 @@
-name: Fix English speaker layout
+name: Fix responsive learning UI
 on:
   push:
     paths:
@@ -10,24 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Move speaker beside progress bar
+      - name: Patch comparison setup layout
         run: |
           python - <<'PY'
           from pathlib import Path
-          p = Path('english.html')
+          p = Path('so-sanh.html')
           s = p.read_text()
-          old = '.speak-inline{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:50px;height:50px;min-width:50px;font-size:26px;z-index:2}'
-          new = '.speak-inline{position:absolute;right:0;top:-46px;transform:none;width:50px;height:50px;min-width:50px;font-size:26px;z-index:2}'
-          s = s.replace(old, new)
-          old2 = '@media(max-width:760px){.target-area{min-height:54px}.speak-inline{right:2px;width:48px;height:48px;min-width:48px;font-size:24px}}'
-          new2 = '@media(max-width:760px){.target-area{min-height:54px}.speak-inline{right:0;top:-44px;width:48px;height:48px;min-width:48px;font-size:24px}}'
-          s = s.replace(old2, new2)
-          p.write_text(s)
+          old = '@media(max-width:760px){.side{transform:translateX(-105%);transition:.2s;box-shadow:10px 0 30px #3b213022}.side.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#2b203855;z-index:15}.main{margin:0;padding:12px 14px 35px}.mobile{display:block}.settings{grid-template-columns:1fr}.card{padding:18px;border-radius:22px}.hero h1{font-size:30px}.visual-groups{gap:7px}.group-icons{gap:4px;min-height:125px;padding:5px}.animal{width:34px;height:34px}.group-label{font-size:15px}.numbers{gap:8px}.num{font-size:54px;min-width:55px}.compare-symbol{font-size:44px;min-width:34px}.answers{grid-template-columns:repeat(3,1fr)}.ans{padding:14px 4px}.symbol-answer{font-size:34px}.sort-row{gap:5px}.sort-tile,.sort-slot{width:42px;height:48px;font-size:21px;border-radius:10px}}'
+          new = '@media(max-width:760px){.side{transform:translateX(-105%);transition:.2s;box-shadow:10px 0 30px #3b213022}.side.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#2b203855;z-index:15}.main{margin:0;padding:12px 14px 35px}.mobile{display:block}.settings{grid-template-columns:1fr;gap:12px}.card{padding:16px;border-radius:22px}.setting{padding:12px;border-radius:18px}.setting h3{font-size:15px;margin-bottom:9px}.settings .setting:first-child .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.settings .setting:last-child .choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.choice{width:100%;min-width:0;padding:9px 5px;font-size:14px;line-height:1.15;border-radius:12px;white-space:normal}.settings .setting:first-child .choice small{font-size:12px;line-height:1.15}.settings .setting:last-child .choice{font-size:14px;padding:10px 3px}.hero h1{font-size:30px}.visual-groups{gap:7px}.group-icons{gap:4px;min-height:125px;padding:5px}.animal{width:34px;height:34px}.group-label{font-size:15px}.numbers{gap:8px}.num{font-size:54px;min-width:55px}.compare-symbol{font-size:44px;min-width:34px}.answers{grid-template-columns:repeat(3,1fr)}.ans{padding:14px 4px}.symbol-answer{font-size:34px}.sort-row{gap:5px}.sort-tile,.sort-slot{width:42px;height:48px;font-size:21px;border-radius:10px}}'
+          if old not in s:
+              raise SystemExit('Expected mobile CSS block not found')
+          p.write_text(s.replace(old, new))
           PY
       - name: Commit change
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add english.html
-          git diff --cached --quiet || git commit -m 'Move speaker above vocabulary word'
+          git add so-sanh.html
+          git diff --cached --quiet || git commit -m 'Improve comparison setup responsive layout'
           git push

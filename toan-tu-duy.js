@@ -1,144 +1,127 @@
 (()=>{
 const TOPICS={
- 'quy-luat-so':{title:'Quy luật số',icon:'🔢',desc:'Quan sát dãy số, tìm quy luật và chọn số tiếp theo.',levels:['+1','+2','−1','−2','+3','−3','xen kẽ','cộng 2 số','quy luật kép','thử thách']},
- 'quy-luat-hinh':{title:'Quy luật hình',icon:'🎨',desc:'Tìm hình, màu sắc, kích thước hoặc số lượng tiếp theo.',levels:['AB','ABC','AAB','ABB','màu sắc','kích thước','số lượng','xoay hình','hai quy luật','thử thách']},
- 'logic':{title:'Logic',icon:'🧩',desc:'Suy luận, loại trừ, sắp xếp và tìm điều còn thiếu.',levels:['so sánh','thứ tự','loại trừ','điều kiện','ai ở đâu','ai còn thiếu','đúng/sai','suy luận 2 bước','suy luận 3 bước','thử thách']},
- 'hinh-hoc':{title:'Hình học',icon:'🔷',desc:'Nhận biết hình, đếm hình và suy luận từ đặc điểm.',levels:['nhận biết','cạnh','góc','đếm hình','phân loại','ghép hình','chia hình','quy luật hình','đếm nâng cao','thử thách']},
- 'bang-so':{title:'Bảng số',icon:'📊',desc:'Điền số theo quy luật hàng, cột và ma trận.',levels:['3×3 dễ','3×3','3×3 nâng cao','hàng & cột','đường chéo','tổng bằng nhau','4×4','ma trận','ma trận kép','thử thách']},
- 'khong-gian':{title:'Không gian 3D',icon:'🧊',desc:'Quan sát khối, hướng quay và cấu trúc không gian.',levels:['khối cơ bản','mặt khối','đếm khối','cao hơn','trái/phải','trước/sau','xoay','ghép khối','tưởng tượng 3D','thử thách']},
- 'quan-sat':{title:'Quan sát & Đếm',icon:'🔎',desc:'Quan sát nhanh và tìm đồ vật theo điều kiện.',levels:['đếm đơn giản','màu sắc','hình dạng','đếm theo nhóm','tìm khác biệt','hai điều kiện','ba điều kiện','đếm nhanh','quan sát khó','thử thách']},
- 'thu-thach':{title:'Thử thách tổng hợp',icon:'🏆',desc:'Trộn các dạng bài để bé vận dụng nhiều kỹ năng.',levels:['khởi động','dễ','dễ+','trung bình','trung bình+','khá','khá+','khó','rất khó','siêu thử thách']}
+ 'quy-luat-so':{title:'Quy luật số',icon:'🔢',desc:'Tìm quy luật thật sự: tăng, giảm, xen kẽ và nhiều bước.',levels:['+1 / −1','+2 / −2','+3 / −3','xen kẽ','bước tăng dần','bước giảm dần','cộng hai số','hai quy luật','quy luật kép','thử thách']},
+ 'quy-luat-hinh':{title:'Quy luật hình',icon:'🎨',desc:'Quan sát hình, màu, kích thước, hướng và số lượng để tìm quy luật.',levels:['AB','ABC','AAB / ABB','màu sắc','kích thước','số lượng','xoay hình','đổi hai thuộc tính','quy luật kép','thử thách']},
+ 'logic':{title:'Suy luận logic',icon:'🧩',desc:'Sắp xếp, loại trừ và kết hợp nhiều điều kiện để tìm đáp án.',levels:['so sánh','thứ tự','loại trừ','điều kiện kép','vị trí','đúng / sai','suy luận 2 bước','suy luận 3 bước','nhiều điều kiện','thử thách']},
+ 'hinh-hoc':{title:'Ghép, tách & đếm hình',icon:'🔷',desc:'Nhận biết, đếm, ghép và tách hình theo tư duy trực quan.',levels:['nhận biết','số cạnh','phân loại','đếm hình','đếm nâng cao','ghép hình','tách hình','hình ẩn','nhiều bước','thử thách']},
+ 'bang-so':{title:'Ma trận & bảng số',icon:'📊',desc:'Tìm số còn thiếu bằng quy luật hàng, cột, đường chéo và ma trận.',levels:['3×3 cơ bản','3×3','hàng & cột','đường chéo','tổng bằng nhau','3×3 hai quy luật','4×4','ma trận hình','ma trận kép','thử thách']},
+ 'khong-gian':{title:'Không gian 3D',icon:'🧊',desc:'Đếm khối, nhìn các mặt, xoay và suy luận cấu trúc không gian.',levels:['khối đơn','khối xếp hàng','khối theo tầng','đếm khối ẩn','mặt nhìn thấy','trái / phải','trước / sau','xoay khối','ghép khối','thử thách']},
+ 'quan-sat':{title:'Bài toán hình ảnh',icon:'🔎',desc:'Quan sát tranh, đếm, so sánh và giải bài toán từ thông tin trực quan.',levels:['đếm đồ vật','thêm / bớt','so sánh','hai loại đồ vật','hai điều kiện','ba điều kiện','sắp xếp','tìm phần còn lại','nhiều bước','thử thách']},
+ 'thu-thach':{title:'Thử thách tổng hợp',icon:'🏆',desc:'Kết hợp quy luật, logic, ma trận, hình học và không gian.',levels:['khởi động','dễ','dễ+','trung bình','trung bình+','khá','khá+','khó','rất khó','siêu thử thách']}
 };
-const $=s=>document.querySelector(s);
-const pick=a=>a[Math.floor(Math.random()*a.length)];
-const shuffle=a=>a.slice().sort(()=>Math.random()-.5);
+const $=s=>document.querySelector(s), key='mathThinkingProgressV2';
+const shuffle=a=>a.slice().sort(()=>Math.random()-.5), pick=a=>a[Math.floor(Math.random()*a.length)], rnd=n=>Math.floor(Math.random()*n);
 const esc=s=>String(s).replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\\':'&bsol;','"':'&quot;'}[m]));
-const key='mathThinkingProgressV1';
-let topic=location.pathname.match(/ttd-([\w-]+)\.html$/)?.[1]||'quy-luat-so';
-if(!TOPICS[topic])topic='quy-luat-so';
+const uniq=a=>[...new Set(a)];
+function numOpts(answer,min=0,max=20){const a=Number(answer),s=new Set([a]);let d=1;while(s.size<5&&d<20){for(const x of [a-d,a+d,a-d-1,a+d+1])if(x>=min&&x<=max)s.add(x)}d++;while(s.size<5){s.add(a-d);s.add(a+d);d++}return shuffle([...s].filter(x=>x!==a)).slice(0,3).concat(a).map(String).sort(()=>Math.random()-.5)}
+function Q({id,question,answer,options,visual='',explain,tip,check=true,kind=''}){return{id,question,answer:String(answer),options:shuffle(options.map(String)),visual,explain,tip:tip||explain,check,kind}}
+function svg(w,h,body,cls='diagram'){return `<svg class="${cls}" viewBox="0 0 ${w} ${h}" role="img">${body}</svg>`}
+const colors={red:'#ef5350',blue:'#4d8df7',green:'#36b37e',yellow:'#f6c344',purple:'#9b6cff',orange:'#f28b38'};
+const shape={circle:c=>`<circle cx="0" cy="0" r="22" fill="${c}" stroke="#23304a" stroke-width="2"/>`,square:c=>`<rect x="-22" y="-22" width="44" height="44" rx="5" fill="${c}" stroke="#23304a" stroke-width="2"/>`,tri:c=>`<path d="M0-25L27 23H-27Z" fill="${c}" stroke="#23304a" stroke-width="2"/>`,rect:c=>`<rect x="-28" y="-17" width="56" height="34" rx="4" fill="${c}" stroke="#23304a" stroke-width="2"/>`};
+function shapeSeq(items){let x=38;return svg(Math.max(320,items.length*58+25),90,items.map((it,i)=>`<g transform="translate(${x+i*58} 43)">${it}</g>`).join(''))}
+function numberMaker(l,i){
+ const t=(l<=2?i%4:l<=4?i%6:l<=6?i%8:i%10);
+ if(t===0){const s=1+rnd(5),a=[s,s+1,s+2,s+3];return Q({id:`n01-${s}-${i}`,question:'Số nào còn thiếu?',answer:s+4,options:numOpts(s+4,0,20),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Mỗi bước tăng 1.',kind:'linear'})}
+ if(t===1){const s=1+rnd(4),a=[s,s+2,s+4,s+6];return Q({id:`n02-${s}-${i}`,question:'Số nào tiếp theo?',answer:s+8,options:numOpts(s+8,0,25),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Mỗi bước tăng 2.',kind:'linear'})}
+ if(t===2){const s=10+rnd(6),a=[s,s-1,s-2,s-3];return Q({id:`n03-${s}-${i}`,question:'Số nào tiếp theo?',answer:s-4,options:numOpts(s-4,0,20),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Mỗi bước giảm 1.',kind:'linear'})}
+ if(t===3){const s=16+rnd(5),a=[s,s-2,s-4,s-6];return Q({id:`n04-${s}-${i}`,question:'Số nào tiếp theo?',answer:s-8,options:numOpts(s-8,0,25),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Mỗi bước giảm 2.',kind:'linear'})}
+ if(t===4){const s=1+rnd(4),a=[s,s+2,s+1,s+3,s+2,s+4];return Q({id:`n05-${s}-${i}`,question:'Số nào tiếp theo theo quy luật xen kẽ?',answer:s+3,options:numOpts(s+3,0,20),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Các bước xen kẽ +2, −1.',kind:'alternating'})}
+ if(t===5){const s=1+rnd(3),a=[s,s+1,s+3,s+6,s+10];return Q({id:`n06-${s}-${i}`,question:'Số nào tiếp theo?',answer:s+15,options:numOpts(s+15,0,25),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Khoảng cách tăng lần lượt +1, +2, +3, +4, +5.',kind:'growing-step'})}
+ if(t===6){const s=20+rnd(4),a=[s,s-1,s-3,s-6,s-10];return Q({id:`n07-${s}-${i}`,question:'Số nào tiếp theo?',answer:s-15,options:numOpts(s-15,0,25),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Mỗi lần giảm nhiều hơn 1: −1, −2, −3, −4, −5.',kind:'shrinking-step'})}
+ if(t===7){let a=1+rnd(2),b=2+rnd(3),seq=[a,b];for(let k=2;k<5;k++)seq.push(seq[k-1]+seq[k-2]);return Q({id:`n08-${a}-${b}-${i}`,question:'Số nào tiếp theo? Mỗi số bằng tổng của hai số đứng trước.',answer:seq[3]+seq[4],options:numOpts(seq[3]+seq[4],0,30),visual:`<div class="sequence">${seq.join('　→　')}　→　?</div>`,explain:'Cộng hai số ngay trước để tạo số mới.',kind:'two-back'})}
+ if(t===8){const s=1+rnd(3),a=[s,s+3,s+7,s+12];return Q({id:`n09-${s}-${i}`,question:'Số nào tiếp theo?',answer:s+18,options:numOpts(s+18,0,30),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Các bước là +3, +4, +5, rồi +6.',kind:'growing-step'})}
+ const s=1+rnd(3),a=[s,s+4,s+3,s+7,s+6,s+10];return Q({id:`n10-${s}-${i}`,question:'Số nào tiếp theo theo hai quy luật xen kẽ?',answer:s+9,options:numOpts(s+9,0,25),visual:`<div class="sequence">${a.join('　→　')}　→　?</div>`,explain:'Xen kẽ +4, −1.',kind:'double-rule'})
+}
+function patternMaker(l,i){
+ const sets=[['circle','square'],['tri','circle','square'],['circle','circle','square'],['square','tri','tri'],['circle','square','tri'],['tri','circle','square','circle']];
+ const cols=[colors.red,colors.blue,colors.green,colors.yellow,colors.purple]; const raw=i%10; const t=l<=2?raw%2:l<=4?raw%4:l<=6?raw%6:raw;
+ if(t<4){const base=sets[t%sets.length],len=6+(l%3),arr=Array.from({length:len},(_,k)=>base[k%base.length]);const ans=base[len%base.length];return Q({id:`p${t}-${l}-${i}`,question:'Hình nào tiếp theo?',answer:ans,options:uniq([ans,...shuffle(['circle','square','tri','rect'].filter(x=>x!==ans))]).slice(0,4),visual:shapeSeq([...arr.map(s=>shape[s]('#6d8cf0')),null].map((s,k)=>k===arr.length?'<text x="0" y="8" text-anchor="middle" font-size="28" font-weight="900">?</text>':s)),explain:`Mẫu lặp lại theo chu kỳ ${base.length}.`,kind:'shape-pattern'})}
+ if(t===4){const base=[colors.red,colors.blue,colors.green];const len=8,arr=Array.from({length:len},(_,k)=>base[k%3]),ans=base[len%3];return Q({id:`pc-${l}-${i}`,question:'Màu nào tiếp theo?',answer:ans,options:uniq([ans,...shuffle(cols.filter(x=>x!==ans))]).slice(0,4),visual:shapeSeq([...arr.map(c=>shape.circle(c)),null].map((s,k)=>k===arr.length?'<text x="0" y="8" text-anchor="middle" font-size="28" font-weight="900">?</text>':s)),explain:'Màu sắc lặp theo chu kỳ đỏ → xanh → xanh lá.',kind:'color-pattern'})}
+ if(t===5){const arr=[16,20,24,28,24,20],ans=16;return Q({id:`ps-${l}-${i}`,question:'Hình nào tiếp theo về kích thước?',answer:'nhỏ',options:['nhỏ','vừa','lớn','rất lớn'],visual:svg(390,95,arr.concat([ans]).map((r,k)=>`<circle cx="${30+k*55}" cy="45" r="${r}" fill="#6d8cf0" stroke="#23304a" stroke-width="2"/>`).join('')),explain:'Kích thước tăng dần rồi giảm dần: nhỏ → vừa → lớn → rất lớn → lớn → vừa → nhỏ.',kind:'size-pattern'})}
+ if(t===6){const base=['↑','→','↓','←'];const arr=Array.from({length:7},(_,k)=>base[k%4]);const ans=base[7%4];return Q({id:`pr-${l}-${i}`,question:'Mũi tên nào tiếp theo?',answer:ans,options:base,visual:`<div class="sequence">${arr.join('　')}　→　❓</div>`,explain:'Mũi tên xoay 90° theo chiều kim đồng hồ mỗi bước.',kind:'rotation'})}
+ if(t===7){const seq=['🔴','🔴🔵','🔴🔵🟢','🔴🔵🟢🟡'];return Q({id:`pcnt-${l}-${i}`,question:'Nhóm tiếp theo có bao nhiêu hình?',answer:5,options:['3','4','5','6'],visual:`<div class="sequence">${seq.join('　→　')}　→　?</div>`,explain:'Mỗi bước thêm 1 hình.',kind:'count-pattern'})}
+ if(t===8){const arr=['🔴','🔵','🔴','🟢','🔵','🟢','🔴','🔵','?'];return Q({id:`pd-${l}-${i}`,question:'Hình nào còn thiếu?',answer:'🟢',options:['🔴','🔵','🟢','🟡'],visual:`<div class="sequence">${arr.join('　')}</div>`,explain:'Dãy được chia thành các nhóm 3: đỏ-xanh-xanh lá.',kind:'group-pattern'})}
+ return Q({id:`pm-${l}-${i}`,question:'Cặp nào tiếp theo?',answer:'🔺🟢',options:['🔺🟢','🟢🔺','🔵🟢','🔺🔵'],visual:'<div class="sequence">🔴🟦　🟦🔴　🔺🟢　🟢🔺　🔴🟦　🟦🔴　❓</div>',explain:'Mỗi cặp lặp lại sau 4 vị trí; đồng thời thứ tự trong cặp đảo qua lại.',kind:'double-pattern'})
+}
+function logicMaker(l,i){
+ const raw=i%10; const t=l<=2?raw%3:l<=4?raw%5:l<=6?raw%7:raw;
+ if(t===0)return Q({id:`l-age-${i}`,question:'Minh lớn hơn Lan. Lan lớn hơn Nam. Ai nhỏ tuổi nhất?',answer:'Nam',options:['Minh','Lan','Nam','Không thể biết'],visual:'👦 Minh　＞　👧 Lan　＞　👦 Nam',explain:'Nếu Minh > Lan và Lan > Nam thì Nam nhỏ tuổi nhất.',kind:'logic'});
+ if(t===1)return Q({id:`l-order-${i}`,question:'An đứng trước Bình. Chi đứng sau An nhưng trước Bình. Ai đứng ở giữa?',answer:'Chi',options:['An','Bình','Chi','Không biết'],visual:'👧 An　　👦 Bình　　👧 Chi',explain:'Thứ tự bắt buộc là An → Chi → Bình.',kind:'ordering'});
+ if(t===2)return Q({id:`l-out-${i}`,question:'Ba bạn chọn ba màu khác nhau: đỏ, xanh, vàng. An không chọn đỏ. Bình chọn xanh. Chi không chọn vàng. An chọn màu nào?',answer:'Vàng',options:['Đỏ','Xanh','Vàng','Không biết'],visual:'👧 An　👦 Bình　👧 Chi',explain:'Bình đã dùng xanh; An không dùng đỏ nên An phải dùng vàng.',kind:'elimination'});
+ if(t===3){const n=4+rnd(3);return Q({id:`l-cond-${n}-${i}`,question:`Số ${n} lớn hơn 3 nhưng nhỏ hơn 7. Câu nào chắc chắn đúng?`,answer:`${n} > 3 và ${n} < 7`,options:[`${n} < 3`,`${n} > 7`,`${n} > 3 và ${n} < 7`,'Không thể biết'],visual:`🔢 ${n}`,explain:'Cả hai điều kiện trong đề đều đúng.',kind:'two-condition'})}
+ if(t===4)return Q({id:`l-pos-${i}`,question:'Có 4 ô. Ngôi sao ở bên phải ô 2 và bên trái ô 4. Ngôi sao ở ô nào?',answer:'Ô 3',options:['Ô 1','Ô 2','Ô 3','Ô 4'],visual:'1　2　⭐　4',explain:'Ngôi sao phải nằm giữa ô 2 và ô 4, nên ở ô 3.',kind:'position'});
+ if(t===5)return Q({id:`l-true-${i}`,question:'Ba câu: A: 5 > 3. B: 2 > 7. C: 4 = 4. Có bao nhiêu câu đúng?',answer:2,options:numOpts(2,0,4),visual:'A: 5 > 3　 B: 2 > 7　 C: 4 = 4',explain:'A và C đúng; B sai. Có 2 câu đúng.',kind:'truth'});
+ if(t===6)return Q({id:`l-two-${i}`,question:'Mai cao hơn Lan. Lan cao hơn Hoa. Ai thấp nhất?',answer:'Hoa',options:['Mai','Lan','Hoa','Không biết'],visual:'👧 Mai　＞　👧 Lan　＞　👧 Hoa',explain:'Nếu Mai > Lan và Lan > Hoa thì Hoa thấp nhất.',kind:'transitive'});
+ if(t===7)return Q({id:`l-three-${i}`,question:'Có 3 hộp đỏ, xanh, vàng. Đỏ không ở giữa. Vàng ở bên phải xanh. Hộp nào ở giữa?',answer:'Xanh',options:['Đỏ','Xanh','Vàng','Không xác định'],visual:'🟥　🟦　🟨',explain:'Vàng phải ở bên phải xanh. Đỏ không ở giữa, nên xanh là hộp giữa.',kind:'three-condition'});
+ if(t===8)return Q({id:`l-select-${i}`,question:'Có 4 hình: 🔺 🔵 🟩 ⭐. Chọn hình vừa có cạnh vừa không phải hình vuông.',answer:'🔺',options:['🔺','🔵','🟩','⭐'],visual:'🔺　🔵　🟩　⭐',explain:'Trong các hình, tam giác có cạnh và không phải hình vuông.',kind:'selection'});
+ return Q({id:`l-multi-${i}`,question:'Nam có nhiều hơn 5 viên bi. Nam ít hơn 8 viên. Số viên bi nào có thể là của Nam?',answer:'7',options:['4','5','7','9'],visual:'⚪⚪⚪⚪⚪⚪⚪',explain:'Số phải lớn hơn 5 và nhỏ hơn 8: 6 hoặc 7. Trong đáp án chỉ có 7.',kind:'range'})
+}
+function geometryMaker(l,i){
+ const raw=i%10; const t=l<=2?raw%2:l<=4?raw%4:l<=6?raw%6:raw;
+ if(t===0){const d=pick([['tam giác',3],['tứ giác',4],['ngũ giác',5],['lục giác',6]]);const pts={3:'75,12 128,86 22,86',4:'22,18 128,18 128,86 22,86',5:'75,10 130,40 110,88 40,88 20,40',6:'35,15 115,15 138,50 115,85 35,85 12,50'}[d[1]];return Q({id:`g-sides-${d[1]}-${i}`,question:`Hình ${d[0]} có bao nhiêu cạnh?`,answer:d[1],options:numOpts(d[1],3,7),visual:svg(150,100,`<polygon points="${pts}" fill="#dbe8ff" stroke="#23304a" stroke-width="3"/>`),explain:`Hình ${d[0]} có ${d[1]} cạnh.`,kind:'properties'})}
+ if(t===1)return Q({id:`g-ident-${i}`,question:'Hình nào có 3 cạnh?',answer:'Tam giác',options:['Hình tròn','Hình vuông','Tam giác','Hình chữ nhật'],visual:'🔺　⚪　🟦　▭',explain:'Tam giác có đúng 3 cạnh.',kind:'identify'});
+ if(t===2){const n=2+rnd(4);return Q({id:`g-class-${n}-${i}`,question:`Có ${n} hình vuông và 2 hình tròn. Có tất cả bao nhiêu hình?`,answer:n+2,options:numOpts(n+2,0,10),visual:`${'🟦'.repeat(n)}　⚪⚪`,explain:`${n} + 2 = ${n+2}.`,kind:'classify-count'})}
+ if(t===3){const tri=2+rnd(3),sq=2+rnd(3);return Q({id:`g-count-${tri}-${sq}-${i}`,question:'Có bao nhiêu hình tất cả?',answer:tri+sq,options:numOpts(tri+sq,0,12),visual:`${'🔺'.repeat(tri)}　${'🟦'.repeat(sq)}`,explain:`Có ${tri} tam giác và ${sq} hình vuông, tổng cộng ${tri+sq}.`,kind:'count'})}
+ if(t===4){const tri=2+rnd(4),sq=1+rnd(3),circle=1+rnd(2);return Q({id:`g-adv-${tri}-${sq}-${circle}-${i}`,question:`Có ${tri} tam giác, ${sq} hình vuông và ${circle} hình tròn. Có bao nhiêu hình không phải hình tròn?`,answer:tri+sq,options:numOpts(tri+sq,0,12),visual:`${'🔺'.repeat(tri)}　${'🟦'.repeat(sq)}　${'⚪'.repeat(circle)}`,explain:`Bỏ các hình tròn: ${tri} + ${sq} = ${tri+sq}.`,kind:'count'})}
+ if(t===5)return Q({id:`g-compose-${i}`,question:'Hai tam giác vuông giống nhau có thể ghép thành hình nào?',answer:'Hình vuông',options:['Hình vuông','Hình tròn','Hình tam giác','Không thể ghép'],visual:svg(300,120,`<path d="M45 20H105V80Z" fill="#9bc1ff" stroke="#23304a" stroke-width="3"/><path d="M145 20H205L145 80Z" fill="#6f9df0" stroke="#23304a" stroke-width="3"/><text x="125" y="55" text-anchor="middle" font-size="28" font-weight="900">+</text><text x="260" y="55" text-anchor="middle" font-size="28" font-weight="900">→ 🟦</text>`),explain:'Hai tam giác vuông giống nhau có thể ghép cạnh huyền để tạo thành một hình vuông.',kind:'compose'});
+ if(t===6){const total=5+rnd(4),part=2+rnd(2);return Q({id:`g-split-${total}-${part}-${i}`,question:`Một hình được tách thành ${part} phần ở bên trái và phần còn lại ở bên phải. Tổng có ${total} phần. Bên phải có bao nhiêu phần?`,answer:total-part,options:numOpts(total-part,0,10),visual:`🧩 × ${part}　+　❓　=　🧩 × ${total}`,explain:`${total} − ${part} = ${total-part}.`,kind:'split'})}
+ if(t===7){return Q({id:`g-hidden-${i}`,question:'Trong hình dưới đây có bao nhiêu hình vuông nhỏ?',answer:4,options:['2','3','4','5'],visual:svg(170,170,[0,1,2,3].map(k=>`<rect x="${20+(k%2)*65}" y="${20+Math.floor(k/2)*65}" width="65" height="65" fill="${k%2?'#b9d0ff':'#e2ecff'}" stroke="#23304a" stroke-width="3"/>`).join('')),explain:'Hình lớn được chia thành 4 hình vuông nhỏ.',kind:'hidden-count'})}
+ if(t===8){const a=2+rnd(3);return Q({id:`g-multi-${a}-${i}`,question:`Có ${a} tam giác. Mỗi tam giác có 3 cạnh. Hỏi có tất cả bao nhiêu cạnh nếu tính riêng từng tam giác?`,answer:a*3,options:numOpts(a*3,0,20),visual:`${'🔺　'.repeat(a)}`,explain:`${a} × 3 = ${a*3}.`,kind:'multi-step'})}
+ return Q({id:`g-challenge-${i}`,question:'Hình nào vừa có 4 cạnh vừa có 4 góc?',answer:'Hình vuông',options:['Hình tròn','Tam giác','Hình vuông','Ngũ giác'],visual:'⚪　🔺　🟦　⬟',explain:'Hình vuông có 4 cạnh và 4 góc.',kind:'challenge'})
+}
+function gridSvg(grid,missingR,missingC){let n=grid.length,cell=62,body='';for(let r=0;r<n;r++)for(let c=0;c<n;c++){const x=c*cell+5,y=r*cell+5;body+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="8" fill="${r===missingR&&c===missingC?'#fff5d8':'#f5f8ff'}" stroke="#23304a" stroke-width="2"/><text x="${x+cell/2}" y="${y+40}" text-anchor="middle" font-size="25" font-weight="800">${r===missingR&&c===missingC?'?':grid[r][c]}</text>`}return svg(n*cell+10,n*cell+10,body)}
+function gridMaker(l,i){
+ const raw=i%10; const t=l<=2?raw%2:l<=4?raw%5:l<=6?raw%6:raw;
+ if(t<4){const n=3,base=[1,2,3],shift=(i+l)%3,grid=Array.from({length:n},(_,r)=>Array.from({length:n},(_,c)=>base[(r+c+shift)%3]));const r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m3-${shift}-${r}-${c}-${i}`,question:'Điền số còn thiếu. Mỗi hàng và mỗi cột đều theo cùng một quy luật.',answer:ans,options:numOpts(ans,1,3),visual:gridSvg(grid,r,c),explain:'Các số 1, 2, 3 luân phiên đều trong từng hàng và cột.',kind:'matrix'})}
+ if(t===4){const grid=[[1,2,3],[2,3,1],[3,1,2]],r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m-diag-${r}-${c}-${i}`,question:'Số nào còn thiếu để mỗi hàng, mỗi cột đều có 1, 2, 3?',answer:ans,options:numOpts(ans,1,3),visual:gridSvg(grid,r,c),explain:'Mỗi hàng và cột phải chứa đủ 1, 2, 3 đúng một lần.',kind:'matrix'})}
+ if(t===5){const a=1+rnd(3),grid=[[a,a+1,a+2],[a+1,a+2,a+3],[a+2,a+3,a+4]],r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m-sum-${a}-${r}-${c}-${i}`,question:'Mỗi ô bên phải tăng 1 và mỗi ô xuống dưới tăng 1. Số nào còn thiếu?',answer:ans,options:numOpts(ans,0,12),visual:gridSvg(grid,r,c),explain:'Đi sang phải +1; đi xuống dưới +1.',kind:'double-grid'})}
+ if(t===6){const n=4,grid=Array.from({length:n},(_,r)=>Array.from({length:n},(_,c)=>(r+c)%4+1)),r=rnd(4),c=rnd(4),ans=grid[r][c];return Q({id:`m4-${r}-${c}-${i}`,question:'Điền số còn thiếu vào ma trận 4×4.',answer:ans,options:numOpts(ans,1,4),visual:gridSvg(grid,r,c),explain:'Mỗi hàng và cột lặp chu kỳ 1, 2, 3, 4.',kind:'matrix4'})}
+ if(t===7){const grid=[[2,4,6],[4,6,8],[6,8,10]],r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m-even-${r}-${c}-${i}`,question:'Mỗi bước sang phải hoặc xuống dưới tăng 2. Số nào còn thiếu?',answer:ans,options:numOpts(ans,0,12),visual:gridSvg(grid,r,c),explain:'Mỗi bước tăng 2.',kind:'matrix'})}
+ if(t===8){const grid=[[1,2,3],[2,3,4],[3,4,5]],r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m-diag2-${r}-${c}-${i}`,question:'Số ở mỗi ô tăng đều theo cả hàng và cột. Điền ô thiếu.',answer:ans,options:numOpts(ans,0,8),visual:gridSvg(grid,r,c),explain:'Mỗi lần sang phải hoặc xuống dưới, số tăng 1.',kind:'matrix'})}
+ const grid=[[1,3,5],[3,5,7],[5,7,9]],r=rnd(3),c=rnd(3),ans=grid[r][c];return Q({id:`m-hard-${r}-${c}-${i}`,question:'Quan sát cả hàng và cột để tìm số còn thiếu.',answer:ans,options:numOpts(ans,0,12),visual:gridSvg(grid,r,c),explain:'Sang phải và xuống dưới đều tăng 2.',kind:'matrix'})
+}
+function cubeSvg(stack){let body='';for(const p of stack){const x=35+p.x*45,y=110-p.z*38-p.y*24;body+=`<g transform="translate(${x} ${y})"><path d="M0 0L25-12L50 0L25 13Z" fill="#9bc1ff" stroke="#23304a" stroke-width="2"/><path d="M0 0V34L25 48V13Z" fill="#6f9df0" stroke="#23304a" stroke-width="2"/><path d="M50 0V34L25 48V13Z" fill="#4e78c8" stroke="#23304a" stroke-width="2"/></g>`}return svg(300,170,body,'cube-diagram')}
+function spaceMaker(l,i){
+ const raw=i%10; const t=l<=2?raw%2:l<=4?raw%4:l<=6?raw%6:raw;
+ if(t===0){const n=2+rnd(5);return Q({id:`s-line-${n}-${i}`,question:'Có bao nhiêu khối lập phương?',answer:n,options:numOpts(n,1,10),visual:`<div class="cube-wrap">${cubeSvg(Array.from({length:n},(_,x)=>({x,y:0,z:0})))}<div class="cube-note">Mỗi khối được vẽ riêng để bé dễ đếm.</div></div>`,explain:`Có ${n} khối nhìn thấy, mỗi hình biểu diễn đúng 1 khối.`,kind:'cube-count'})}
+ if(t===1){const w=2+rnd(3),d=1+rnd(2),stack=Array.from({length:w*d},(_,k)=>({x:k%w,y:Math.floor(k/w),z:0}));return Q({id:`s-grid-${w}-${d}-${i}`,question:'Có bao nhiêu khối ở tầng dưới?',answer:w*d,options:numOpts(w*d,1,10),visual:`<div class="cube-wrap">${cubeSvg(stack)}<div class="cube-note">Mỗi khối là một hình 3D riêng.</div></div>`,explain:`Có ${w} khối theo chiều ngang và ${d} hàng: ${w} × ${d} = ${w*d}.`,kind:'cube-count'})}
+ if(t===2){const h=[1+rnd(3),1+rnd(3),1+rnd(3)],total=h.reduce((a,b)=>a+b,0),stack=[];h.forEach((z,x)=>{for(let k=0;k<z;k++)stack.push({x,y:0,z:k})});return Q({id:`s-tower-${h.join('')}-${i}`,question:'Có tất cả bao nhiêu khối lập phương?',answer:total,options:numOpts(total,1,12),visual:`<div class="cube-wrap">${cubeSvg(stack)}<div class="cube-note">Đếm từng khối ở mỗi cột.</div></div>`,explain:`Ba cột có ${h.join(', ')} khối: ${h.join(' + ')} = ${total}.`,kind:'cube-count'})}
+ if(t===3){const h=[2,1+rnd(3),1+rnd(3)],total=h.reduce((a,b)=>a+b,0),stack=[];h.forEach((z,x)=>{for(let k=0;k<z;k++)stack.push({x,y:0,z:k})});return Q({id:`s-hidden-${h.join('')}-${i}`,question:'Nhìn hình và đếm cả những khối nằm chồng lên nhau. Có tất cả bao nhiêu khối?',answer:total,options:numOpts(total,1,12),visual:`<div class="cube-wrap">${cubeSvg(stack)}<div class="cube-note">Khối phía trên vẫn được tính.</div></div>`,explain:`Đếm theo từng cột: ${h.join(' + ')} = ${total}.`,kind:'cube-count'})}
+ if(t===4)return Q({id:`s-face-${i}`,question:'Khi nhìn một khối lập phương từ một góc, ta có thể thấy tối đa bao nhiêu mặt?',answer:3,options:['1','2','3','6'],visual:'<div class="cube-large"><span>1</span><span>2</span><span>3</span></div>',explain:'Từ một góc của khối lập phương, ta thấy 3 mặt.',kind:'spatial'})
+ if(t===5)return Q({id:`s-lr-${i}`,question:'Mũi tên quay sang phải 90°. Hướng mới là gì?',answer:'→',options:['↑','→','↓','←'],visual:'<div class="sequence">↑　↻90°　→　❓</div>',explain:'Quay 90° theo chiều kim đồng hồ từ ↑ sẽ thành →.',kind:'rotation'})
+ if(t===6)return Q({id:`s-fb-${i}`,question:'Nếu khối đỏ ở phía trước khối xanh, khi nhìn từ phía trước ta thấy khối nào trước?',answer:'Đỏ',options:['Đỏ','Xanh','Cả hai như nhau','Không biết'],visual:'🟥 → 🟦',explain:'Khối đỏ ở phía trước nên được nhìn thấy trước.',kind:'front-back'})
+ if(t===7){const n=2+rnd(3);return Q({id:`s-rotate-${n}-${i}`,question:`Một hàng có ${n} khối. Xoay cả hàng 180°. Có bao nhiêu khối vẫn còn trong hàng?`,answer:n,options:numOpts(n,1,8),visual:`<div class="cube-wrap">${cubeSvg(Array.from({length:n},(_,x)=>({x,y:0,z:0})))}<div class="cube-note">Xoay hình không làm mất khối nào.</div></div>`,explain:'Xoay không làm thay đổi số lượng khối.',kind:'rotation-count'})}
+ if(t===8){const a=2+rnd(3),b=1+rnd(2);return Q({id:`s-compose-${a}-${b}-${i}`,question:`Ghép một nhóm ${a} khối với nhóm ${b} khối. Có tất cả bao nhiêu khối?`,answer:a+b,options:numOpts(a+b,1,10),visual:`<div class="cube-wrap">${cubeSvg([...Array.from({length:a},(_,x)=>({x,y:0,z:0})),...Array.from({length:b},(_,x)=>({x:x+a+1,y:0,z:0}))])}<div class="cube-note">Hai nhóm khối được vẽ tách biệt.</div></div>`,explain:`${a} + ${b} = ${a+b}.`,kind:'compose'})}
+ const h=[1,2,3,2],total=h.reduce((a,b)=>a+b,0);return Q({id:`s-ch-${i}`,question:'Một mô hình có 4 cột khối với độ cao 1, 2, 3, 2. Có tất cả bao nhiêu khối?',answer:total,options:numOpts(total,1,12),visual:`<div class="cube-wrap">${cubeSvg(h.flatMap((z,x)=>Array.from({length:z},(_,k)=>({x,y:0,z:k}))))}<div class="cube-note">Độ cao các cột: 1, 2, 3, 2.</div></div>`,explain:'Cộng số khối ở từng cột: 1 + 2 + 3 + 2 = 8.',kind:'cube-count'})
+}
+function observeMaker(l,i){
+ const raw=i%10; const t=l<=2?raw%2:l<=4?raw%4:l<=6?raw%6:raw;
+ if(t===0){const a=2+rnd(4),b=1+rnd(3);return Q({id:`o-count-${a}-${b}-${i}`,question:'Có tất cả bao nhiêu quả?',answer:a+b,options:numOpts(a+b,0,12),visual:`🍎 `.repeat(a)+`🍊 `.repeat(b),explain:`Có ${a} quả táo và ${b} quả cam: ${a}+${b}=${a+b}.`,kind:'visual-word'})}
+ if(t===1){const a=3+rnd(4),b=1+rnd(a);return Q({id:`o-sub-${a}-${b}-${i}`,question:`Có ${a} quả bóng. Bé lấy đi ${b} quả. Còn lại bao nhiêu quả?`,answer:a-b,options:numOpts(a-b,0,10),visual:`⚽ `.repeat(a),explain:`${a} − ${b} = ${a-b}.`,kind:'visual-word'})}
+ if(t===2){const a=2+rnd(5),b=a+1+rnd(3);return Q({id:`o-compare-${a}-${b}-${i}`,question:`Lan có ${a} nhãn vở. Mai có ${b}. Ai có nhiều hơn?`,answer:'Mai',options:['Lan','Mai','Hai bạn bằng nhau','Không biết'],visual:`👧 Lan: ${'🟨'.repeat(a)}<br>👧 Mai: ${'🟨'.repeat(b)}`,explain:`${b} lớn hơn ${a}, nên Mai có nhiều hơn.`,kind:'compare'})}
+ if(t===3){const a=2+rnd(4),b=1+rnd(3);return Q({id:`o-two-${a}-${b}-${i}`,question:`Có ${a} con mèo và ${b} con chó. Có tất cả bao nhiêu con vật?`,answer:a+b,options:numOpts(a+b,0,12),visual:`🐱 `.repeat(a)+`🐶 `.repeat(b),explain:`${a} + ${b} = ${a+b}.`,kind:'visual-word'})}
+ if(t===4){const r=2+rnd(3),b=1+rnd(3),g=1+rnd(2);return Q({id:`o-cond-${r}-${b}-${g}-${i}`,question:`Có ${r} bóng đỏ, ${b} bóng xanh và ${g} bóng vàng. Có bao nhiêu bóng không phải màu vàng?`,answer:r+b,options:numOpts(r+b,0,12),visual:`🔴 `.repeat(r)+`🔵 `.repeat(b)+`🟡 `.repeat(g),explain:`Không tính vàng: ${r}+${b}=${r+b}.`,kind:'multi-condition'})}
+ if(t===5){const apples=2+rnd(4),oranges=2+rnd(3),eaten=1+rnd(2);return Q({id:`o-three-${apples}-${oranges}-${eaten}-${i}`,question:`Có ${apples} quả táo và ${oranges} quả cam. Ăn ${eaten} quả. Còn lại bao nhiêu quả?`,answer:apples+oranges-eaten,options:numOpts(apples+oranges-eaten,0,12),visual:`🍎 `.repeat(apples)+`🍊 `.repeat(oranges)+` → ăn ${eaten}`,explain:`Tổng ban đầu ${apples+oranges}; bớt ${eaten} còn ${apples+oranges-eaten}.`,kind:'multi-step'})}
+ if(t===6)return Q({id:`o-order-${i}`,question:'Con vật nào đứng thứ 3?',answer:'🐰',options:['🐱','🐶','🐰','🐼'],visual:'🐱　🐶　🐰　🐼　🐸',explain:'Đếm từ trái sang phải: con thỏ đứng thứ 3.',kind:'position'});
+ if(t===7){const total=7+rnd(3),red=2+rnd(3);return Q({id:`o-rest-${total}-${red}-${i}`,question:`Có ${total} chiếc bút. Trong đó ${red} chiếc màu đỏ. Có bao nhiêu chiếc không màu đỏ?`,answer:total-red,options:numOpts(total-red,0,12),visual:`🖊️ × ${total}　　🔴 × ${red}`,explain:`${total} − ${red} = ${total-red}.`,kind:'rest'})}
+ if(t===8){const boys=2+rnd(3),girls=2+rnd(3);return Q({id:`o-group-${boys}-${girls}-${i}`,question:`Có ${boys} bạn nam và ${girls} bạn nữ. Có tất cả bao nhiêu bạn?`,answer:boys+girls,options:numOpts(boys+girls,0,12),visual:`👦 `.repeat(boys)+`　👧 `.repeat(girls),explain:`${boys} + ${girls} = ${boys+girls}.`,kind:'group'})}
+ const n=3+rnd(3),blue=1+rnd(2);return Q({id:`o-ch-${n}-${blue}-${i}`,question:`Có ${n} chiếc xe. ${blue} chiếc màu xanh. Có bao nhiêu chiếc không màu xanh?`,answer:n-blue,options:numOpts(n-blue,0,10),visual:`🚗 `.repeat(n)+`　🔵 × ${blue}`,explain:`${n} − ${blue} = ${n-blue}.`,kind:'challenge'})
+}
+function makeQuestion(){const makers={'quy-luat-so':numberMaker,'quy-luat-hinh':patternMaker,logic:logicMaker,'hinh-hoc':geometryMaker,'bang-so':gridMaker,'khong-gian':spaceMaker,'quan-sat':observeMaker};if(topic==='thu-thach'){const arr=Object.values(makers);return arr[(level+qIndex)%arr.length](Math.min(10,level),qIndex)}return makers[topic](level,qIndex)}
+function validate(q){const opts=uniq(q.options);const correct=opts.filter(x=>x===q.answer).length;return !!q.question&&!!q.visual&&opts.length===4&&correct===1&&q.explain&&q.check!==false}
+let topic=location.pathname.match(/ttd-([\w-]+)\.html$/)?.[1]||'quy-luat-so';if(!TOPICS[topic])topic='quy-luat-so';
 let level=Math.min(10,Math.max(1,Number(new URLSearchParams(location.search).get('level'))||Number(localStorage.getItem(key+'Level:'+topic))||1));
-let qIndex=0,score=0,streak=0,answered=false,current=null,hintUsed=false;
-function rnd(n=10){return Math.floor(Math.random()*n)}
-function numOptions(answer,range=4){
- const s=new Set([Number(answer)]);
- let d=1;
- while(s.size<4){
-  const candidates=[Number(answer)-d,Number(answer)+d,Number(answer)-d-1,Number(answer)+d+1];
-  candidates.forEach(x=>{if(x>=0&&s.size<4)s.add(x)});d++;
- }
- return shuffle([...s]).map(String);
-}
-function seq(a){return `<div class="sequence">${a.map(x=>esc(x)).join(' → ')}</div>`}
-function Q(question,answer,options,visual='',explain=''){return{question,answer:String(answer),options:shuffle(options.map(String)),visual,explain}}
-function makeNumber(l){
- if(l===1){const s=1+rnd(5),a=[s,s+1,s+2,s+3];return Q('Số nào tiếp theo?',s+4,numOptions(s+4),seq([...a,'?']),'Mỗi lần thêm 1 đơn vị.')}
- if(l===2){const s=1+rnd(3),a=[s,s+2,s+4,s+6];return Q('Số nào tiếp theo?',s+8,numOptions(s+8),seq([...a,'?']),'Mỗi lần thêm 2 đơn vị.')}
- if(l===3){const s=7+rnd(4),a=[s,s-1,s-2,s-3];return Q('Số nào tiếp theo?',s-4,numOptions(s-4),seq([...a,'?']),'Mỗi lần bớt 1 đơn vị.')}
- if(l===4){const s=10+rnd(4),a=[s,s-2,s-4,s-6];return Q('Số nào tiếp theo?',s-8,numOptions(s-8),seq([...a,'?']),'Mỗi lần bớt 2 đơn vị.')}
- if(l===5){const s=1+rnd(3),a=[s,s+3,s+6,s+9];return Q('Số nào tiếp theo?',s+12,numOptions(s+12),seq([...a,'?']),'Mỗi lần thêm 3 đơn vị.')}
- if(l===6){const s=14+rnd(3),a=[s,s-3,s-6,s-9];return Q('Số nào tiếp theo?',s-12,numOptions(s-12),seq([...a,'?']),'Mỗi lần bớt 3 đơn vị.')}
- if(l===7){const s=1+rnd(3),a=[s,s+2,s+1,s+3,s+2,s+4];return Q('Số nào tiếp theo theo quy luật xen kẽ?',s+3,numOptions(s+3),seq([...a,'?']),'Lần lượt +2, −1, +2, −1, +2, −1.')}
- if(l===8){const a=[1+rnd(2),2+rnd(2)];a.push(a[0]+a[1],a[1]+a[2]);const answer=a[2]+a[3];return Q('Số nào tiếp theo? Mỗi số bằng tổng của hai số đứng trước.',answer,numOptions(answer,6),seq([...a,'?']),'Lấy hai số ngay trước cộng lại.')}
- if(l===9){const s=1+rnd(2),a=[s,s+2,s+5,s+9];return Q('Số nào tiếp theo? Khoảng cách giữa các số tăng dần.',s+14,numOptions(s+14,6),seq([...a,'?']),'Các bước là +2, +3, +4, rồi +5.')}
- const s=1+rnd(2),a=[s,s+1,s+3,s+6,s+10];return Q('Tìm số tiếp theo của dãy.',s+15,numOptions(s+15,7),seq([...a,'?']),'Các bước tăng lần lượt +1, +2, +3, +4, rồi +5.')
-}
-function makePattern(l){
- const pools=[['🔴','🔵'],['🔺','🟢','⭐'],['🟡','🟡','🔵'],['🟣','🟢','🟢'],['🍎','🍌'],['🔺','🔺','⚪'],['⭐','⭐','🌙'],['⬆️','➡️','⬇️','⬅️']];
- let base=pools[Math.min(l-1,pools.length-1)];
- let len=l<=2?6:l<=5?8:10;
- if(l===8){base=pools[7];len=8}
- if(l===9){base=['🔴','🔵','🟢'];len=9}
- if(l===10){base=['🔺','🟢','⭐','🟦'];len=12}
- const arr=Array.from({length:len},(_,i)=>base[i%base.length]);
- const answer=base[len%base.length];
- const all=['🔴','🔵','🟢','🟡','🔺','⭐','🟣','⚪','🍎','🍌','⬆️','➡️','⬇️','⬅️','🟦'];
- const opts=[answer,...shuffle(all.filter(x=>x!==answer)).slice(0,3)];
- const rule=l<=5?`Nhóm hình lặp lại theo mẫu ${base.length} phần tử.`:`Quan sát chu kỳ ${base.length} hình để tìm hình tiếp theo.`;
- return Q('Hình nào tiếp theo?',answer,opts,seq([...arr,'?']),rule)
-}
-function makeLogic(l){
- if(l<=2){const a=2+rnd(3),b=a+1,c=b+1;return Q('Ba bạn có tuổi lần lượt là '+a+', '+b+', '+c+'. Ai lớn tuổi nhất?','Bạn 3',['Bạn 1','Bạn 2','Bạn 3','Không biết'],`👧 Bạn 1: ${a} tuổi　👦 Bạn 2: ${b} tuổi　🧒 Bạn 3: ${c} tuổi`,'So sánh ba số tuổi, số lớn nhất là của Bạn 3.')}
- if(l<=4)return Q('An đứng trước Bình. Chi đứng sau Bình. Ai đứng ở giữa?','Bình',['An','Bình','Chi','Không biết'],'👧 An　→　👦 Bình　→　👧 Chi','Bình nằm giữa An và Chi.');
- if(l<=6)return Q('Hình nào không cùng nhóm với ba hình còn lại?','🐟',['🐶','🐱','🐰','🐟'],'🐶　🐱　🐰　🐟','Ba hình đầu là con vật sống chủ yếu trên cạn; cá sống dưới nước.');
- if(l<=8){const n=3+rnd(3);return Q(`Số ${n} vừa lớn hơn 2 vừa nhỏ hơn 6. Câu nào đúng?`,`Số ${n} lớn hơn 2 và nhỏ hơn 6`,[`Số ${n} nhỏ hơn 2`,`Số ${n} lớn hơn 6`,`Số ${n} lớn hơn 2 và nhỏ hơn 6`,`Không thể biết`],'🔎','Cả hai điều kiện đều đúng.')}
- return Q('Có 3 chiếc hộp: đỏ, xanh, vàng. Hộp đỏ không ở giữa. Hộp vàng đứng sau hộp xanh. Hộp nào có thể đứng giữa?','Hộp xanh',['Hộp đỏ','Hộp xanh','Hộp vàng','Không thể biết'],'🟥　🟦　🟨','Nếu vàng đứng sau xanh và đỏ không ở giữa, xanh có thể đứng giữa.')
-}
-function makeGeometry(l){
- const data=[['🔺','Hình tam giác','3 cạnh'],['🟦','Hình vuông','4 cạnh bằng nhau'],['▭','Hình chữ nhật','4 cạnh'],['⚪','Hình tròn','không có cạnh'],['⬟','Hình lục giác','6 cạnh']];
- if(l<=3){const d=pick(data);return Q(`Hình nào có đặc điểm: ${d[2]}?`,d[1],shuffle(data.map(x=>x[1])),d[0],`Đáp án là ${d[1]}.`)}
- if(l<=5){const d=pick(data.filter(x=>x[2].includes('cạnh')));return Q(`Hình nào có ${d[2].replace('cạnh bằng nhau','cạnh bằng nhau').replace('cạnh','cạnh')}?`,d[1],shuffle(data.map(x=>x[1])),d[0],`Quan sát số cạnh và đặc điểm của hình.`)}
- const count=l===6?6:l===7?8:l===8?9:10;const triangles=2+rnd(Math.max(2,count-2));const squares=count-triangles;return Q(`Có ${count} hình. Trong đó có ${triangles} hình tam giác. Có bao nhiêu hình còn lại?`,squares,numOptions(squares,3),`🔺`.repeat(triangles)+'　'+`🟦`.repeat(squares),'Lấy tổng số hình trừ số hình tam giác.')
-}
-function makeGrid(l){
- const n=l>=7?4:3;
- const grid=n===3?[[1,2,3],[2,3,1],[3,1,2]]:[[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]];
- const r=rnd(n),c=rnd(n),answer=grid[r][c];
- const cells=grid.map((row,ri)=>row.map((x,ci)=>ri===r&&ci===c?'?':x).join('　')).join('<br>');
- return Q(`Điền số còn thiếu vào bảng ${n}×${n}.`,answer,numOptions(answer,n+2),`<div class="sequence">${cells}</div>`,`Mỗi hàng và mỗi cột đều chứa đủ các số ${n===3?'1, 2, 3':'1, 2, 3, 4'} theo cùng một quy luật.`)
-}
-function makeSpace(l){
- const count=l<=3?3+l:l<=6?5+l:7+rnd(4);
- const visual=`<div class="cube-scene"><div class="cube" id="miniCube"><div class="face front">1</div><div class="face backf">2</div><div class="face right">3</div><div class="face left">4</div><div class="face topf">5</div><div class="face bottom">6</div></div></div><div style="font-size:18px;color:#68738a">🧊 × ${count}</div>`;
- return Q('Có bao nhiêu khối lập phương?',count,numOptions(count,3),visual,'Mỗi biểu tượng đại diện cho một khối lập phương. Hãy đếm thật kỹ.');
-}
-function makeObserve(l){
- const colors=['🔴','🔵','🟢','🟡'];const animals=['🐶','🐱','🐰','🐼'];
- const pool=l<=3?colors:l<=6?animals:[...colors,...animals];
- const len=l<=3?8:l<=6?10:12;const target=pick(pool);let arr=Array.from({length:len},()=>pick(pool));
- if(!arr.includes(target))arr[rnd(len)]=target;
- const answer=arr.filter(x=>x===target).length;
- return Q(`Có bao nhiêu ${target} trong hình?`,answer,numOptions(answer,3),arr.join('　'),`Đếm từng ${target} từ trái sang phải và không bỏ sót.`)
-}
-function makeChallenge(l){
- const makers=[makeNumber,makePattern,makeLogic,makeGeometry,makeGrid,makeSpace,makeObserve];
- return makers[(l+rnd(makers.length))%makers.length](Math.max(1,l));
-}
-function makeQuestion(){
- if(topic==='quy-luat-so')return makeNumber(level);
- if(topic==='quy-luat-hinh')return makePattern(level);
- if(topic==='logic')return makeLogic(level);
- if(topic==='hinh-hoc')return makeGeometry(level);
- if(topic==='bang-so')return makeGrid(level);
- if(topic==='khong-gian')return makeSpace(level);
- if(topic==='quan-sat')return makeObserve(level);
- return makeChallenge(level);
-}
-function sound(ok){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const c=new A();const o=c.createOscillator(),g=c.createGain();o.type=ok?'sine':'sawtooth';o.frequency.value=ok?660:180;g.gain.value=.055;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+(ok?.18:.28));setTimeout(()=>c.close(),500)}catch(e){}}
+let qIndex=0,score=0,streak=0,answered=false,current=null,hintUsed=false,used=new Set();
+function sound(ok){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const c=new A(),o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=ok?660:180;g.gain.value=.05;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+(ok?.16:.25));setTimeout(()=>c.close(),400)}catch(e){}}
 function save(){let done=[];try{done=JSON.parse(localStorage.getItem(key+'Done:'+topic)||'[]')}catch(e){}if(score>=8&&!done.includes(level))done.push(level);try{localStorage.setItem(key+'Done:'+topic,JSON.stringify(done));localStorage.setItem(key+'Level:'+topic,String(level))}catch(e){}}
-function renderLevels(){
- let done=[];try{done=JSON.parse(localStorage.getItem(key+'Done:'+topic)||'[]')}catch(e){}
- $('#levels').innerHTML=TOPICS[topic].levels.map((name,i)=>`<button class="${i+1===level?'on ':''}${done.includes(i+1)?'done':''}" data-l="${i+1}">${i+1}<br><small>${name}</small></button>`).join('');
- document.querySelectorAll('#levels button').forEach(b=>b.onclick=()=>{level=Number(b.dataset.l);try{localStorage.setItem(key+'Level:'+topic,String(level))}catch(e){}start()});
-}
-function render(){
- current=makeQuestion();answered=false;hintUsed=false;
- $('#qNo').textContent=`Câu ${qIndex+1}/10`;$('#score').textContent=`⭐ ${score}`;$('#streak').textContent=`🔥 ${streak}`;$('#progress').style.width=((qIndex)/10*100)+'%';
- $('#question').textContent=current.question;$('#visual').innerHTML=current.visual||'';$('#options').innerHTML=current.options.map(o=>`<button class="option" data-v="${esc(o)}">${esc(o)}</button>`).join('');
- $('#feedback').textContent='';$('#explain').classList.remove('show');$('#explain').textContent='';$('#next').classList.remove('show');
- document.querySelectorAll('.option').forEach(b=>b.onclick=()=>answer(b,b.dataset.v));
- if(topic==='khong-gian'){
-  const cube=$('#miniCube');let sx=0,sy=0,rx=-22,ry=32;
-  if(cube){cube.onpointerdown=e=>{sx=e.clientX;sy=e.clientY;cube.setPointerCapture(e.pointerId)};cube.onpointermove=e=>{if(!cube.hasPointerCapture(e.pointerId))return;ry+=e.clientX-sx;rx-=e.clientY-sy;sx=e.clientX;sy=e.clientY;cube.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`};cube.onpointerup=e=>cube.releasePointerCapture(e.pointerId);cube.onpointercancel=e=>cube.releasePointerCapture(e.pointerId)}
- }
-}
-function answer(btn,v){
- if(answered)return;const ok=String(v)===String(current.answer);
- if(ok){answered=true;score++;streak++;btn.classList.add('correct');document.querySelectorAll('.option').forEach(x=>x.disabled=true);$('#feedback').textContent=streak>=3?'🔥 Tuyệt vời! Chuỗi đúng '+streak+' câu!':'🎉 Chính xác!';$('#feedback').style.color='#087443';$('#explain').textContent=current.explain;$('#explain').classList.add('show');$('#next').classList.add('show');sound(true);save()}
- else{streak=0;btn.classList.add('wrong');$('#feedback').textContent='💪 Chưa đúng. Hãy thử lại nhé!';$('#feedback').style.color='#b4232e';if(hintUsed){$('#explain').textContent='💡 Gợi ý: '+current.explain;$('#explain').classList.add('show')}sound(false)}
-}
+function renderLevels(){let done=[];try{done=JSON.parse(localStorage.getItem(key+'Done:'+topic)||'[]')}catch(e){}$('#levels').innerHTML=TOPICS[topic].levels.map((n,i)=>`<button class="${i+1===level?'on ':''}${done.includes(i+1)?'done':''}" data-l="${i+1}">${i+1}<br><small>${n}</small></button>`).join('');document.querySelectorAll('#levels button').forEach(b=>b.onclick=()=>{level=+b.dataset.l;start()})}
+function render(){let tries=0;do{current=makeQuestion();tries++}while((!validate(current)||used.has(current.id))&&tries<30);if(!validate(current))current=Q({id:'fallback',question:'Có bao nhiêu hình?',answer:3,options:['2','3','4','5'],visual:'🔺 🔺 🔺',explain:'Đếm ba hình tam giác.'});used.add(current.id);answered=false;hintUsed=false;$('#qNo').textContent=`Câu ${qIndex+1}/10`;$('#score').textContent=`⭐ ${score}`;$('#streak').textContent=`🔥 ${streak}`;$('#progress').style.width=(qIndex/10*100)+'%';$('#question').textContent=current.question;$('#visual').innerHTML=current.visual;$('#options').innerHTML=current.options.map(o=>`<button class="option" data-v="${esc(o)}">${esc(o)}</button>`).join('');$('#feedback').textContent='';$('#explain').classList.remove('show');$('#explain').textContent='';$('#next').classList.remove('show');document.querySelectorAll('.option').forEach(b=>b.onclick=()=>answer(b,b.dataset.v));if(topic==='khong-gian'){document.querySelectorAll('.cube-diagram').forEach(c=>{let sx=0,sy=0,rx=-18,ry=28;c.onpointerdown=e=>{sx=e.clientX;sy=e.clientY;c.setPointerCapture(e.pointerId)};c.onpointermove=e=>{if(!c.hasPointerCapture(e.pointerId))return;ry+=e.clientX-sx;rx-=e.clientY-sy;sx=e.clientX;sy=e.clientY;c.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`};c.onpointerup=e=>c.releasePointerCapture(e.pointerId)})}}
+function answer(btn,v){if(answered)return;const ok=String(v)===String(current.answer);if(ok){answered=true;score++;streak++;btn.classList.add('correct');document.querySelectorAll('.option').forEach(x=>x.disabled=true);$('#feedback').textContent=streak>=3?'🔥 Tuyệt vời! Chuỗi đúng '+streak+' câu!':'🎉 Chính xác!';$('#feedback').style.color='#087443';$('#explain').textContent=current.explain;$('#explain').classList.add('show');$('#next').classList.add('show');sound(true);save()}else{streak=0;btn.classList.add('wrong');$('#feedback').textContent='💪 Chưa đúng. Bé thử lại nhé!';$('#feedback').style.color='#b4232e';if(hintUsed){$('#explain').textContent='💡 '+current.tip;$('#explain').classList.add('show')}sound(false)}}
 function next(){if(!answered)return;qIndex++;if(qIndex>=10){finish();return}render()}
-function finish(){
- save();$('#progress').style.width='100%';const msg=score===10?'🏆 Hoàn hảo!':score>=8?'🌟 Rất tốt!':score>=6?'👏 Bé làm tốt!':'💪 Cố gắng thêm nhé!';
- $('#questionCard').innerHTML=`<div class="finish"><div class="big">${score===10?'🏆':score>=8?'🌟':'🎯'}</div><h2>${msg}</h2><p>Bé đạt <strong>${score}/10</strong> điểm ở Level ${level}.</p><p>${score>=8?'Level này đã được đánh dấu hoàn thành. Bé có thể thử Level tiếp theo!':'Hãy chơi lại Level này để cải thiện điểm số nhé.'}</p><button onclick="start()">🔄 Chơi lại</button>${level<10&&score>=8?`<button onclick="goNextLevel()">Level ${level+1} →</button>`:''}</div>`;
- renderLevels();
-}
+function finish(){save();$('#progress').style.width='100%';const msg=score===10?'🏆 Hoàn hảo!':score>=8?'🌟 Rất tốt!':score>=6?'👏 Bé làm tốt!':'💪 Cố gắng thêm nhé!';$('#questionCard').innerHTML=`<div class="finish"><div class="big">${score===10?'🏆':score>=8?'🌟':'🎯'}</div><h2>${msg}</h2><p>Bé đạt <strong>${score}/10</strong> điểm ở Level ${level}.</p><p>${score>=8?'Level này đã hoàn thành. Bé có thể thử Level tiếp theo!':'Chơi lại Level này để luyện thêm nhé.'}</p><button onclick="start()">🔄 Chơi lại</button>${level<10&&score>=8?`<button onclick="goNextLevel()">Level ${level+1} →</button>`:''}</div>`;renderLevels()}
 function goNextLevel(){if(level<10){level++;start()}}
-function hint(){if(answered)return;hintUsed=true;$('#explain').textContent='💡 Gợi ý: '+current.explain;$('#explain').classList.add('show')}
-function start(){
- qIndex=0;score=0;streak=0;
- $('#questionCard').innerHTML='<div class="q-meta" id="qNo"></div><div class="question" id="question"></div><div class="visual" id="visual"></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><div class="actions"><button class="hint" id="hint">💡 Gợi ý</button><button class="next" id="next">Tiếp theo →</button></div><div class="explain" id="explain"></div>';
- $('#hint').onclick=hint;$('#next').onclick=next;renderLevels();render();
-}
+function hint(){if(answered)return;hintUsed=true;$('#explain').textContent='💡 '+current.tip;$('#explain').classList.add('show')}
+function start(){qIndex=0;score=0;streak=0;used=new Set();$('#questionCard').innerHTML='<div class="q-meta" id="qNo"></div><div class="question" id="question"></div><div class="visual" id="visual"></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><div class="actions"><button class="hint" id="hint">💡 Gợi ý</button><button class="next" id="next">Tiếp theo →</button></div><div class="explain" id="explain"></div>';$('#hint').onclick=hint;$('#next').onclick=next;renderLevels();render()}
 function init(){document.title=TOPICS[topic].title+' · Toán Tư Duy Lớp 1';$('#topicIcon').textContent=TOPICS[topic].icon;$('#topicTitle').textContent=TOPICS[topic].title;$('#topicDesc').textContent=TOPICS[topic].desc;start()}
 window.goNextLevel=goNextLevel;window.start=start;document.addEventListener('DOMContentLoaded',init);
 })();

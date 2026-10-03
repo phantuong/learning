@@ -29,10 +29,18 @@ function fixRelativeShapeProblem(){
   c.dataset.qualityFix='relative-shape-count';
   c.dataset.correctDisplay=String(total);
   c.dataset.legacyAnswer=oldAnswer;
-  opts.innerHTML=answers.map(n=>`<button class="option" data-answer="${n===total?oldAnswer:n}">${n}</button>`).join('');
+  const buttons=[...opts.querySelectorAll('.option')];
+  answers.forEach((n,i)=>{
+    const btn=buttons[i];
+    if(!btn)return;
+    btn.textContent=String(n);
+    btn.dataset.answer=String(n===total?oldAnswer:n);
+    btn.classList.remove('correct','wrong');
+    btn.disabled=false;
+  });
   if(explainEl())explainEl().textContent=`Số hình vuông = ${triangles} + ${diff} = ${squares}. Tổng số hình = ${triangles} + ${squares} = ${total}.`;
   if(feedbackEl())feedbackEl().textContent='';
-  opts.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',()=>{
+  buttons.forEach(btn=>btn.addEventListener('click',()=>{
     setTimeout(()=>{
       const fb=feedbackEl(), ex=explainEl();
       if(fb)fb.textContent=btn.dataset.answer===oldAnswer?'🎉 Chính xác!':`Chưa đúng. Đáp án là ${total}.`;

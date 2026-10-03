@@ -51,6 +51,5 @@ function start(){if(!allWords.length){$('setupText').textContent='Hãy chọn í
 function next(){if(qi>=9){$('game').classList.add('hidden');$('done').classList.remove('hidden');$('doneText').textContent=`Bé đạt ${score}/10 câu đúng. 🌟`;if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{completed:true,lastScore:score,updatedAt:new Date().toISOString()}});return}qi++;renderQuestion()}
 $('startBtn').addEventListener('click',start);$('checkBtn').addEventListener('click',finish);$('nextBtn').addEventListener('click',next);$('restartBtn').addEventListener('click',start);$('speaker').addEventListener('click',()=>{const q=questions[qi];if(q)speakWord(q.word)});
 allWords=[...new Set(selectedWords().map(normalizeWord).filter(usable))];if(allWords.length){$('setupText').textContent=`Đã tìm thấy ${allWords.length} từ được ⭐ chọn. Mỗi lượt sẽ có 10 câu.`}else{$('setupText').textContent='Chưa có từ phù hợp được ⭐ chọn. Hãy vào Vocabulary List và chọn từ.';$('startBtn').disabled=true}
-</script>
-<script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script></body>
+</script><script src="navigation-v2.js?v=20261005"></script></body>
 </html>

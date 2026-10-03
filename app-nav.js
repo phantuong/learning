@@ -8,6 +8,7 @@
     nav.innerHTML=`<div><button type="button" class="grade-toggle grade" data-grade="1">📂 <span>Lớp 1</span><span class="chev">⌃</span></button><div class="subnav sub open" id="shared-grade-1">${course('english.html','Tiếng Anh','🔤🌈')}<div class="course-list courses">${course('vocabulary-list.html','Vocabulary List','↳')}${course('voca-scramble.html','Sắp xếp chữ cái','↳')}</div>${course('math.html','Toán','➕')}<div class="course-list courses">${course('cong-tru-10.html','Cộng Trừ Phạm Vi 10','↳')}${course('so-sanh.html','So sánh','↳')}${course('hinh-phang.html','Hình phẳng','↳')}</div>${course('doc-hieu.html','Tiếng Việt · Đọc Hiểu','📖')}<a href="class.html?grade=1" class="${current==='class.html'?'active':''}">📚 Các môn học</a></div></div>${Array.from({length:11},(_,i)=>{const g=i+2;return `<div><a href="class.html?grade=${g}">📁 Lớp ${g}</a></div>`}).join('')}`;
     nav.querySelector('[data-grade]')?.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
+  function removeVocabularyGamesBackLink(){if(current!=='voca-scramble.html')return;document.querySelector('.back[href="english.html"]')?.remove()}
   function initFeedbackSounds(){
     if(window.__learningFeedbackSounds)return;
     window.__learningFeedbackSounds=true;
@@ -30,6 +31,6 @@
   function patchSortFlow(){if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;const original=window.checkSort;const patched=function(){if(!document.querySelector('.sort-area'))return original();if(sortState.some(x=>x===null)||answered)return;answered=true;const q=qs[pos],ok=sortState.join(',')===q.answer,fb=document.querySelector('#fb');if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}showLevel5Next()};patched.__patched=true;window.checkSort=patched}
   function watchLevel5(){const quiz=document.querySelector('#quiz');if(!quiz)return;const observer=new MutationObserver(()=>{if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow()}});observer.observe(quiz,{childList:true,subtree:true});if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button()}}
   function initDocHieuProgress(){if(current!=='doc-hieu.html')return;const advance=()=>{let n=Number(localStorage.getItem('docHieuNextStory')||1);if(!Number.isInteger(n)||n<1||n>500)n=1;localStorage.setItem('docHieuNextStory',n===500?1:n+1)};advance();document.getElementById('nextBtn')?.addEventListener('click',advance)}
-  function init(){build();initFeedbackSounds();ensureFlatShapeLevels();loadFlatShapesRuntime();watchLevel5();initDocHieuProgress()}
+  function init(){build();removeVocabularyGamesBackLink();initFeedbackSounds();ensureFlatShapeLevels();loadFlatShapesRuntime();watchLevel5();initDocHieuProgress()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

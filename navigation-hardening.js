@@ -18,5 +18,75 @@
     document.head.appendChild(s);
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true}); else install();
+
+  // Grade 1 English "Sắp xếp chữ cái": make speech reliable and require a
+  // correct answer before allowing the learner to continue.
+  function patchVocaScramble(){
+    if(!/voca-scramble\.html$/i.test(location.pathname)) return;
+    if(typeof window.finish!=='function' || typeof window.speakWord!=='function') return;
+    if(window.__vocaScramblePatched) return;
+    window.__vocaScramblePatched=true;
+
+    window.speakWord=function(word){
+      const text=String(word||'').trim();
+      if(!text) return;
+      try{
+        const synth=window.speechSynthesis;
+        if(!synth) return;
+        synth.cancel();
+        synth.resume();
+        const utterance=new SpeechSynthesisUtterance(text);
+        utterance.lang='en-US';
+        utterance.rate=.78;
+        utterance.pitch=1;
+        utterance.volume=1;
+        const voices=synth.getVoices();
+        const voice=voices.find(v=>/^en-US$/i.test(v.lang)) || voices.find(v=>/^en[-_]/i.test(v.lang));
+        if(voice) utterance.voice=voice;
+        synth.speak(utterance);
+      }catch(e){ console.warn('Speech synthesis unavailable:',e); }
+    };
+
+    window.finish=function(){
+      if(window.answered) return;
+      const q=window.questions?.[window.qi];
+      if(!q || !Array.isArray(window.answer)) return;
+      const word=q.word;
+      const got=window.answer.map(x=>x?x.char:'').join('');
+      const ok=got===word;
+      const feedback=document.getElementById('feedback');
+      const check=document.getElementById('checkBtn');
+      const next=document.getElementById('nextBtn');
+      if(ok){
+        window.answered=true;
+        window.score++;
+        if(feedback){feedback.className='feedback good';feedback.textContent='🎉 Chính xác!';}
+        window.speakWord(word);
+        document.getElementById('score').textContent=window.score;
+        check?.classList.add('hidden');
+        next?.classList.remove('hidden');
+        if(window.learningSync?.queue) window.learningSync.queue({voca_scramble:{current:window.qi+1,score:window.score,updatedAt:new Date().toISOString()}});
+      }else{
+        window.answered=false;
+        if(feedback){feedback.className='feedback bad';feedback.textContent='💪 Chưa đúng, bé thử lại nhé!';}
+        if(typeof window.playWrongSound==='function') window.playWrongSound();
+        check?.classList.remove('hidden');
+        next?.classList.add('hidden');
+      }
+    };
+
+    // Explicitly bind the speaker to the patched speech function.
+    const speaker=document.getElementById('speaker');
+    speaker?.addEventListener('click',function(){
+      const q=window.questions?.[window.qi];
+      if(q) window.speakWord(q.word);
+    },{capture:true});
+  }
+
+  function bootPatch(){
+    patchVocaScramble();
+    if(!window.__vocaScramblePatched) setTimeout(patchVocaScramble,0);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootPatch,{once:true}); else bootPatch();
 })();
 // Shared navigation hardening: fixed menu position and isolated icon sizing on every page.

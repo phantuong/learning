@@ -23,10 +23,11 @@ jobs:
           s = p.read_text(encoding='utf-8')
           old = """function finish(){const word=questions[qi].word;const got=answer.map(x=>x?x.char:'').join('');answered=true;const ok=got===word;$('feedback').className='feedback '+(ok?'good':'bad');$('feedback').textContent=ok?'🎉 Chính xác!':`💪 Chưa đúng. Đáp án: ${word}`;if(ok){score++;speakWord(word)}else{playWrongSound()}$('score').textContent=score;$('checkBtn').classList.add('hidden');$('nextBtn').classList.remove('hidden');if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}})}"""
           new = """function finish(){const word=questions[qi].word;const got=answer.map(x=>x?x.char:'').join('');const ok=got===word;$('feedback').className='feedback '+(ok?'good':'bad');if(ok){answered=true;score++;speakWord(word);$('feedback').textContent='🎉 Chính xác!';$('score').textContent=score;$('checkBtn').classList.add('hidden');$('nextBtn').classList.remove('hidden');if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}})}else{answered=false;playWrongSound();$('feedback').textContent='💪 Chưa đúng! Hãy thử lại nhé.';$('checkBtn').classList.remove('hidden');$('checkBtn').disabled=false;$('nextBtn').classList.add('hidden')}}"""
-          if old not in s:
-              raise SystemExit('Expected finish() implementation was not found; refusing to modify the file.')
-          s = s.replace(old, new, 1)
           marker = '/* scramble-retry-v1 */'
+          if new not in s:
+              if old not in s:
+                  raise SystemExit('Expected old finish() implementation was not found.')
+              s = s.replace(old, new, 1)
           if marker not in s:
               s = s.replace('</style>', '\n' + marker + '\n' + '</style>', 1)
           p.write_text(s, encoding='utf-8')

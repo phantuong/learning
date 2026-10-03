@@ -12,7 +12,18 @@ function getSide(){return document.querySelector('#sidebar,#side,.sidebar,.side'
 function getOverlay(){return document.querySelector('#overlay,.overlay')}
 function setMenu(open){const side=getSide(),ov=getOverlay();if(!side)return;side.classList.toggle('open',open);if(ov)ov.classList.toggle('show',open);document.body.classList.toggle('nav-open',open)}
 window.toggleNav=function(){const side=getSide();setMenu(!side?.classList.contains('open'))};
-function bindMenu(){const side=getSide(),ov=getOverlay();if(!side)return;const buttons=document.querySelectorAll('#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]');buttons.forEach(btn=>{if(btn.dataset.nvBound==='1')return;const clone=btn.cloneNode(true);btn.replaceWith(clone);btn=clone;btn.dataset.nvBound='1';btn.removeAttribute('onclick');btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();setMenu(!side.classList.contains('open'))})});if(ov&&ov.dataset.nvBound!=='1'){const clone=ov.cloneNode(true);ov.replaceWith(clone);const newOverlay=clone;newOverlay.dataset.nvBound='1';newOverlay.addEventListener('click',function(e){e.preventDefault();setMenu(false)})}}
+function bindMenu(){
+  const side=getSide(),ov=getOverlay();
+  if(!side)return;
+  if(window.__learningNavigationCaptureBound)return;
+  window.__learningNavigationCaptureBound=true;
+  document.addEventListener('click',function(e){
+    const target=e.target&&e.target.closest?e.target.closest('#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]'):null;
+    if(target){e.preventDefault();e.stopImmediatePropagation();const current=getSide();setMenu(!current?.classList.contains('open'));return;}
+    const overlay=e.target&&e.target.closest?e.target.closest('#overlay,.overlay'):null;
+    if(overlay){e.preventDefault();e.stopImmediatePropagation();setMenu(false)}
+  },true);
+}
 function build(nav){const cg=map[page]?.[0]||gurl||1;let out='';for(let g=1;g<=12;g++){const open=g===cg;out+=`<div class="nv-grade"><button type="button" class="grade-toggle" data-grade="${g}"><span class="icon">${open?'📂':'📁'}</span><span>Lớp ${g}</span><span class="chev">${open?'⌃':'›'}</span></button><div class="nv-sub ${open?'open':''}" id="nv-g-${g}">`;subs.forEach(s=>{const cs=courses(g,s),co=cs.some(x=>active(g,s,x[0]));out+=`<div class="nv-subject ${co?'current-subject':''}"><div class="nv-subject-btn"><span class="icon">${icons[s]}</span><span>${s}</span><span class="chev">›</span></div><div class="nv-courses open">`;cs.forEach(x=>{out+=`<a href="${link(g,s,x[0],x[1])}" class="nv-course ${active(g,s,x[0])?'active':''}"><span class="icon">${x[2]}</span><span>${x[0]}</span></a>`});out+='</div></div>'});out+='</div></div>'}nav.innerHTML=out;nav.querySelectorAll('.grade-toggle').forEach(b=>b.addEventListener('click',()=>document.getElementById('nv-g-'+b.dataset.grade)?.classList.toggle('open')))}
 function shell(){const nav=document.querySelector('#gradeNav,#nav,.nav');if(!nav)return null;const side=getSide();if(side)side.classList.add('nv-standard-sidebar');const main=document.querySelector('.main,main');if(main)main.classList.add('nv-main');bindMenu();return nav}
 function css(){if(document.getElementById('nv2'))return;const s=document.createElement('style');s.id='nv2';s.textContent=`

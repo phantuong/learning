@@ -53,5 +53,5 @@ function fitTarget(){requestAnimationFrame(()=>{const target=$('target'),word=cu
 function nextQuestion(){if(!state.answered)return;if(state.index<state.queue.length-1){state.index++;renderQuestion()}else{state.queue=shuffle(state.words);state.index=0;state.score=0;renderQuestion()}}
 $('nextBtn').onclick=nextQuestion;$('speakBtn').onclick=()=>speak(current());window.addEventListener('resize',fitTarget);renderNav();remember();loadVocabulary();
 </script>
-<script src="app-nav.js"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script></body>
+<script src="app-nav.js"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-v2.js?v=20261005"></script></body>
 </html>

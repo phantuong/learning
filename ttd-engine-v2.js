@@ -5,7 +5,7 @@ const TTD_ENGINE_V2=(()=>{
  const clone=o=>JSON.parse(JSON.stringify(o)),uniq=a=>[...new Set(a.map(String))],shuffle=a=>a.slice().sort(()=>Math.random()-.5);
  const choices=(answer,pool)=>shuffle(uniq([answer,...pool])).slice(0,4).map(String);
  const render={
-  sequence:p=>p.items.map((x,i)=>i===p.missing?'❓':x).join('  '),
+  sequence:p=>p.missing>=p.items.length?p.items.join('  ')+'  ❓':p.items.map((x,i)=>i===p.missing?'❓':x).join('  '),
   matrix:p=>p.grid.map((r,ri)=>r.map((x,ci)=>ri===p.mr&&ci===p.mc?'❓':x).join(' | ')).join('<br>'),
   count:p=>`${p.sample}  |  ${p.items.join(' ')}`,
   logic:p=>p.entities.join(' · '),

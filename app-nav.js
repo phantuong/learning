@@ -12,63 +12,15 @@
     if(window.__learningFeedbackSounds)return;
     window.__learningFeedbackSounds=true;
     let ctx=null,lastSignature='',lastAt=0;
-    const getCtx=()=>{
-      try{
-        const AC=window.AudioContext||window.webkitAudioContext;
-        if(!AC)return null;
-        if(!ctx)ctx=new AC();
-        if(ctx.state==='suspended')ctx.resume().catch(()=>{});
-        return ctx;
-      }catch(e){return null}
-    };
-    const tone=(c,freq,start,duration,type='sine',volume=.055)=>{
-      const osc=c.createOscillator(),gain=c.createGain();
-      osc.type=type;osc.frequency.setValueAtTime(freq,start);
-      gain.gain.setValueAtTime(0.0001,start);
-      gain.gain.exponentialRampToValueAtTime(volume,start+0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001,start+duration);
-      osc.connect(gain);gain.connect(c.destination);osc.start(start);osc.stop(start+duration+0.02);
-    };
-    const cheer=()=>{
-      const c=getCtx();if(!c)return;
-      const t=c.currentTime;
-      [[523.25,0,.16],[659.25,.11,.16],[783.99,.22,.18],[1046.5,.34,.28]].forEach(x=>tone(c,x[0],t+x[1],x[2],'sine',.07));
-      tone(c,1318.51,t+.43,.22,'triangle',.045);
-    };
-    const buzzer=()=>{
-      const c=getCtx();if(!c)return;
-      const t=c.currentTime;
-      tone(c,330,t,.18,'sawtooth',.055);
-      tone(c,220,t+.16,.25,'sawtooth',.05);
-    };
-    const classify=text=>{
-      const s=(text||'').replace(/\s+/g,' ').trim().toLowerCase();
-      if(!s)return '';
-      if(/chính xác|đúng rồi|tuyệt vời|hoan hô|excellent|correct|great job/.test(s))return 'correct';
-      if(/chưa đúng|sai rồi|gần đúng|đáp án là|thử lại|incorrect|wrong|try again/.test(s))return 'wrong';
-      return '';
-    };
-    const check=node=>{
-      if(!node)return;
-      const el=node.nodeType===1?node:node.parentElement;
-      if(!el)return;
-      const candidates=[el,...(el.parentElement?[el.parentElement]:[])];
-      for(const item of candidates){
-        const kind=classify(item.textContent||'');
-        if(!kind)continue;
-        const sig=kind+'|'+(item.textContent||'').trim();
-        const now=Date.now();
-        if(sig===lastSignature&&now-lastAt<700)return;
-        lastSignature=sig;lastAt=now;
-        if(kind==='correct')cheer();else buzzer();
-        return;
-      }
-    };
-    document.addEventListener('pointerdown',()=>getCtx(),{passive:true,capture:true});
-    document.addEventListener('keydown',()=>getCtx(),{passive:true,capture:true});
+    const getCtx=()=>{try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;if(!ctx)ctx=new AC();if(ctx.state==='suspended')ctx.resume().catch(()=>{});return ctx}catch(e){return null}};
+    const tone=(c,freq,start,duration,type='sine',volume=.055)=>{const osc=c.createOscillator(),gain=c.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,start);gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(volume,start+.015);gain.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(gain);gain.connect(c.destination);osc.start(start);osc.stop(start+duration+.02)};
+    const cheer=()=>{const c=getCtx();if(!c)return;const t=c.currentTime;[[523.25,0,.16],[659.25,.11,.16],[783.99,.22,.18],[1046.5,.34,.28]].forEach(x=>tone(c,x[0],t+x[1],x[2],'sine',.07));tone(c,1318.51,t+.43,.22,'triangle',.045)};
+    const buzzer=()=>{const c=getCtx();if(!c)return;const t=c.currentTime;tone(c,330,t,.18,'sawtooth',.055);tone(c,220,t+.16,.25,'sawtooth',.05)};
+    const classify=text=>{const s=(text||'').replace(/\s+/g,' ').trim().toLowerCase();if(!s)return '';if(/chính xác|đúng rồi|tuyệt vời|hoan hô|excellent|correct|great job/.test(s))return 'correct';if(/chưa đúng|sai rồi|gần đúng|đáp án là|thử lại|incorrect|wrong|try again/.test(s))return 'wrong';return ''};
+    const check=node=>{if(!node)return;const el=node.nodeType===1?node:node.parentElement;if(!el)return;const candidates=[el,...(el.parentElement?[el.parentElement]:[])];for(const item of candidates){const kind=classify(item.textContent||'');if(!kind)continue;const sig=kind+'|'+(item.textContent||'').trim(),now=Date.now();if(sig===lastSignature&&now-lastAt<700)return;lastSignature=sig;lastAt=now;if(kind==='wrong')buzzer();else if(current!=='english.html')cheer();return}};
+    document.addEventListener('pointerdown',()=>getCtx(),{passive:true,capture:true});document.addEventListener('keydown',()=>getCtx(),{passive:true,capture:true});
     const observer=new MutationObserver(mutations=>mutations.forEach(m=>{check(m.target);m.addedNodes&&m.addedNodes.forEach(check)}));
-    const startObserver=()=>{if(document.body)observer.observe(document.body,{subtree:true,childList:true,characterData:true})};
-    if(document.body)startObserver();else document.addEventListener('DOMContentLoaded',startObserver,{once:true});
+    const startObserver=()=>{if(document.body)observer.observe(document.body,{subtree:true,childList:true,characterData:true})};if(document.body)startObserver();else document.addEventListener('DOMContentLoaded',startObserver,{once:true});
   }
   function loadFlatShapesRuntime(){if(current!=='hinh-phang.html'||window.__flatShapesRuntime)return;const s=document.createElement('script');s.src='hinh-phang-runtime.js';s.async=false;document.body.appendChild(s)}
   function ensureFlatShapeLevels(){if(current!=='hinh-phang.html')return;const host=document.getElementById('levels');if(!host||host.children.length)return;const levels=[['1','Nhận biết hình','🔎'],['2','Hình quanh bé','🏠'],['3','Đoán theo đặc điểm','🧠'],['4','Đúng hay sai','🤔'],['5','Ghép hình','🧩'],['6','Chia hình','✂️'],['7','Đếm hình thông minh','🔢'],['8','Mảnh ghép còn thiếu','🧱'],['9','Hình mở & kín','🔓'],['10','Thử thách tổng hợp','🌟']];let selected=1;try{selected=Math.min(10,Math.max(1,Number(localStorage.getItem('flatShapeLevel')||1)))}catch(e){}host.innerHTML='';levels.forEach(([n,label,icon])=>{const b=document.createElement('button');b.type='button';b.className='choice'+(+n===selected?' on':'');b.innerHTML=`<span style="font-size:20px">${icon}</span> Level ${n}<br><small>${label}</small>`;b.addEventListener('click',()=>{selected=+n;try{localStorage.setItem('flatShapeLevel',selected)}catch(e){}host.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));b.classList.add('on')});host.appendChild(b)})}

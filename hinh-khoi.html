@@ -52,6 +52,5 @@ function up(){drag=false}
 stage.addEventListener('pointerdown',down,{passive:false});stage.addEventListener('pointermove',move,{passive:false});stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);stage.addEventListener('pointerleave',up);stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.006;draw()},{passive:false});window.addEventListener('resize',draw);draw();
 }catch(err){stage.innerHTML='<div style="height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;color:#667085">Không thể khởi tạo hình 3D trên thiết bị này.</div>';console.error(err)}});
 })();
-</script>
-<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body>
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body>
 </html>

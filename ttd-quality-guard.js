@@ -24,8 +24,14 @@ function fixRelativeShapeProblem(){
   const answers=choices(total);
   if(!answers.includes(total))answers[0]=total;
   answers.sort(()=>Math.random()-0.5);
+
+  // This is a word problem. Do NOT reveal the quantities as icons or
+  // multiplication labels before the child has reasoned from the text.
+  // Visuals are reserved for genuinely visual questions.
+  v.innerHTML='';
+  v.style.display='none';
+
   q.textContent=`Có ${triangles} hình tam giác. Số hình vuông nhiều hơn số hình tam giác là ${diff}. Có tất cả bao nhiêu hình?`;
-  v.innerHTML=`<div class="visual-text"><span>🔺 × ${triangles}</span>　<span>🟦 × ${squares}</span></div>`;
   c.dataset.qualityFix='relative-shape-count';
   c.dataset.correctDisplay=String(total);
   c.dataset.legacyAnswer=oldAnswer;
@@ -52,6 +58,8 @@ function fixRelativeShapeProblem(){
 function run(){
   const c=card();
   if(!c)return;
+  const v=visualEl();
+  if(v)v.style.display='';
   const current=qEl()?.textContent.trim()||'';
   if(c.dataset.qualitySource===current)return;
   c.dataset.qualitySource=current;

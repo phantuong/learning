@@ -13,76 +13,17 @@ function getOverlay(){return document.querySelector('#overlay,.overlay')}
 function getMenu(){return document.querySelector('#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]')}
 function setMenu(open){const side=getSide(),ov=getOverlay();if(!side)return;side.classList.toggle('open',open);if(ov)ov.classList.toggle('show',open);document.body.classList.toggle('nav-open',open)}
 window.toggleNav=function(){const side=getSide();setMenu(!side?.classList.contains('open'))};
-function ensureShell(){
-  let side=getSide();
-  if(!side){
-    side=document.createElement('aside');side.id='sidebar';side.className='sidebar nv-generated-sidebar';
-    side.innerHTML='<a class="brand" href="index.html">🎓 Learning Hub</a><div class="nav-label">Các lớp</div><nav class="nav" id="gradeNav"></nav>';
-    document.body.insertBefore(side,document.body.firstChild);
-  }
-  let nav=side.querySelector('#gradeNav,#nav,.nav');
-  if(!nav){nav=document.createElement('nav');nav.className='nav';nav.id='gradeNav';side.appendChild(nav)}
-  let ov=getOverlay();
-  if(!ov){ov=document.createElement('div');ov.id='overlay';ov.className='overlay';document.body.appendChild(ov)}
-  let menu=getMenu();
-  if(!menu){
-    const host=document.querySelector('main')||document.body;
-    menu=document.createElement('button');menu.type='button';menu.id='menuBtn';menu.className='mobile-btn nv-generated-menu';menu.setAttribute('aria-label','Mở navigation');menu.textContent='☰';
-    host.insertBefore(menu,host.firstChild);
-  }
-  return {side,nav,ov,menu};
-}
-function bindMenu(){
-  if(window.__learningNavigationCaptureBound)return;
-  window.__learningNavigationCaptureBound=true;
-  document.addEventListener('click',function(e){
-    const target=e.target&&e.target.closest?e.target.closest('#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]'):null;
-    if(target){e.preventDefault();e.stopImmediatePropagation();const current=getSide();setMenu(!current?.classList.contains('open'));return;}
-    const overlay=e.target&&e.target.closest?e.target.closest('#overlay,.overlay'):null;
-    if(overlay){e.preventDefault();e.stopImmediatePropagation();setMenu(false);return;}
-  },true);
-}
-function build(nav){
-  const cg=map[page]?.[0]||gurl||1;let out='';
-  for(let g=1;g<=12;g++){
-    const open=g===cg;
-    out+=`<div class="nv-grade"><button type="button" class="grade-toggle" data-grade="${g}"><span class="icon">${open?'📂':'📁'}</span><span>Lớp ${g}</span><span class="chev">${open?'⌃':'›'}</span></button><div class="nv-sub ${open?'open':''}" id="nv-g-${g}">`;
-    subs.forEach(s=>{
-      const cs=courses(g,s),co=cs.some(x=>active(g,s,x[0]));
-      out+=`<div class="nv-subject ${co?'current-subject':''}"><div class="nv-subject-btn"><span class="icon">${icons[s]}</span><span>${s}</span><span class="chev">›</span></div><div class="nv-courses open">`;
-      cs.forEach(x=>{out+=`<a href="${link(g,s,x[0],x[1])}" class="nv-course ${active(g,s,x[0])?'active':''}"><span class="icon">${x[2]}</span><span>${x[0]}</span></a>`});
-      out+='</div></div>';
-    });
-    out+='</div></div>';
-  }
-  nav.innerHTML=out;
-  nav.querySelectorAll('.grade-toggle').forEach(b=>b.addEventListener('click',()=>document.getElementById('nv-g-'+b.dataset.grade)?.classList.toggle('open')));
-}
-function css(){
-  if(document.getElementById('nv2'))return;
-  const s=document.createElement('style');s.id='nv2';s.textContent=`
+function ensureShell(){let side=getSide();if(!side){side=document.createElement('aside');side.id='sidebar';side.className='sidebar nv-generated-sidebar';side.innerHTML='<a class="brand" href="index.html">🎓 Learning Hub</a><div class="nav-label">Các lớp</div><nav class="nav" id="gradeNav"></nav>';document.body.insertBefore(side,document.body.firstChild)}let nav=side.querySelector('#gradeNav,#nav,.nav');if(!nav){nav=document.createElement('nav');nav.className='nav';nav.id='gradeNav';side.appendChild(nav)}let ov=getOverlay();if(!ov){ov=document.createElement('div');ov.id='overlay';ov.className='overlay';document.body.appendChild(ov)}let menu=getMenu();if(!menu){const host=document.querySelector('main')||document.body;menu=document.createElement('button');menu.type='button';menu.id='menuBtn';menu.className='mobile-btn nv-generated-menu';menu.setAttribute('aria-label','Mở navigation');menu.textContent='☰';host.insertBefore(menu,host.firstChild)}return{side,nav,ov,menu}}
+function bindMenu(){if(window.__learningNavigationCaptureBound)return;window.__learningNavigationCaptureBound=true;document.addEventListener('click',function(e){const target=e.target&&e.target.closest?e.target.closest('#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]'):null;if(target){e.preventDefault();e.stopImmediatePropagation();const current=getSide();setMenu(!current?.classList.contains('open'));return}const overlay=e.target&&e.target.closest?e.target.closest('#overlay,.overlay'):null;if(overlay){e.preventDefault();e.stopImmediatePropagation();setMenu(false);return}},true)}
+function build(nav){const cg=map[page]?.[0]||gurl||1;let out='';for(let g=1;g<=12;g++){const open=g===cg;out+=`<div class="nv-grade"><button type="button" class="grade-toggle" data-grade="${g}"><span class="icon">${open?'📂':'📁'}</span><span>Lớp ${g}</span><span class="chev">${open?'⌃':'›'}</span></button><div class="nv-sub ${open?'open':''}" id="nv-g-${g}">`;subs.forEach(s=>{const cs=courses(g,s),co=cs.some(x=>active(g,s,x[0]));out+=`<div class="nv-subject ${co?'current-subject':''}"><div class="nv-subject-btn"><span class="icon">${icons[s]}</span><span>${s}</span><span class="chev">›</span></div><div class="nv-courses open">`;cs.forEach(x=>{out+=`<a href="${link(g,s,x[0],x[1])}" class="nv-course ${active(g,s,x[0])?'active':''}"><span class="icon">${x[2]}</span><span>${x[0]}</span></a>`});out+='</div></div>'});out+='</div></div>'}nav.innerHTML=out;nav.querySelectorAll('.grade-toggle').forEach(b=>b.addEventListener('click',()=>document.getElementById('nv-g-'+b.dataset.grade)?.classList.toggle('open')))}
+function css(){if(document.getElementById('nv2'))return;const s=document.createElement('style');s.id='nv2';s.textContent=`
 .nv-standard-sidebar,.nv-generated-sidebar{position:fixed!important;inset:0 auto 0 0!important;width:260px!important;background:#fff!important;border-right:1px solid #efd5e3!important;padding:18px 12px!important;z-index:100!important;overflow:auto!important}
-.nv-standard-sidebar .nv-sub,.nv-sub{display:none!important;margin:2px 0 6px 15px!important;padding-left:13px!important;border-left:1px solid #f0dbe7!important}.nv-standard-sidebar .nv-sub.open,.nv-sub.open{display:block!important}
-.nv-standard-sidebar .nv-subject,.nv-subject{display:block!important;margin:0!important;padding:0!important}.nv-standard-sidebar .nv-subject-btn,.nv-subject-btn{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;padding:8px 9px!important;border:0!important;background:transparent!important;color:#475467!important;font:inherit!important;font-size:14px!important;font-weight:700!important;text-align:left!important;border-radius:10px!important;cursor:default!important;box-shadow:none!important}.nv-subject-btn .icon{width:24px!important;min-width:24px!important;text-align:center!important}.nv-subject-btn .chev{margin-left:auto!important;color:#98a2b3!important}
-.nv-standard-sidebar .nv-courses,.nv-courses{display:block!important;margin:0 0 5px 12px!important;padding-left:12px!important;border-left:1px dashed #ead9e3!important}.nv-standard-sidebar .nv-course,.nv-course{display:flex!important;align-items:center!important;gap:7px!important;width:auto!important;margin:2px 0!important;padding:8px 9px!important;border-radius:9px!important;text-decoration:none!important;color:#5e5969!important;font-size:13px!important;font-weight:700!important;line-height:1.25!important;background:transparent!important}.nv-course .icon{font-size:15px!important;width:20px!important;min-width:20px!important;text-align:center!important}.nv-course.active{background:#29243b!important;color:#fff!important}.nv-course:hover{background:#f8faff!important}.nv-course.active:hover{background:#29243b!important}
-.nv-standard-sidebar .nv-grade,.nv-grade{display:block!important}.nv-standard-sidebar .grade-toggle,.grade-toggle{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;padding:8px 10px!important;border:0!important;background:transparent!important;color:#5e5969!important;font:inherit!important;font-weight:700!important;text-align:left!important;border-radius:12px!important;cursor:pointer!important;box-shadow:none!important}.nv-standard-sidebar .grade-toggle .chev,.grade-toggle .chev{margin-left:auto!important}
-.nv-standard-sidebar .brand,.nv-generated-sidebar .brand{display:block!important;text-decoration:none!important;color:#182033!important;font-weight:850!important;font-size:21px!important;padding:8px 10px 18px!important}.nv-standard-sidebar .nav-label,.nv-generated-sidebar .nav-label{font-size:11px!important;font-weight:800!important;color:#98a2b3!important;text-transform:uppercase!important;padding:0 10px 7px!important}.nv-standard-sidebar .nav,.nv-generated-sidebar .nav{display:block!important}
-.nv-main{margin-left:260px!important}.nav-open{overflow:hidden!important}
-.nv-generated-menu{display:block!important;position:relative!important;z-index:101!important;border:0!important;background:#fff!important;width:44px!important;height:44px!important;border-radius:13px!important;font-size:23px!important;box-shadow:0 4px 15px #18203312!important;cursor:pointer!important;margin:0 0 8px!important}
-.nv-standard-sidebar~.nv-overlay,.nv-overlay{display:none}
-@media(min-width:761px){.nv-generated-menu{display:block!important}.nv-generated-sidebar~main{margin-left:260px!important}.nv-standard-sidebar~main{margin-left:260px!important}}
-@media(max-width:760px){.nv-standard-sidebar,.nv-generated-sidebar{transform:translateX(-105%)!important;transition:.22s!important;width:270px!important;box-shadow:12px 0 35px #18203322!important}.nv-standard-sidebar.open,.nv-generated-sidebar.open{transform:translateX(0)!important}.overlay.show{display:block!important;position:fixed!important;inset:0!important;background:#18203355!important;z-index:90!important}.nv-main{margin-left:0!important}.nv-generated-sidebar~main{margin-left:0!important}.nv-standard-sidebar~main{margin-left:0!important}.nv-generated-menu{display:block!important}}
-`;
-  document.head.appendChild(s);
-}
-function shell(){
-  const sh=ensureShell();
-  sh.side.classList.add('nv-standard-sidebar');
-  const main=document.querySelector('.main,main');if(main)main.classList.add('nv-main');
-  bindMenu();
-  return sh.nav;
-}
+.nv-standard-sidebar .nv-sub,.nv-sub{display:none!important;margin:2px 0 6px 15px!important;padding-left:13px!important;border-left:1px solid #f0dbe7!important}.nv-standard-sidebar .nv-sub.open,.nv-sub.open{display:block!important}.nv-standard-sidebar .nv-subject,.nv-subject{display:block!important;margin:0!important;padding:0!important}.nv-standard-sidebar .nv-subject-btn,.nv-subject-btn{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;padding:8px 9px!important;border:0!important;background:transparent!important;color:#475467!important;font:inherit!important;font-size:14px!important;font-weight:700!important;text-align:left!important;border-radius:10px!important;cursor:default!important;box-shadow:none!important}.nv-subject-btn .icon{width:24px!important;min-width:24px!important;text-align:center!important}.nv-subject-btn .chev{margin-left:auto!important;color:#98a2b3!important}
+.nv-standard-sidebar .nv-courses,.nv-courses{display:block!important;margin:0 0 5px 12px!important;padding-left:12px!important;border-left:1px dashed #ead9e3!important}.nv-standard-sidebar .nv-course,.nv-course{display:flex!important;align-items:center!important;gap:7px!important;width:auto!important;margin:2px 0!important;padding:8px 9px!important;border-radius:9px!important;text-decoration:none!important;color:#5e5969!important;font-size:13px!important;font-weight:700!important;line-height:1.25!important;background:transparent!important}.nv-course .icon{font-size:15px!important;width:20px!important;min-width:20px!important;text-align:center!important}.nv-course.active{background:#29243b!important;color:#fff!important}.nv-course:hover{background:#f8faff!important}.nv-course.active:hover{background:#29243b!important}.nv-standard-sidebar .nv-grade,.nv-grade{display:block!important}.nv-standard-sidebar .grade-toggle,.grade-toggle{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;padding:8px 10px!important;border:0!important;background:transparent!important;color:#5e5969!important;font:inherit!important;font-weight:700!important;text-align:left!important;border-radius:12px!important;cursor:pointer!important;box-shadow:none!important}.nv-standard-sidebar .grade-toggle .chev,.grade-toggle .chev{margin-left:auto!important}.nv-standard-sidebar .brand,.nv-generated-sidebar .brand{display:block!important;text-decoration:none!important;color:#182033!important;font-weight:850!important;font-size:21px!important;padding:8px 10px 18px!important}.nv-standard-sidebar .nav-label,.nv-generated-sidebar .nav-label{font-size:11px!important;font-weight:800!important;color:#98a2b3!important;text-transform:uppercase!important;padding:0 10px 7px!important}.nv-standard-sidebar .nav,.nv-generated-sidebar .nav{display:block!important}.nv-main{margin-left:260px!important}.nav-open{overflow:hidden!important}.nv-generated-menu{display:block!important;position:relative!important;z-index:101!important;border:0!important;background:#fff!important;width:44px!important;height:44px!important;border-radius:13px!important;font-size:23px!important;box-shadow:0 4px 15px #18203312!important;cursor:pointer!important;margin:0 0 8px!important}@media(min-width:761px){.nv-generated-menu{display:block!important}.nv-generated-sidebar~main{margin-left:260px!important}.nv-standard-sidebar~main{margin-left:260px!important}}@media(max-width:760px){.nv-standard-sidebar,.nv-generated-sidebar{transform:translateX(-105%)!important;transition:.22s!important;width:270px!important;box-shadow:12px 0 35px #18203322!important}.nv-standard-sidebar.open,.nv-generated-sidebar.open{transform:translateX(0)!important}.overlay.show{display:block!important;position:fixed!important;inset:0!important;background:#18203355!important;z-index:90!important}.nv-main{margin-left:0!important}.nv-generated-sidebar~main{margin-left:0!important}.nv-standard-sidebar~main{margin-left:0!important}.nv-generated-menu{display:block!important}}
+`;document.head.appendChild(s)}
+function shell(){const sh=ensureShell();sh.side.classList.add('nv-standard-sidebar');const main=document.querySelector('.main,main');if(main)main.classList.add('nv-main');bindMenu();return sh.nav}
 function init(){css();const nav=shell();if(nav)build(nav);bindMenu()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 // Shared navigation: every page gets the same menu button + navigation shell, including coming-soon pages.
+// Deployment verification: 2026-10-03

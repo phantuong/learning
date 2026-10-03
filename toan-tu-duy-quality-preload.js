@@ -1,0 +1,1 @@
+(()=>{const add=document.addEventListener.bind(document);document.addEventListener=(type,fn,opt)=>{if(type==='DOMContentLoaded'&&fn&&fn.name==='init'&&String(fn).includes('TOPICS[topic]'))return;return add(type,fn,opt)}})();

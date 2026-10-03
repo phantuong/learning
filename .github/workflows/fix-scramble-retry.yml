@@ -1,62 +1,31 @@
-name: Fix scramble retry behavior
+name: Verify scramble retry behavior
 
 on:
   push:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  fix:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Patch Sắp xếp chữ cái retry behavior
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('voca-scramble.html')
-          s = p.read_text(encoding='utf-8')
-          old = """function finish(){const word=questions[qi].word;const got=answer.map(x=>x?x.char:'').join('');answered=true;const ok=got===word;$('feedback').className='feedback '+(ok?'good':'bad');$('feedback').textContent=ok?'🎉 Chính xác!':`💪 Chưa đúng. Đáp án: ${word}`;if(ok){score++;speakWord(word)}else{playWrongSound()}$('score').textContent=score;$('checkBtn').classList.add('hidden');$('nextBtn').classList.remove('hidden');if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}})}"""
-          new = """function finish(){const word=questions[qi].word;const got=answer.map(x=>x?x.char:'').join('');const ok=got===word;$('feedback').className='feedback '+(ok?'good':'bad');if(ok){answered=true;score++;speakWord(word);$('feedback').textContent='🎉 Chính xác!';$('score').textContent=score;$('checkBtn').classList.add('hidden');$('nextBtn').classList.remove('hidden');if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}})}else{answered=false;playWrongSound();$('feedback').textContent='💪 Chưa đúng! Hãy thử lại nhé.';$('checkBtn').classList.remove('hidden');$('checkBtn').disabled=false;$('nextBtn').classList.add('hidden')}}"""
-          marker = '/* scramble-retry-v1 */'
-          if new not in s:
-              if old not in s:
-                  raise SystemExit('Expected old finish() implementation was not found.')
-              s = s.replace(old, new, 1)
-          if marker not in s:
-              s = s.replace('</style>', '\n' + marker + '\n' + '</style>', 1)
-          p.write_text(s, encoding='utf-8')
-          PY
-
-      - name: Verify behavior
+      - name: Verify Sắp xếp chữ cái retry behavior
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           s = Path('voca-scramble.html').read_text(encoding='utf-8')
           assert "💪 Chưa đúng! Hãy thử lại nhé." in s
-          assert "if(ok){answered=true;score++;speakWord(word)" in s
-          assert "else{answered=false;playWrongSound()" in s
+          assert "speakWord(q.word)" in s
+          assert "beep();" in s
           assert "$('nextBtn').classList.add('hidden')" in s
+          assert "$('checkBtn').disabled=false" in s
           print('Scramble retry behavior verified.')
           PY
-
-      - name: Commit if changed
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add voca-scramble.html
-          if git diff --cached --quiet; then
-            echo 'No changes needed.'
-          else
-            git commit -m 'Require correct answer before next scramble question'
-            git push
-          fi
 
 # Deployment trigger verification

@@ -8,39 +8,29 @@
 <article class="card"><h2>🔵 Hình cầu</h2><div class="shape-stage" data-shape="sphere"><div class="webgl-error">Thiết bị chưa hỗ trợ hiển thị 3D.</div></div><div class="hint">👆 Chạm và kéo để xoay hình 3D</div><div class="examples"><strong>🌟 Ví dụ thực tế</strong><div class="examples-list"><div class="example"><span class="pic">⚽</span>Quả bóng</div><div class="example"><span class="pic">🍊</span>Quả cam</div><div class="example"><span class="pic">🍉</span>Quả dưa</div></div></div></article>
 <article class="card"><h2>🟢 Hình trụ</h2><div class="shape-stage" data-shape="cylinder"><div class="webgl-error">Thiết bị chưa hỗ trợ hiển thị 3D.</div></div><div class="hint">👆 Chạm và kéo để xoay hình 3D</div><div class="examples"><strong>🌟 Ví dụ thực tế</strong><div class="examples-list"><div class="example"><span class="pic">🥛</span>Hộp sữa</div><div class="example"><span class="pic">🥫</span>Lon đồ hộp</div><div class="example"><span class="pic">🕯️</span>Cây nến</div></div></div></article>
 <article class="card"><h2>🟧 Hình hộp chữ nhật</h2><div class="shape-stage" data-shape="cuboid"><div class="webgl-error">Thiết bị chưa hỗ trợ hiển thị 3D.</div></div><div class="hint">👆 Chạm và kéo để xoay hình 3D</div><div class="examples"><strong>🌟 Ví dụ thực tế</strong><div class="examples-list"><div class="example"><span class="pic">📦</span>Hộp quà</div><div class="example"><span class="pic">📕</span>Quyển sách</div><div class="example"><span class="pic">🧱</span>Viên gạch</div></div></div></article>
-<article class="card"><h2>🟣 Hình lập phương</h2><div class="shape-stage" data-shape="cube"><div class="webgl-error">Thiết bị chưa hỗ trợ hiển thị 3D.</div></div><div class="hint">👆 Chạm và kéo để xoay hình 3D</div><div class="examples"><strong>🌟 Ví dụ thực tế</strong><div class="examples-list"><div class="example"><span class="pic">🎲</span>Con xúc xắc</div><div class="example"><span class="pic">🧊</span>Viên đá</div><div class="example"><span class="pic">🧩</span>Khối đồ chơi</div></div></div></div></article>
+<article class="card"><h2>🟣 Hình lập phương</h2><div class="shape-stage" data-shape="cube"><div class="webgl-error">Thiết bị chưa hỗ trợ hiển thị 3D.</div></div><div class="hint">👆 Chạm và kéo để xoay hình 3D</div><div class="examples"><strong>🌟 Ví dụ thực tế</strong><div class="examples-list"><div class="example"><span class="pic">🎲</span>Con xúc xắc</div><div class="example"><span class="pic">🧊</span>Viên đá</div><div class="example"><span class="pic">🧩</span>Khối đồ chơi</div></div></div></article>
 </section><p class="footer">💡 Mẹo: Bé có thể xoay mỗi hình nhiều lần để nhìn các mặt và góc khác nhau.</p></main>
 <script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
 <script>
 (function(){
   if(!window.THREE)return;
   const colors={sphere:0x43a9e3,cylinder:0x42b96e,cuboid:0xf0a43a,cube:0x7654df};
-  const stages=document.querySelectorAll('.shape-stage');
-  stages.forEach(stage=>{
+  document.querySelectorAll('.shape-stage').forEach(stage=>{
     const type=stage.dataset.shape;
     try{
       const scene=new THREE.Scene();
-      const camera=new THREE.PerspectiveCamera(32,1,.1,100);
-      camera.position.set(3.5,2.7,5.2);
+      const camera=new THREE.PerspectiveCamera(32,1,.1,100);camera.position.set(3.5,2.7,5.2);
       const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:false});
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
-      renderer.outputColorSpace=THREE.SRGBColorSpace;
-      renderer.shadowMap.enabled=true;
-      renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-      stage.prepend(renderer.domElement);
-      const group=new THREE.Group();
-      scene.add(group);
-      let geometry;
-      if(type==='sphere') geometry=new THREE.SphereGeometry(1.18,48,32);
-      if(type==='cylinder') geometry=new THREE.CylinderGeometry(1.0,1.0,1.75,48,1,false);
-      if(type==='cuboid') geometry=new THREE.BoxGeometry(2.35,1.65,1.45);
-      if(type==='cube') geometry=new THREE.BoxGeometry(1.8,1.8,1.8);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.prepend(renderer.domElement);
+      const group=new THREE.Group();scene.add(group);let geometry;
+      if(type==='sphere')geometry=new THREE.SphereGeometry(1.18,48,32);
+      if(type==='cylinder')geometry=new THREE.CylinderGeometry(1,1,1.75,48,1,false);
+      if(type==='cuboid')geometry=new THREE.BoxGeometry(2.35,1.65,1.45);
+      if(type==='cube')geometry=new THREE.BoxGeometry(1.8,1.8,1.8);
       const material=new THREE.MeshStandardMaterial({color:colors[type],roughness:.32,metalness:.02});
-      const mesh=new THREE.Mesh(geometry,material);
-      mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
-      const ground=new THREE.Mesh(new THREE.CircleGeometry(2.25,48),new THREE.ShadowMaterial({opacity:.14}));
-      ground.rotation.x=-Math.PI/2;ground.position.y=-1.05;ground.receiveShadow=true;scene.add(ground);
-      const hemi=new THREE.HemisphereLight(0xffffff,0xb7c9d8,2.2);scene.add(hemi);
+      const mesh=new THREE.Mesh(geometry,material);mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
+      const ground=new THREE.Mesh(new THREE.CircleGeometry(2.25,48),new THREE.ShadowMaterial({opacity:.14}));ground.rotation.x=-Math.PI/2;ground.position.y=-1.05;ground.receiveShadow=true;scene.add(ground);
+      scene.add(new THREE.HemisphereLight(0xffffff,0xb7c9d8,2.2));
       const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(3.5,5,4);key.castShadow=true;key.shadow.mapSize.set(1024,1024);scene.add(key);
       const fill=new THREE.DirectionalLight(0x9ed8ff,1.3);fill.position.set(-4,2,2);scene.add(fill);
       let rx=-.15,ry=.55,drag=false,lastX=0,lastY=0;
@@ -50,8 +40,7 @@
       function move(e){if(!drag)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;ry+=dx*.012;rx+=dy*.009;rx=Math.max(-1.15,Math.min(1.15,rx));lastX=e.clientX;lastY=e.clientY;draw()}
       function up(){drag=false}
       stage.addEventListener('pointerdown',down);stage.addEventListener('pointermove',move);stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);stage.addEventListener('pointerleave',up);
-      stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.006;draw()},{passive:false});
-      window.addEventListener('resize',resize);resize();draw();
+      stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.006;draw()},{passive:false});window.addEventListener('resize',resize);resize();draw();
       function animate(){requestAnimationFrame(animate);renderer.render(scene,camera)}animate();
     }catch(err){stage.querySelector('.webgl-error').style.display='flex'}
   });

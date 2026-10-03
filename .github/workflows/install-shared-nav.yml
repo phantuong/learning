@@ -14,14 +14,18 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          tag = '<script src="navigation-v2.js?v=20261005"></script>'
-          pattern = r'\s*<script\s+src=["\']navigation-v2\.js\?v=[^"\']+["\']></script>'
+          tags = '<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script>'
+          pattern = r'\s*<script\s+src=["\']navigation-v2\.js\?v=[^"\']+["\']></script>\s*<script\s+src=["\']navigation-hardening\.js\?v=[^"\']+["\']></script>'
+          old_nav = r'\s*<script\s+src=["\']navigation-v2\.js\?v=[^"\']+["\']></script>'
+          old_hardening = r'\s*<script\s+src=["\']navigation-hardening\.js\?v=[^"\']+["\']></script>'
           changed=[]
           for p in Path('.').glob('*.html'):
               s=p.read_text(encoding='utf-8')
               updated=re.sub(pattern,'',s)
+              updated=re.sub(old_nav,'',updated)
+              updated=re.sub(old_hardening,'',updated)
               if '</body>' in updated:
-                  updated=updated.replace('</body>',tag+'</body>',1)
+                  updated=updated.replace('</body>',tags+'</body>',1)
               if updated!=s:
                   p.write_text(updated,encoding='utf-8')
                   changed.append(p.name)
@@ -31,6 +35,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add '*.html' navigation-v2.js
+          git add '*.html' navigation-v2.js navigation-hardening.js
           git diff --cached --quiet || git commit -m 'Refresh shared navigation version'
           git push

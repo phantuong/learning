@@ -41,5 +41,4 @@ $('loginBtn').onclick=async()=>{message.textContent='Đang đăng nhập...';try
 $('signupBtn').onclick=async()=>{message.textContent='Đang tạo tài khoản...';try{const r=await window.learningSyncV2.signUp(email.value,password.value);if(r.session){await save();status.textContent='☁️ Đã đồng bộ';account.textContent='Đang đăng nhập: '+(r.user?.email||email.value);message.textContent='Tạo tài khoản thành công và đã lưu tiến độ.';}else message.textContent='Tài khoản đã tạo. Hãy kiểm tra email để xác nhận, sau đó đăng nhập ở cả Safari và Opera.';}catch(e){message.textContent='Không tạo được tài khoản: '+(e?.message||e);}};
 bootstrap();
 })();
-</script>
-<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

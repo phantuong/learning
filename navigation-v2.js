@@ -1,10 +1,10 @@
 (function(){'use strict';
 const page=(location.pathname.split('/').pop()||'index.html').toLowerCase();
 const p=new URLSearchParams(location.search),gurl=Number(p.get('grade')||0);
-const map={'cong-tru-10.html':[1,'Toán','Cộng Trừ'],'so-sanh.html':[1,'Toán','So Sánh'],'hinh-phang.html':[1,'Toán','Hình Phẳng'],'hinh-khoi.html':[1,'Toán','Hình Khối'],'doc-hieu.html':[1,'Tiếng Việt','Đọc Hiểu'],'doc-hieu-v5.html':[1,'Tiếng Việt','Đọc Hiểu'],'english.html':[1,'Tiếng Anh','Hoàn Thành Từ'],'vocabulary-list.html':[1,'Tiếng Anh','Danh Sách Từ Vựng'],'voca-scramble.html':[1,'Tiếng Anh','Sắp Xếp Câu']};
+const map={'cong-tru-10.html':[1,'Toán','Cộng Trừ'],'so-sanh.html':[1,'Toán','So Sánh'],'hinh-phang.html':[1,'Toán','Hình Phẳng'],'hinh-khoi.html':[1,'Toán','Hình Khối'],'doc-hieu.html':[1,'Tiếng Việt','Đọc Hiểu'],'doc-hieu-v5.html':[1,'Tiếng Việt','Đọc Hiểu'],'english.html':[1,'Tiếng Anh','Hoàn Thành Từ'],'vocabulary-list.html':[1,'Tiếng Anh','Danh Sách Từ Vựng'],'voca-scramble.html':[1,'Tiếng Anh','Sắp Xếp Chữ Cái']};
 const subs=['Toán','Tiếng Việt','Tiếng Anh','Toán Tư Duy','Math'];
 const icons={'Toán':'🔢','Tiếng Việt':'📖','Tiếng Anh':'🔤','Toán Tư Duy':'🧠','Math':'🌎'};
-const one={'Toán':[['Cộng Trừ','cong-tru-10.html','➕'],['So Sánh','so-sanh.html','⚖️'],['Hình Phẳng','hinh-phang.html','🔷'],['Hình Khối',null,'🧊']], 'Tiếng Việt':[['Đọc Hiểu','doc-hieu.html','📖'],['Hoàn Thành Từ',null,'✏️'],['Sắp Xếp Câu',null,'🧩']], 'Tiếng Anh':[['Danh Sách Từ Vựng','vocabulary-list.html','📚'],['Hoàn Thành Từ','english.html','🔤'],['Sắp Xếp Câu','voca-scramble.html','🔀']], 'Toán Tư Duy':[['Toán Tư Duy',null,'🧠']], 'Math':[['Math',null,'🌎']]};
+const one={'Toán':[['Cộng Trừ','cong-tru-10.html','➕'],['So Sánh','so-sanh.html','⚖️'],['Hình Phẳng','hinh-phang.html','🔷'],['Hình Khối',null,'🧊']], 'Tiếng Việt':[['Đọc Hiểu','doc-hieu.html','📖'],['Hoàn Thành Từ',null,'✏️'],['Sắp Xếp Câu',null,'🧩']], 'Tiếng Anh':[['Danh Sách Từ Vựng','vocabulary-list.html','📚'],['Hoàn Thành Từ','english.html','🔤'],['Sắp Xếp Chữ Cái','voca-scramble.html','🔀']], 'Toán Tư Duy':[['Toán Tư Duy',null,'🧠']], 'Math':[['Math',null,'🌎']]};
 function active(g,s,c){if(map[page])return map[page][0]===g&&map[page][1]===s&&map[page][2]===c;return Number(p.get('grade'))===g&&p.get('subject')===s&&p.get('course')===c}
 function link(g,s,c,h){return h||`coming-soon.html?grade=${g}&subject=${encodeURIComponent(s)}&course=${encodeURIComponent(c)}`}
 function courses(g,s){return g===1?one[s]:[[s,null,icons[s]||'📘']]}

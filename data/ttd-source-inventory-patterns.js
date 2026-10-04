@@ -1,0 +1,22 @@
+// Grade 1 Patterns source inventory. Metadata only; question payloads are not copied here.
+window.TTD_PATTERN_SOURCE_INVENTORY={version:'2026-10-04',items:[
+{id:'edu-shape-patterns',source:'education',title:'Shape Patterns',grade:1,skill:'shape-patterns',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-recognizing-patterns-what-next-1',source:'education',title:'Recognizing Patterns: What Comes Next? #1',grade:1,skill:'next-shape',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-pattern-practice-whats-pattern-2',source:'education',title:'Pattern Practice: What’s In a Pattern? #2',grade:1,skill:'identify-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-abc-pattern',source:'education',title:'ABC Pattern',grade:1,skill:'shape-patterns',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-aabb-pattern',source:'education',title:'AABB Pattern',grade:1,skill:'shape-patterns',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-pattern-sequence',source:'education',title:'Pattern Sequence',grade:1,skill:'complete-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-complete-pattern',source:'education',title:'Complete the Pattern',grade:1,skill:'complete-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/math/patterns/shape-patterns/'},
+{id:'edu-complete-patterns-1',source:'education',title:'Complete the Patterns #1',grade:1,skill:'complete-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/'},
+{id:'ixl-jj1',source:'ixl',title:'Complete a pattern',grade:1,skill:'complete-pattern',format:'interactive-skill',url:'https://www.ixl.com/math/grade-1/skills'},
+{id:'ixl-jj2',source:'ixl',title:'Make a pattern',grade:1,skill:'make-pattern',format:'interactive-skill',url:'https://www.ixl.com/math/grade-1/skills'},
+{id:'ixl-jj3',source:'ixl',title:'Growing patterns',grade:1,skill:'growing-patterns',format:'interactive-skill',url:'https://www.ixl.com/math/grade-1/skills'},
+{id:'ixl-jj4',source:'ixl',title:'Find the next shape in a growing pattern',grade:1,skill:'next-shape',format:'interactive-skill',url:'https://www.ixl.com/math/grade-1/skills'},
+{id:'ixl-jj5',source:'ixl',title:'Find the next row in a growing pattern',grade:1,skill:'next-row',format:'interactive-skill',url:'https://www.ixl.com/math/grade-1/skills'},
+{id:'edu-patterns-on-the-go',source:'education',title:'Patterns on the Go',grade:1,skill:'patterns',format:'workbook',url:'https://www.education.com/resources/grade-1/workbooks/math/patterns/'},
+{id:'edu-pattern-practice-complete-1',source:'education',title:'Pattern Practice: Complete the Pattern #1',grade:1,skill:'complete-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/'},
+{id:'edu-practice-patterns-bugs',source:'education',title:'Practice Patterns: Bugs, Bugs, Bugs',grade:1,skill:'identify-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/'},
+{id:'edu-pattern-practice-whats-pattern-1',source:'education',title:'Pattern Practice: What’s In a Pattern? #1',grade:1,skill:'identify-pattern',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/'},
+{id:'edu-christmas-number-20',source:'education',title:'Christmas Number Fun #20',grade:1,skill:'number-patterns',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/'},
+{id:'edu-recognizing-alphabet-fruit',source:'education',title:'Recognizing Patterns: Alphabet Fruit',grade:1,skill:'number-patterns',format:'worksheet',url:'https://www.education.com/resources/grade-1/worksheets/math/patterns/shape-patterns/'},
+{id:'ixl-patterns-master-list',source:'ixl',title:'Patterns skill family',grade:1,skill:'patterns',format:'skill-index',url:'https://www.ixl.com/math/patterns'}]};

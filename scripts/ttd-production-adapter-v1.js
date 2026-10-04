@@ -1,0 +1,4 @@
+/* TTD Production Adapter v1 — converts canonical question models to UI-safe format. */
+function toProductionQuestion(q){const choices=(q.choices||[]).map((c,i)=>({id:c.id||`choice-${i}`,visual:c.visual||c,misconception:c.misconception||null,isCorrect:!!c.isCorrect}));const answerId=q.answerId||choices.find(c=>c.isCorrect)?.id;if(!answerId||choices.length!==4)throw new Error(`invalid_question:${q.id||'unknown'}`);return{id:q.id,type:q.type||'shape_pattern',family:q.family||q.type,level:q.level,question:q.question,problem:q.problem,visual:q.visual,choices,answerId,explanation:q.explanation};}
+function validateProduction(q){const cs=q.choices||[],correct=cs.filter(c=>c.isCorrect);return{valid:cs.length===4&&correct.length===1&&!!q.answerId&&cs.some(c=>c.id===q.answerId),visualChoices:cs.every(c=>!!c.visual),noTextOnlyChoices:cs.every(c=>typeof c.visual==='object')};}
+if(typeof module!=='undefined')module.exports={toProductionQuestion,validateProduction};

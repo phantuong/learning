@@ -19,77 +19,23 @@
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true}); else install();
 
-  // Grade 1 English "Sắp xếp chữ cái": reliable English speech and retry
-  // until correct. This is intentionally scoped to this page only.
   function patchVocaScramble(){
     if(!/voca-scramble\.html$/i.test(location.pathname)) return;
     if(typeof finish!=='function' || typeof speakWord!=='function') return;
     if(window.__vocaScramblePatched) return;
     window.__vocaScramblePatched=true;
-
-    speakWord=function(word){
-      const text=String(word||'').trim();
-      if(!text) return;
-      try{
-        const synth=window.speechSynthesis;
-        if(!synth) return;
-        synth.cancel();
-        synth.resume();
-        const utterance=new SpeechSynthesisUtterance(text);
-        utterance.lang='en-US';
-        utterance.rate=.78;
-        utterance.pitch=1;
-        utterance.volume=1;
-        const voices=synth.getVoices();
-        const voice=voices.find(v=>/^en-US$/i.test(v.lang)) || voices.find(v=>/^en[-_]/i.test(v.lang));
-        if(voice) utterance.voice=voice;
-        synth.speak(utterance);
-      }catch(e){ console.warn('Speech synthesis unavailable:',e); }
-    };
-
-    finish=function(){
-      if(answered) return;
-      const q=questions?.[qi];
-      if(!q || !Array.isArray(answer)) return;
-      const word=q.word;
-      const got=answer.map(x=>x?x.char:'').join('');
-      const ok=got===word;
-      const feedback=document.getElementById('feedback');
-      const check=document.getElementById('checkBtn');
-      const next=document.getElementById('nextBtn');
-      if(ok){
-        answered=true;
-        score++;
-        if(feedback){feedback.className='feedback good';feedback.textContent='🎉 Chính xác!';}
-        speakWord(word);
-        document.getElementById('score').textContent=score;
-        check?.classList.add('hidden');
-        next?.classList.remove('hidden');
-        if(window.learningSync?.queue) window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}});
-      }else{
-        answered=false;
-        if(feedback){feedback.className='feedback bad';feedback.textContent='💪 Chưa đúng, bé thử lại nhé!';}
-        if(typeof playWrongSound==='function') playWrongSound();
-        check?.classList.remove('hidden');
-        next?.classList.add('hidden');
-      }
-    };
-
-    const speaker=document.getElementById('speaker');
-    if(speaker){
-      speaker.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        const q=questions?.[qi];
-        if(q) speakWord(q.word);
-      },{capture:true});
-    }
+    speakWord=function(word){const text=String(word||'').trim();if(!text)return;try{const synth=window.speechSynthesis;if(!synth)return;synth.cancel();synth.resume();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.78;u.pitch=1;u.volume=1;const voices=synth.getVoices();const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en[-_]/i.test(v.lang));if(voice)u.voice=voice;synth.speak(u)}catch(e){console.warn('Speech synthesis unavailable:',e)}};
+    finish=function(){if(answered)return;const q=questions?.[qi];if(!q||!Array.isArray(answer))return;const word=q.word,got=answer.map(x=>x?x.char:'').join(''),ok=got===word,feedback=document.getElementById('feedback'),check=document.getElementById('checkBtn'),next=document.getElementById('nextBtn');if(ok){answered=true;score++;if(feedback){feedback.className='feedback good';feedback.textContent='🎉 Chính xác!'}speakWord(word);document.getElementById('score').textContent=score;check?.classList.add('hidden');next?.classList.remove('hidden');if(window.learningSync?.queue)window.learningSync.queue({voca_scramble:{current:qi+1,score,updatedAt:new Date().toISOString()}})}else{answered=false;if(feedback){feedback.className='feedback bad';feedback.textContent='💪 Chưa đúng, bé thử lại nhé!'}if(typeof playWrongSound==='function')playWrongSound();check?.classList.remove('hidden');next?.classList.add('hidden')}};
+    const speaker=document.getElementById('speaker');if(speaker)speaker.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();const q=questions?.[qi];if(q)speakWord(q.word)},{capture:true});
   }
-
-  function bootPatch(){
-    patchVocaScramble();
-    if(!window.__vocaScramblePatched) setTimeout(patchVocaScramble,0);
+  function patchUnit2(){
+    if(!/may-academy-unit2-l123\.html$/i.test(location.pathname))return;
+    const phonics=document.querySelector('#phonics .phonics');
+    if(phonics){phonics.innerHTML=['c','k','ck','e','h','r','m','d'].map(x=>`<button class="sound" onclick="speak(${JSON.stringify(x)})">${x}</button>`).join('')}
+    const sight=document.querySelector('#sight .sight');
+    if(sight){sight.innerHTML=['I','can','see','my','a','the','like','is','an','to','have',"haven't",'got','What','this','yes','no','who'].map(x=>`<span>${x}</span>`).join('')}
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootPatch,{once:true}); else bootPatch();
+  function boot(){patchVocaScramble();patchUnit2();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-// Shared navigation hardening: fixed menu position and isolated icon sizing on every page.
+// Shared navigation hardening: fixed menu position, isolated icon sizing, and page-specific compatibility fixes.

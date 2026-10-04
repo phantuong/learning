@@ -1,1 +1,36 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Môn học · Learning Hub</title><style>body{margin:0;background:#f4f6fb;color:#182033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.main{min-height:100vh;padding:70px 24px 45px}.wrap{max-width:900px;margin:auto}.head{text-align:center;margin-bottom:28px}.icon{font-size:52px}.head h1{font-size:34px;margin:5px}.head p{color:#68738a}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.course{display:block;background:#fff;border:1px solid #e2e6ee;border-radius:20px;padding:20px;text-decoration:none;color:#182033;box-shadow:0 7px 20px #1820330b}.course:hover{transform:translateY(-1px)}.course h2{margin:0 0 7px;font-size:20px}.course p{margin:0;color:#68738a;line-height:1.5}.badge{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:99px;background:#eef8f2;color:#087443;font-size:12px;font-weight:800}@media(max-width:700px){.grid{grid-template-columns:1fr}.main{padding:65px 14px 35px}}</style></head><body><main class="main"><div class="wrap"><header class="head"><div class="icon" id="icon">📘</div><h1 id="title">Môn học</h1><p id="sub">Chọn bài học</p></header><section class="grid" id="courses"></section></div></main><script>const p=new URLSearchParams(location.search),g=Number(p.get('grade')||1),s=p.get('subject')||'Toán';const icons={'Toán':'➕','Tiếng Việt':'📖','Tiếng Anh':'🔤','Toán Tư Duy':'🧠','Math':'🌎'};const grade1={'Toán':[['Công Trừ Phạm Vi 10','cong-tru-10.html'],['So Sánh','so-sanh.html'],['Hình Phẳng','hinh-phang.html'],['Hình Khối',null]],'Tiếng Việt':[['Đọc Hiểu','doc-hieu.html'],['Hoàn Thành Từ',null],['Sắp Xếp Câu',null]],'Tiếng Anh':[['Danh Sách Từ Vựng','vocabulary-list.html'],['Hoàn Thành Từ','english.html'],['Sắp Xếp Câu','voca-scramble.html']], 'Toán Tư Duy':[['Toán Tư Duy','toan-tu-duy.html']], 'Math':[['Math',null]]};const arr=g===1?(grade1[s]||[]):[[s,null]];document.title=`${s} · Lớp ${g} · Learning Hub`;icon.textContent=icons[s]||'📘';title.textContent=s;sub.textContent=`Lớp ${g} · Chọn bài học`;courses.innerHTML=arr.map(([n,h])=>{const href=h||`coming-soon.html?grade=${g}&subject=${encodeURIComponent(s)}&course=${encodeURIComponent(n)}`;return `<a class="course" href="${href}"><h2>${n}</h2><p>${h?'Mở bài học và luyện tập.':'Nội dung bài học đang được xây dựng.'}</p><span class="badge">${h?'Đang học':'Đang phát triển'}</span></a>`}).join('');</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Môn học · Learning Hub</title><style>body{margin:0;background:#f4f6fb;color:#182033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.main{min-height:100vh;padding:70px 24px 45px}.wrap{max-width:900px;margin:auto}.head{text-align:center;margin-bottom:28px}.icon{font-size:52px}.head h1{font-size:34px;margin:5px}.head p{color:#68738a}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.course{display:block;background:#fff;border:1px solid #e2e6ee;border-radius:20px;padding:20px;text-decoration:none;color:#182033;box-shadow:0 7px 20px #1820330b}.course:hover{transform:translateY(-1px)}.course h2{margin:0 0 7px;font-size:20px}.course p{margin:0;color:#68738a;line-height:1.5}.badge{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:99px;background:#eef8f2;color:#087443;font-size:12px;font-weight:800}.section-label{grid-column:1/-1;font-size:13px;font-weight:850;color:#667085;text-transform:uppercase;letter-spacing:.07em;margin:9px 2px -2px}@media(max-width:700px){.grid{grid-template-columns:1fr}.main{padding:65px 14px 35px}}</style></head><body><main class="main"><div class="wrap"><header class="head"><div class="icon" id="icon">📘</div><h1 id="title">Môn học</h1><p id="sub">Chọn bài học</p></header><section class="grid" id="courses"></section></div></main><script>
+const p=new URLSearchParams(location.search),g=Number(p.get('grade')||1),s=p.get('subject')||'Toán';
+const icons={'Toán':'➕','Tiếng Việt':'📖','Tiếng Anh':'🔤','Toán Tư Duy':'🧠','Math':'🌎'};
+const grade1={
+'Toán':[['Công Trừ Phạm Vi 10','cong-tru-10.html'],['So Sánh','so-sanh.html'],['Hình Phẳng','hinh-phang.html'],['Hình Khối',null]],
+'Tiếng Việt':[['Đọc Hiểu','doc-hieu.html'],['Hoàn Thành Từ',null],['Sắp Xếp Câu',null]],
+'Toán Tư Duy':[['Toán Tư Duy','toan-tu-duy.html']],
+'Math':[['Math',null]],
+'Tiếng Anh':[
+['section','Từ Vựng',''],
+['Danh Sách Từ Vựng','vocabulary-list.html'],
+['Hoàn Thành từ','english.html'],
+['Sắp xếp chữ cái','voca-scramble.html'],
+['section','May Academy',''],
+['Welcome','may-academy-welcome.html'],
+['Unit Starter','coming-soon.html?course=Unit%20Starter'],
+['Unit 1: Lesson 1–2–3','coming-soon.html?course=Unit%201%20Lesson%201-2-3'],
+['Unit 1: Lesson 4–5','coming-soon.html?course=Unit%201%20Lesson%204-5'],
+['Unit 1: Lesson 6–7–8 · Review 1','coming-soon.html?course=Unit%201%20Lesson%206-7-8%20Review%201'],
+['Unit 2: Lesson 1–2–3','coming-soon.html?course=Unit%202%20Lesson%201-2-3'],
+['Unit 2: Lesson 4–5–6','coming-soon.html?course=Unit%202%20Lesson%204-5-6'],
+['Unit 2: Review','coming-soon.html?course=Unit%202%20Review'],
+['Unit 3: Lesson 1–2–3','coming-soon.html?course=Unit%203%20Lesson%201-2-3'],
+['Unit 3: Lesson 4–5–6','coming-soon.html?course=Unit%203%20Lesson%204-5-6'],
+['Unit 3: Review','coming-soon.html?course=Unit%203%20Review'],
+['Unit 4: Lesson 1–2–3','coming-soon.html?course=Unit%204%20Lesson%201-2-3'],
+['Unit 4: Review','coming-soon.html?course=Unit%204%20Review'],
+['Unit 5 and Christmas','coming-soon.html?course=Unit%205%20and%20Christmas'],
+['Unit 6: Lesson 1–2–3','coming-soon.html?course=Unit%206%20Lesson%201-2-3'],
+['Unit 6: Lesson 4–5–6','coming-soon.html?course=Unit%206%20Lesson%204-5-6'],
+['Unit 7','coming-soon.html?course=Unit%207'],
+['Unit 8','coming-soon.html?course=Unit%208']
+]};
+const arr=g===1?(grade1[s]||[]):[[s,null]];document.title=`${s} · Lớp ${g} · Learning Hub`;icon.textContent=icons[s]||'📘';title.textContent=s;sub.textContent=`Lớp ${g} · Chọn bài học`;
+courses.innerHTML=arr.map(item=>{if(item[0]==='section')return `<div class="section-label">${item[1]}</div>`;const [n,h]=item;const href=h||`coming-soon.html?grade=${g}&subject=${encodeURIComponent(s)}&course=${encodeURIComponent(n)}`;const active=!!h;return `<a class="course" href="${href}"><h2>${n}</h2><p>${active?'Mở bài học và luyện tập.':'Nội dung bài học sẽ được import từ PDF của cô giáo.'}</p><span class="badge">${active?'Đang học':'Sắp import'}</span></a>`}).join('');
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

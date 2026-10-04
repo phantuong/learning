@@ -1,9 +1,9 @@
 {
-  "version": 6,
+  "version": 7,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Unit 2: Lesson 4-5-6",
+  "lastUpdatedFrom": "May Academy · Unit 3: Lesson 1-2-3",
   "words": [
     { "word": "stand up" }, { "word": "sit down" }, { "word": "open" }, { "word": "open your book" }, { "word": "raise your hand" }, { "word": "look" }, { "word": "listen" }, { "word": "listen and look" }, { "word": "sit nicely" }, { "word": "be quiet" }, { "word": "speak English" },
     { "word": "happy" }, { "word": "sad" }, { "word": "angry" }, { "word": "hungry" }, { "word": "thirsty" }, { "word": "tired" }, { "word": "scared" },
@@ -19,8 +19,9 @@
     { "word": "he" }, { "word": "she" }, { "word": "he's" }, { "word": "she's" }, { "word": "this" }, { "word": "is" }, { "word": "my" }, { "word": "what" }, { "word": "who" },
     { "word": "I" }, { "word": "see" }, { "word": "the" }, { "word": "like" }, { "word": "a" }, { "word": "have" }, { "word": "an" }, { "word": "to" }, { "word": "haven't" }, { "word": "what's" }, { "word": "yes" }, { "word": "no" },
     { "word": "name" }, { "word": "feel" }, { "word": "may" }, { "word": "drink" }, { "word": "water" }, { "word": "weather" }, { "word": "day" }, { "word": "today" }, { "word": "many" }, { "word": "can" }, { "word": "fine" }, { "word": "color" },
-    { "word": "doll" }, { "word": "skipping rope" }, { "word": "ball" }, { "word": "robot" }, { "word": "boat" }, { "word": "scooter" }, { "word": "skateboard" }, { "word": "kite" }, { "word": "yoyo" }, { "word": "teddy" },
+    { "word": "doll" }, { "word": "skipping rope" }, { "word": "ball" }, { "word": "robot" }, { "word": "boat" }, { "word": "scooter" }, { "word": "skateboard" }, { "word": "kite" }, { "word": "yoyo" }, { "word": "teddy" }, { "word": "toys" },
     { "word": "got" }, { "word": "trace" }, { "word": "match" }, { "word": "point" }, { "word": "write" }, { "word": "read" }, { "word": "circle" }, { "word": "number" },
-    { "word": "clever" }, { "word": "friendly" }, { "word": "funny" }, { "word": "helpful" }, { "word": "nice" }, { "word": "sporty" }
+    { "word": "clever" }, { "word": "friendly" }, { "word": "funny" }, { "word": "helpful" }, { "word": "nice" }, { "word": "sporty" },
+    { "word": "we" }, { "word": "they" }, { "word": "go" }
   ]
 }

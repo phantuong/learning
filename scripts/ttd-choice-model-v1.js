@@ -1,0 +1,4 @@
+/* TTD Choice Model v1 — stores answer choices with visual + misconception metadata */
+function buildChoiceModel(q){const d=require('./ttd-distractor-v1');const distractors=d.makeDistractors(q),answer=q.choices[q.answer];const choices=[{id:'choice-0',visual:answer,isCorrect:true,misconception:null},...distractors.map((x,i)=>({id:`choice-${i+1}`,visual:x.visual,isCorrect:false,misconception:x.reason}))];return {...q,choices,answerId:'choice-0',answer:undefined};}
+function validateChoiceModel(q){const choices=q.choices||[];return{valid:choices.length===4&&choices.filter(x=>x.isCorrect).length===1&&choices.filter(x=>!x.isCorrect).length===3&&choices.every(x=>x.visual)&&choices.filter(x=>!x.isCorrect).every(x=>x.misconception)};}
+if(typeof module!=='undefined')module.exports={buildChoiceModel,validateChoiceModel};

@@ -1,12 +1,11 @@
-/* Grade 1 Thinking Math — Question Engine v2.2
+/* Grade 1 Thinking Math — Question Engine v2.3
  * Problem Model -> Solver -> Renderer -> Choices -> Validator -> Publish
  */
 const TTD_ENGINE_V2=(()=>{
  const clone=o=>JSON.parse(JSON.stringify(o));
  const uniqBy=(a,key)=>{const seen=new Set();return a.filter(x=>{const k=key(x);if(seen.has(k))return false;seen.add(k);return true;});};
  const shapeSVG=(o,size=72)=>{
-  const s=size,c=o.color||'#3b82f6',sh=o.shape||'circle',scale=o.size==='small'?.72:o.size==='large'?1.22:1;
-  const z=s*scale,off=(s-z)/2;
+  const s=size,c=o.color||'#3b82f6',sh=o.shape||'circle',scale=o.size==='small'?.72:o.size==='large'?1.22:1,z=s*scale,off=(s-z)/2;
   const wrap=b=>`<svg viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-label="shape">${b}</svg>`;
   if(sh==='circle')return wrap(`<circle cx="${s/2}" cy="${s/2}" r="${z*.32}" fill="${c}"/>`);
   if(sh==='square')return wrap(`<rect x="${off+z*.18}" y="${off+z*.18}" width="${z*.64}" height="${z*.64}" rx="4" fill="${c}"/>`);
@@ -15,11 +14,12 @@ const TTD_ENGINE_V2=(()=>{
   if(sh==='star')return wrap(`<polygon points="${s/2},${off+z*.07} ${off+z*.60},${off+z*.38} ${off+z*.90},${off+z*.38} ${off+z*.66},${off+z*.57} ${off+z*.76},${off+z*.88} ${s/2},${off+z*.69} ${off+z*.24},${off+z*.88} ${off+z*.34},${off+z*.57} ${off+z*.10},${off+z*.38} ${off+z*.40},${off+z*.38}" fill="${c}"/>`);
   return wrap(`<circle cx="${s/2}" cy="${s/2}" r="${s*.3}" fill="${c}"/>`);
  };
+ const shapeBody=(o,size=44)=>{const raw=shapeSVG(o,size);return raw.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');};
  const visualKey=o=>JSON.stringify(o);
  const optionHTML=o=>{
   if(o==null)return '';
   if(typeof o==='object'&&o.type==='shape'){
-   if(o.count){let b='';for(let i=0;i<Math.min(o.count,6);i++)b+=shapeSVG(o,44).replace(/<svg[^>]*>|<\/svg>/g,'');return `<div class="ttd-option-group" aria-label="${o.count} shapes">${b}</div>`;}
+   if(o.count){const n=Math.min(o.count,6),w=n*46+4;return `<svg viewBox="0 0 ${w} 48" width="${w}" height="48" aria-label="${o.count} shapes">${Array.from({length:n},(_,i)=>`<g transform="translate(${i*46+2},2)">${shapeBody(o,44)}</g>`).join('')}</svg>`;}
    return shapeSVG(o,78);
   }
   if(typeof o==='object'&&o.type==='pattern')return `<div class="ttd-option-group">${(o.items||[]).map(x=>optionHTML(x)).join('')}</div>`;

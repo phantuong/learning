@@ -21,5 +21,5 @@
 </main>
 <script>
 const tabs=[...document.querySelectorAll('.tab')];const sections=[...document.querySelectorAll('.section')];function show(id){sections.forEach(s=>s.style.display=s.id===id?'block':'none');tabs.forEach(t=>t.classList.toggle('active',t.dataset.target===id));history.replaceState(null,'','#'+id)}tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.target)));const initial=location.hash.slice(1);show(sections.some(s=>s.id===initial)?initial:'overview');
-</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script>
-</body></html>
+</script>
+<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

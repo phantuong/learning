@@ -1,0 +1,7 @@
+/* TTD Classification Engine v1 — Same/Different, Odd-One-Out, Rule-Based Grouping. */
+function same(a,b){return a.shape===b.shape&&a.color===b.color&&a.size===b.size}
+function diffCount(a,b){return ['shape','color','size'].filter(k=>a[k]!==b[k]).length}
+function sameDifferent(items){if(!items||items.length!==2)throw Error('sameDifferent requires 2 items');return{answer:same(items[0],items[1]),rule:'exact_visual_match'}}
+function oddOneOut(items){if(!items||items.length<3)throw Error('oddOneOut requires >=3 items');for(const key of ['shape','color','size']){const counts={};for(const x of items)counts[x[key]]=(counts[x[key]]||0)+1;const singleton=Object.entries(counts).find(([,n])=>n===1);if(singleton)return{index:items.findIndex(x=>x[key]===singleton[0]),rule:`odd_${key}`}}const signatures=items.map(x=>JSON.stringify({shape:x.shape,color:x.color,size:x.size}));const counts=new Map();signatures.forEach(s=>counts.set(s,(counts.get(s)||0)+1));const single=[...counts].find(([,n])=>n===1);if(single)return{index:signatures.indexOf(single[0]),rule:'odd_full_signature'};return null}
+function grouping(items,rule){if(!Array.isArray(items)||items.length<4)throw Error('grouping requires >=4 items');if(rule==='shape')return items.map(x=>x.shape);if(rule==='color')return items.map(x=>x.color);if(rule==='size')return items.map(x=>x.size);if(rule==='same_shape_and_color')return items.map(x=>`${x.shape}|${x.color}`);throw Error('unsupported grouping rule')}
+module.exports={sameDifferent,oddOneOut,grouping,diffCount};

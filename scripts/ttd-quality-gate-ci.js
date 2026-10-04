@@ -1,0 +1,8 @@
+const fs=require('fs');const vm=require('vm');const path=require('path');
+const root=path.resolve(__dirname,'..');const context={console,window:{}};context.global=context;vm.createContext(context);
+function load(name){const p=path.join(root,name);if(!fs.existsSync(p))throw new Error(`Missing required file: ${name}`);vm.runInContext(fs.readFileSync(p,'utf8'),context,{filename:name});}
+['ttd-generator-spec-v1.js','ttd-quality-gate-v1.js','ttd-multicondition-generator-v2.js','ttd-relational-generator-v2.js','ttd-spatial-cube-v2.js','ttd-spatial-generator-v3.js'].forEach(load);
+const generators=[['multi',context.TTD_MULTICONDITION_GENERATOR_V2],['relational',context.TTD_RELATIONAL_GENERATOR_V2],['spatial',context.TTD_SPATIAL_GENERATOR_V3]];
+let failed=false;const report=[];
+for(const [name,g] of generators){if(!g||typeof g.generate!=='function')throw new Error(`Generator unavailable: ${name}`);const items=g.generate(100);const contract=items.filter(q=>context.TTD_GENERATOR_SPEC_V1.validateContract(q).valid);const quality=context.TTD_QUALITY_GATE_V1.inspect(items);const row={name,total:items.length,contract:contract.length,rejected:quality.rejected,exactDuplicates:quality.exactDuplicates.length,nearDuplicates:quality.nearDuplicates.length};report.push(row);if(row.contract!==row.total||row.exactDuplicates>0||row.nearDuplicates>0||row.rejected>0)failed=true;}
+console.log(JSON.stringify({status:failed?'FAIL':'PASS',report},null,2));if(failed)process.exit(1);

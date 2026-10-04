@@ -1,0 +1,13 @@
+// Grade 1 Numbers / Operations source inventory. Metadata only; no question payload copied here yet.
+window.TTD_NUMBERS_INVENTORY={version:'2026-10-04',sources:[
+{id:'ixl-counting',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:[
+'counting-review-up-to-10','ten-frames-up-to-40','count-objects-to-100','count-forward-to-100','count-backward-to-100','number-lines-to-100','hundred-chart','ordinal-numbers','count-to-120','number-sequences','number-words-to-digits','digits-to-number-words']},
+{id:'ixl-skip',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:['skip-count-by-2','skip-count-by-5','skip-count-by-10','mixed-skip-counting','skip-counting-tables','count-by-2-5-10','objects-by-tens-and-ones']},
+{id:'ixl-compare',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:['more-or-fewer','how-many-more','how-many-fewer','compare-numbers-using-words','compare-numbers-using-symbols']},
+{id:'ixl-addition',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:['add-with-cubes','add-with-pictures','addition-models','addition-number-lines','addition-from-pictures','addition-word-problems','counting-on','make-ten','doubles','near-doubles','ten-frames','addition-facts-to-20','three-addends']},
+{id:'ixl-subtraction',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:['subtract-with-cubes','subtract-with-pictures','subtraction-models','subtraction-number-lines','subtraction-from-pictures','subtraction-word-problems','counting-back','counting-on-to-subtract','use-addition-to-subtract','subtraction-facts-to-20']},
+{id:'ixl-word-problems',publisher:'IXL',url:'https://www.ixl.com/math/grade-1/skills',skills:['sum-or-difference-unknown','change-unknown','start-unknown','one-addend-unknown','both-addends-unknown','model-word-problems','comparison-word-problems']},
+{id:'k5',publisher:'K5 Learning',url:'https://www.k5learning.com/free-math-worksheets/first-grade-1',skills:['number-charts-counting','number-patterns','comparing-numbers','base-10-blocks','place-value','addition','subtraction','word-problems']},
+{id:'k5-addition',publisher:'K5 Learning',url:'https://www.k5learning.com/free-math-worksheets/first-grade-1/addition',skills:['picture-addition-to-10','picture-addition-to-20','number-lines','addition-sentences','mental-addition','number-bonds','doubles','missing-addends','whole-tens','column-addition']},
+{id:'k5-general',publisher:'K5 Learning',url:'https://www.k5learning.com/math/grade-1-lessons',skills:['addition-within-10','place-value-tens-and-ones','skip-counting','subtraction-within-10','subtraction-within-20','fact-families']}
+]};

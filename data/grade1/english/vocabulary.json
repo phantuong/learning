@@ -1,9 +1,9 @@
 {
-  "version": 5,
+  "version": 6,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Unit 1: Lesson 6-7-8 · Review 1",
+  "lastUpdatedFrom": "May Academy · Unit 2: Lesson 4-5-6",
   "words": [
     { "word": "stand up" }, { "word": "sit down" }, { "word": "open" }, { "word": "open your book" }, { "word": "raise your hand" }, { "word": "look" }, { "word": "listen" }, { "word": "listen and look" }, { "word": "sit nicely" }, { "word": "be quiet" }, { "word": "speak English" },
     { "word": "happy" }, { "word": "sad" }, { "word": "angry" }, { "word": "hungry" }, { "word": "thirsty" }, { "word": "tired" }, { "word": "scared" },
@@ -15,11 +15,12 @@
     { "word": "red" }, { "word": "yellow" }, { "word": "green" }, { "word": "pink" }, { "word": "purple" }, { "word": "orange" }, { "word": "blue" }, { "word": "black" }, { "word": "white" }, { "word": "brown" }, { "word": "gray" },
     { "word": "mum" }, { "word": "dad" }, { "word": "grandpa" }, { "word": "grandma" }, { "word": "sister" }, { "word": "brother" }, { "word": "twin" }, { "word": "uncle" }, { "word": "auntie" }, { "word": "cousin" }, { "word": "father" }, { "word": "mother" }, { "word": "parents" },
     { "word": "old" }, { "word": "young" }, { "word": "tall" }, { "word": "short" }, { "word": "pretty" }, { "word": "handsome" },
-    { "word": "he" }, { "word": "she" }, { "word": "this" }, { "word": "is" }, { "word": "my" }, { "word": "what" }, { "word": "who" },
+    { "word": "lion" }, { "word": "duck" }, { "word": "deer" }, { "word": "family" }, { "word": "baby" },
+    { "word": "he" }, { "word": "she" }, { "word": "he's" }, { "word": "she's" }, { "word": "this" }, { "word": "is" }, { "word": "my" }, { "word": "what" }, { "word": "who" },
     { "word": "I" }, { "word": "see" }, { "word": "the" }, { "word": "like" }, { "word": "a" }, { "word": "have" }, { "word": "an" }, { "word": "to" }, { "word": "haven't" }, { "word": "what's" }, { "word": "yes" }, { "word": "no" },
     { "word": "name" }, { "word": "feel" }, { "word": "may" }, { "word": "drink" }, { "word": "water" }, { "word": "weather" }, { "word": "day" }, { "word": "today" }, { "word": "many" }, { "word": "can" }, { "word": "fine" }, { "word": "color" },
-    { "word": "lion" }, { "word": "duck" }, { "word": "deer" }, { "word": "family" }, { "word": "baby" },
     { "word": "doll" }, { "word": "skipping rope" }, { "word": "ball" }, { "word": "robot" }, { "word": "boat" }, { "word": "scooter" }, { "word": "skateboard" }, { "word": "kite" }, { "word": "yoyo" }, { "word": "teddy" },
-    { "word": "got" }, { "word": "trace" }, { "word": "match" }, { "word": "point" }, { "word": "write" }, { "word": "read" }, { "word": "circle" }, { "word": "number" }
+    { "word": "got" }, { "word": "trace" }, { "word": "match" }, { "word": "point" }, { "word": "write" }, { "word": "read" }, { "word": "circle" }, { "word": "number" },
+    { "word": "clever" }, { "word": "friendly" }, { "word": "funny" }, { "word": "helpful" }, { "word": "nice" }, { "word": "sporty" }
   ]
 }

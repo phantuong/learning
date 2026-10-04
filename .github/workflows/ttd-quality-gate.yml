@@ -1,0 +1,25 @@
+name: TTD Quality Gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ttd-*.js'
+      - 'ttd-*.html'
+      - 'scripts/**'
+      - '.github/workflows/ttd-quality-gate.yml'
+  pull_request:
+    paths:
+      - 'ttd-*.js'
+      - 'ttd-*.html'
+      - 'scripts/**'
+      - '.github/workflows/ttd-quality-gate.yml'
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run TTD quality gate
+        run: node scripts/ttd-quality-gate-ci.js

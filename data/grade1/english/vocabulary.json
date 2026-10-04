@@ -1,9 +1,9 @@
 {
-  "version": 3,
+  "version": 4,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Unit Starter",
+  "lastUpdatedFrom": "May Academy · Unit 1: Lesson 4-5",
   "words": [
     { "word": "stand up" }, { "word": "sit down" }, { "word": "open" }, { "word": "open your book" }, { "word": "raise your hand" }, { "word": "look" }, { "word": "listen" }, { "word": "listen and look" }, { "word": "sit nicely" }, { "word": "be quiet" }, { "word": "speak English" },
     { "word": "happy" }, { "word": "sad" }, { "word": "angry" }, { "word": "hungry" }, { "word": "thirsty" }, { "word": "tired" }, { "word": "scared" },
@@ -19,6 +19,7 @@
     { "word": "I" }, { "word": "see" }, { "word": "the" }, { "word": "like" }, { "word": "a" }, { "word": "have" },
     { "word": "name" }, { "word": "feel" }, { "word": "may" }, { "word": "drink" }, { "word": "water" }, { "word": "weather" }, { "word": "day" }, { "word": "today" }, { "word": "many" }, { "word": "can" }, { "word": "fine" }, { "word": "color" },
     { "word": "lion" }, { "word": "duck" }, { "word": "deer" }, { "word": "family" }, { "word": "baby" },
-    { "word": "doll" }, { "word": "skipping rope" }, { "word": "ball" }, { "word": "robot" }, { "word": "boat" }, { "word": "scooter" }, { "word": "skateboard" }, { "word": "kite" }, { "word": "yoyo" }, { "word": "teddy" }
+    { "word": "doll" }, { "word": "skipping rope" }, { "word": "ball" }, { "word": "robot" }, { "word": "boat" }, { "word": "scooter" }, { "word": "skateboard" }, { "word": "kite" }, { "word": "yoyo" }, { "word": "teddy" },
+    { "word": "got" }, { "word": "trace" }, { "word": "match" }, { "word": "point" }, { "word": "write" }
   ]
 }

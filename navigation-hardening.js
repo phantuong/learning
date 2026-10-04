@@ -35,7 +35,21 @@
     const sight=document.querySelector('#sight .sight');
     if(sight){sight.innerHTML=['I','can','see','my','a','the','like','is','an','to','have',"haven't",'got','What','this','yes','no','who'].map(x=>`<span>${x}</span>`).join('')}
   }
-  function boot(){patchVocaScramble();patchUnit2();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);}
+  function patchUnit3Navigation(){
+    if(window.__unit3NavPatched)return;
+    const subjects=[...document.querySelectorAll('.nv-subject')];
+    const english=subjects.find(el=>/Tiếng Anh/i.test(el.querySelector('.nv-subject-btn')?.textContent||''));
+    const courses=english?.querySelector('.nv-courses');
+    if(!courses)return;
+    if(courses.querySelector('a[href*="may-academy-unit3-l123.html"]')){window.__unit3NavPatched=true;return}
+    const a=document.createElement('a');
+    a.href='may-academy-unit3-l123.html';
+    a.className='nv-course'+(/may-academy-unit3-l123\.html$/i.test(location.pathname)?' active':'');
+    a.innerHTML='<span class="icon">3️⃣</span><span>Unit 3: Lesson 1–2–3</span>';
+    courses.appendChild(a);
+    window.__unit3NavPatched=true;
+  }
+  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-// Shared navigation hardening: fixed menu position, isolated icon sizing, and page-specific compatibility fixes.
+// Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, and Unit 3 navigation injection.

@@ -60,7 +60,7 @@
     if(window.__learningProgressSyncLoader)return;
     window.__learningProgressSyncLoader=true;
     const s=document.createElement('script');
-    s.src='progress-sync.js?v=20261005';
+    s.src='progress-sync.js?v=20261005b';
     s.async=true;
     s.onerror=e=>console.warn('Reading progress sync could not be loaded:',e);
     document.head.appendChild(s);

@@ -17,7 +17,21 @@
     `;
     document.head.appendChild(s);
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true}); else install();
+  function moveReadingSyncStatus(){
+    if(!/doc-hieu(?:-v7)?\.html$/i.test(location.pathname)) return;
+    const controls=document.querySelector('.controls');
+    const readerStatus=document.getElementById('syncStatus');
+    if(!controls)return;
+    let listStatus=document.getElementById('progressListSyncStatus');
+    if(!listStatus){
+      listStatus=document.createElement('div');
+      listStatus.id='progressListSyncStatus';
+      listStatus.style.cssText='text-align:center;margin-top:8px;font-size:12px;font-weight:700;min-height:16px;color:var(--muted);';
+      controls.appendChild(listStatus);
+    }
+    if(readerStatus && readerStatus.textContent && !listStatus.textContent) listStatus.textContent=readerStatus.textContent;
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{install();moveReadingSyncStatus()},{once:true}); else {install();moveReadingSyncStatus();}
 
   function patchVocaScramble(){
     if(!/voca-scramble\\.html$/i.test(location.pathname)) return;
@@ -57,15 +71,17 @@
     add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js?v=20261005')).then(()=>add('auth-guard.js?v=20261005')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
   }
   function loadProgressSync(){
+    if(!/doc-hieu(?:-v7)?\.html$/i.test(location.pathname))return;
     if(window.__learningProgressSyncLoader)return;
     window.__learningProgressSyncLoader=true;
     const s=document.createElement('script');
-    s.src='progress-sync.js?v=20261005b';
-    s.async=true;
+    s.src='progress-sync.js?v=20261005c';
+    s.async=false;
+    s.onload=()=>moveReadingSyncStatus();
     s.onerror=e=>console.warn('Reading progress sync could not be loaded:',e);
     document.head.appendChild(s);
   }
-  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();loadProgressSync();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
+  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();loadProgressSync();moveReadingSyncStatus();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
 // Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, authentication bootstrap, and reading progress sync.

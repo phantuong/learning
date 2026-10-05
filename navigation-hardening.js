@@ -34,7 +34,7 @@
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{install();moveReadingSyncStatus()},{once:true}); else {install();moveReadingSyncStatus();}
 
   function patchVocaScramble(){
-    if(!/voca-scramble\\.html$/i.test(location.pathname)) return;
+    if(!/voca-scramble\.html$/i.test(location.pathname)) return;
     if(typeof finish!=='function' || typeof speakWord!=='function') return;
     if(window.__vocaScramblePatched) return;
     window.__vocaScramblePatched=true;
@@ -43,7 +43,7 @@
     const speaker=document.getElementById('speaker');if(speaker)speaker.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();const q=questions?.[qi];if(q)speakWord(q.word)},{capture:true});
   }
   function patchUnit2(){
-    if(!/may-academy-unit2-l123\\.html$/i.test(location.pathname))return;
+    if(!/may-academy-unit2-l123\.html$/i.test(location.pathname))return;
     const phonics=document.querySelector('#phonics .phonics');
     if(phonics){phonics.innerHTML=['c','k','ck','e','h','r','m','d'].map(x=>`<button class="sound" onclick="speak(${JSON.stringify(x)})">${x}</button>`).join('')}
     const sight=document.querySelector('#sight .sight');
@@ -58,13 +58,13 @@
     if(courses.querySelector('a[href*="may-academy-unit3-l123.html"]')){window.__unit3NavPatched=true;return}
     const a=document.createElement('a');
     a.href='may-academy-unit3-l123.html';
-    a.className='nv-course'+(/may-academy-unit3-l123\\.html$/i.test(location.pathname)?' active':'');
+    a.className='nv-course'+(/may-academy-unit3-l123\.html$/i.test(location.pathname)?' active':'');
     a.innerHTML='<span class="icon">3️⃣</span><span>Unit 3: Lesson 1–2–3</span>';
     courses.appendChild(a);
     window.__unit3NavPatched=true;
   }
   function loadAuth(){
-    if(/(^|\\/)auth\\.html$/i.test(location.pathname)) return;
+    if(/(^|\/)auth\.html$/i.test(location.pathname)) return;
     if(window.__learningAuthLoader)return;
     window.__learningAuthLoader=true;
     const add=(src)=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
@@ -81,7 +81,17 @@
     s.onerror=e=>console.warn('Reading progress sync could not be loaded:',e);
     document.head.appendChild(s);
   }
-  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();loadProgressSync();moveReadingSyncStatus();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
+  function loadVocabularySync(){
+    if(!/vocabulary-list-v2\.html$/i.test(location.pathname))return;
+    if(window.__learningVocabularySyncLoader)return;
+    window.__learningVocabularySyncLoader=true;
+    const s=document.createElement('script');
+    s.src='vocabulary-sync.js?v=20261005a';
+    s.async=false;
+    s.onerror=e=>console.warn('Vocabulary selection sync could not be loaded:',e);
+    document.head.appendChild(s);
+  }
+  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();loadProgressSync();loadVocabularySync();moveReadingSyncStatus();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-// Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, authentication bootstrap, and reading progress sync.
+// Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, authentication bootstrap, reading progress sync, and vocabulary selection sync.

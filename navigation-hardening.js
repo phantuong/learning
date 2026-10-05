@@ -96,3 +96,23 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
 // Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, authentication bootstrap, reading progress sync, and vocabulary selection sync.
+
+(function(){
+  'use strict';
+  function moveUsefulWebsiteToTop(){
+    const grade=document.getElementById('nv-g-1');
+    if(!grade)return false;
+    const item=grade.querySelector('.nv-special[href="website-huu-ich.html"]');
+    if(!item)return false;
+    const firstSubject=grade.querySelector('.nv-subject');
+    if(firstSubject && item.nextElementSibling!==firstSubject) grade.insertBefore(item,firstSubject);
+    return true;
+  }
+  function bootOrder(){
+    if(moveUsefulWebsiteToTop())return;
+    setTimeout(moveUsefulWebsiteToTop,50);
+    setTimeout(moveUsefulWebsiteToTop,250);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootOrder,{once:true});else bootOrder();
+})();
+// Grade 1 navigation order: Website Hữu Ích appears before all subjects.

@@ -76,4 +76,4 @@ const authed=await waitForAuth();
 if(authed){await loadRemoteRead();subscribeRemote();document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});window.addEventListener('focus',syncNow);setInterval(syncNow,30000);}
 if(new URLSearchParams(location.search).has('story')){const n=Number(new URLSearchParams(location.search).get('story'));if(n>=1&&n<=stories.length)openStory(n)}
 })();
-</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261005"></script></body></html>
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

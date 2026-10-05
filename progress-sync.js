@@ -2,19 +2,20 @@
   'use strict';
   if(window.__learningProgressSyncStarted) return;
   window.__learningProgressSyncStarted=true;
+
+  // Keep synchronization running silently; the status indicator is intentionally hidden.
+  if(!document.getElementById('hide-progress-sync-status')){
+    const style=document.createElement('style');
+    style.id='hide-progress-sync-status';
+    style.textContent='#progressListSyncStatus{display:none!important}';
+    document.head.appendChild(style);
+  }
+
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   function status(text,bad){
-    let el=document.getElementById('progressListSyncStatus');
-    if(!el){
-      const c=document.querySelector('.controls');
-      if(c){
-        el=document.createElement('div');
-        el.id='progressListSyncStatus';
-        el.style.cssText='text-align:center;margin-top:8px;font-size:12px;font-weight:700;min-height:16px;';
-        c.appendChild(el);
-      }
-    }
-    if(el){el.textContent=text||'';el.style.color=bad?'var(--bad)':'var(--good)';}
+    // Status messages are intentionally not shown in the UI.
+    const el=document.getElementById('progressListSyncStatus');
+    if(el){el.textContent='';el.setAttribute('aria-hidden','true');}
   }
   async function getClient(){
     for(let i=0;i<240;i++){

@@ -13,7 +13,7 @@
 <main class="main"><div class="wrap">
 <header class="hero"><div class="hero-icon">📖✨</div><h1>Đọc Hiểu</h1><p>Tiếng Việt · Lớp 1</p></header>
 <section id="listView" class="list-view">
-<div class="controls"><div class="controls-row"><div class="controls-label">Cỡ chữ bài đọc</div><div class="size-options" id="sizeOptions"></div></div></div>
+<div class="controls"><div class="controls-row"><div class="controls-label">Cỡ chữ bài đọc</div><div class="size-options" id="sizeOptions"></div></div><div class="sync-status" id="progressListSyncStatus"></div></div>
 <div class="list-card" id="storyList"></div>
 </section>
 <section id="readerView" class="reader">
@@ -34,12 +34,12 @@ let readSet=new Set(JSON.parse(localStorage.getItem(READ_KEY)||'[]').map(Number)
 let fontSize=Number(localStorage.getItem(SIZE_KEY)||22);if(![18,20,22,24,26].includes(fontSize))fontSize=22;
 let current=Number(localStorage.getItem(CURRENT_KEY)||1);if(!Number.isInteger(current)||current<1||current>stories.length)current=1;
 const $=id=>document.getElementById(id);let sb=null,user=null,realtimeChannel=null;
-function setSyncStatus(text,bad=false){const el=$('syncStatus');el.textContent=text||'';el.style.color=bad?'var(--bad)':'var(--muted)'}
+function setSyncStatus(text,bad=false){[$('syncStatus'),$('progressListSyncStatus')].forEach(el=>{if(el){el.textContent=text||'';el.style.color=bad?'var(--bad)':'var(--muted)'}})}
 async function waitForAuth(){for(let i=0;i<200;i++){if(window.learningAuth&&window.learningUser){sb=window.learningAuth;user=window.learningUser;return true}await new Promise(r=>setTimeout(r,50))}setSyncStatus('Không kết nối được tài khoản để đồng bộ.',true);return false}
 function saveRead(){localStorage.setItem(READ_KEY,JSON.stringify([...readSet]))}
-async function loadRemoteRead(){if(!sb||!user)return false;const {data,error}=await sb.from('user_story_progress').select('story_id,is_read').eq('user_id',user.id).eq('is_read',true);if(error){console.error(error);setSyncStatus('Không tải được tiến độ đồng bộ.',true);return false}data.forEach(row=>{const n=Number(row.story_id);if(Number.isInteger(n)&&n>=1&&n<=stories.length)readSet.add(n)});saveRead();renderList();return true}
-async function markReadRemote(n){if(!sb||!user)return false;setSyncStatus('Đang đồng bộ…');const {error}=await sb.rpc('mark_story_read',{p_story_id:String(n)});if(error){console.error('mark_story_read failed:',error);setSyncStatus('Đồng bộ thất bại: '+error.message,true);return false}setSyncStatus('✓ Đã đồng bộ');return true}
-function subscribeRemote(){if(!sb||!user)return;realtimeChannel=sb.channel('story-progress-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'user_story_progress',filter:'user_id=eq.'+user.id},payload=>{const n=Number(payload.new?.story_id||payload.old?.story_id);if(!Number.isInteger(n))return;if(payload.eventType==='DELETE'||payload.new?.is_read===false)readSet.delete(n);else if(payload.new?.is_read===true)readSet.add(n);saveRead();renderList()}).subscribe()}
+async function loadRemoteRead(){if(!sb||!user)return false;setSyncStatus('Đang tải tiến độ…');const {data,error}=await sb.from('user_story_progress').select('story_id,is_read').eq('user_id',user.id).eq('is_read',true);if(error){console.error(error);setSyncStatus('Không tải được tiến độ đồng bộ.',true);return false}data.forEach(row=>{const n=Number(row.story_id);if(Number.isInteger(n)&&n>=1&&n<=stories.length)readSet.add(n)});saveRead();renderList();setSyncStatus(`✓ Đã đồng bộ ${readSet.size} bài`);return true}
+async function markReadRemote(n){if(!sb||!user){setSyncStatus('Chưa đăng nhập để đồng bộ.',true);return false}setSyncStatus('Đang đồng bộ…');const {error}=await sb.rpc('mark_story_read',{p_story_id:String(n)});if(error){console.error('mark_story_read failed:',error);setSyncStatus('Đồng bộ thất bại: '+error.message,true);return false}await loadRemoteRead();return true}
+function subscribeRemote(){if(!sb||!user)return;realtimeChannel=sb.channel('story-progress-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'user_story_progress',filter:'user_id=eq.'+user.id},payload=>{const n=Number(payload.new?.story_id||payload.old?.story_id);if(!Number.isInteger(n))return;if(payload.eventType==='DELETE'||payload.new?.is_read===false)readSet.delete(n);else if(payload.new?.is_read===true)readSet.add(n);saveRead();renderList();setSyncStatus(`✓ Đã đồng bộ ${readSet.size} bài`)}).subscribe()}
 async function syncNow(){await loadRemoteRead()}
 function renderSize(){const box=$('sizeOptions');box.innerHTML='';[18,20,22,24,26].forEach(size=>{const b=document.createElement('button');b.className='size-btn'+(size===fontSize?' active':'');b.textContent=size+'px';b.onclick=()=>{fontSize=size;localStorage.setItem(SIZE_KEY,String(size));renderSize();if($('readerView').classList.contains('show'))applyFont()};box.appendChild(b)})}
 function renderList(){const list=$('storyList');list.innerHTML='';stories.forEach((s,i)=>{const n=i+1;const b=document.createElement('button');b.className='story-item';const title=document.createElement('div');title.className='story-item-title';const num=document.createElement('span');num.className='story-item-number';num.textContent='Bài '+String(n).padStart(2,'0');const name=document.createElement('span');name.textContent=s.title;title.append(num,name);const status=document.createElement('div');status.className='story-item-status'+(readSet.has(n)?' read':'');status.textContent=readSet.has(n)?'✓ Đã đọc':'○ Chưa đọc';b.append(title,status);b.onclick=()=>openStory(n);list.appendChild(b)})}
@@ -50,7 +50,7 @@ function renderStory(){const s=stories[current-1];$('storyNumber').textContent=`
 $('backBtn').onclick=showList;$('nextBtn').onclick=()=>openStory(current===stories.length?1:current+1);
 renderSize();renderList();
 const authed=await waitForAuth();
-if(authed){setSyncStatus('Đang tải tiến độ…');await loadRemoteRead();subscribeRemote();document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});window.addEventListener('focus',syncNow);setInterval(syncNow,30000)}
+if(authed){await loadRemoteRead();subscribeRemote();document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNow()});window.addEventListener('focus',syncNow);setInterval(syncNow,30000)}
 const params=new URLSearchParams(location.search);if(params.has('story')){const n=Number(params.get('story'));if(n>=1&&n<=stories.length)openStory(n)}
 })();
-</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>
+</script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261005c"></script></body></html>

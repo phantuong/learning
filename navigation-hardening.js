@@ -13,6 +13,7 @@
       .nv-generated-menu,#menuBtn,.menuBtn,.mobile-btn,.mobile,.menu-button,[data-menu-toggle]{width:44px!important;height:44px!important;min-width:44px!important;max-width:44px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
       .nv-standard-sidebar .nv-subject-btn,.nv-generated-sidebar .nv-subject-btn{font-size:14px!important;line-height:1.25!important}
       .nv-standard-sidebar .nv-course,.nv-generated-sidebar .nv-course{font-size:13px!important;line-height:1.25!important}
+      #sync{display:none!important}
       @media(max-width:760px){.nv-standard-sidebar,.nv-generated-sidebar{width:270px!important;max-width:270px!important}.nv-standard-sidebar.open,.nv-generated-sidebar.open{transform:translateX(0)!important}}
     `;
     document.head.appendChild(s);

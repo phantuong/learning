@@ -57,7 +57,7 @@
     add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js?v=20261005')).then(()=>add('auth-guard.js?v=20261005')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
   }
   function loadProgressSync(){
-    if(!document.getElementById('storyList') || window.__learningProgressSyncLoader) return;
+    if(window.__learningProgressSyncLoader)return;
     window.__learningProgressSyncLoader=true;
     const s=document.createElement('script');
     s.src='progress-sync.js?v=20261005';

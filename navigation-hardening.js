@@ -56,7 +56,16 @@
     const add=(src)=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
     add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js?v=20261005')).then(()=>add('auth-guard.js?v=20261005')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
   }
-  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
+  function loadProgressSync(){
+    if(!document.getElementById('storyList') || window.__learningProgressSyncLoader) return;
+    window.__learningProgressSyncLoader=true;
+    const s=document.createElement('script');
+    s.src='progress-sync.js?v=20261005';
+    s.async=true;
+    s.onerror=e=>console.warn('Reading progress sync could not be loaded:',e);
+    document.head.appendChild(s);
+  }
+  function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();loadProgressSync();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-// Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, and authentication bootstrap.
+// Shared navigation hardening: fixed menu position, isolated icon sizing, page-specific compatibility fixes, Unit 3 navigation injection, authentication bootstrap, and reading progress sync.

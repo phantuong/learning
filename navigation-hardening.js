@@ -54,7 +54,7 @@
     if(window.__learningAuthLoader)return;
     window.__learningAuthLoader=true;
     const add=(src)=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
-    add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js')).then(()=>add('auth-guard.js')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
+    add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js?v=20261005')).then(()=>add('auth-guard.js?v=20261005')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
   }
   function boot(){patchVocaScramble();patchUnit2();patchUnit3Navigation();loadAuth();if(!window.__vocaScramblePatched)setTimeout(patchVocaScramble,0);if(!window.__unit3NavPatched)setTimeout(patchUnit3Navigation,0);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();

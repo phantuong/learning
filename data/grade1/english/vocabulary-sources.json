@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "sources": [
     {"id":"may-academy-g1-welcome","publisher":"May Academy","grade":1,"course":"English","unit":"Welcome","lesson":null,"label":"May Academy · Grade 1 · Welcome","description":"Vocabulary and sight-word foundation materials from the Grade 1 Welcome document."},
     {"id":"may-academy-g1-unit-starter","publisher":"May Academy","grade":1,"course":"English","unit":"Unit Starter","lesson":null,"label":"May Academy · Grade 1 · Unit Starter","description":"Core colors, numbers 1–10, and sight words from the Unit Starter document."},
@@ -10,6 +10,7 @@
     {"id":"may-academy-g1-unit2-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 2","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 2 · Lesson 4-5-6","description":"Family vocabulary review plus new adjectives and animal/family words: old, young, tall, short, pretty, handsome, lion, duck, deer, family, baby."},
     {"id":"may-academy-g1-unit2-review1","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 2","lesson":"Lesson 7-8-9-10 · Review 1","label":"May Academy · Grade 1 · Unit 2 · Lesson 7-8-9-10 · Review 1","description":"Review of family and descriptive vocabulary from Unit 2, with expanded vocabulary: father, mother, parents."},
     {"id":"may-academy-g1-unit3-l1-2-3","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 3","lesson":"Lesson 1-2-3","label":"May Academy · Grade 1 · Unit 3 · Lesson 1-2-3","description":"Toys vocabulary from the Unit 3 Lessons 1-2-3 material: doll, skipping rope, ball, robot, boat, scooter, skateboard, kite, yoyo, teddy."},
-    {"id":"may-academy-g1-unit3-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 3","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 3 · Lesson 4-5-6","description":"Hobbies and activities vocabulary: play football, play tennis, run, ride a horse, ride a bike, rollerblade, can, can't, plus extended vocabulary football game, glue, stars, counters, paper."}
+    {"id":"may-academy-g1-unit3-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 3","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 3 · Lesson 4-5-6","description":"Hobbies and activities vocabulary: play football, play tennis, run, ride a horse, ride a bike, rollerblade, can, can't, plus extended vocabulary football game, glue, stars, counters, paper."},
+    {"id":"may-academy-g1-unit3-review","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 3","lesson":"Review","label":"May Academy · Grade 1 · Unit 3 · Review","description":"Review of Unit 3 core toy and activity vocabulary: doll, skipping rope, ball, robot, boat, scooter, skateboard, kite, yoyo, teddy, play football, play tennis, run, ride a horse, ride a bike, rollerblade."}
   ]
 }

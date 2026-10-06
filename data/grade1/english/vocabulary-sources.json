@@ -1,5 +1,5 @@
 {
-  "version": 18,
+  "version": 19,
   "sources": [
     {"id":"may-academy-g1-welcome","publisher":"May Academy","grade":1,"course":"English","unit":"Welcome","lesson":null,"label":"May Academy · Grade 1 · Welcome","description":"Vocabulary and sight-word foundation materials from the Grade 1 Welcome document."},
     {"id":"may-academy-g1-unit-starter","publisher":"May Academy","grade":1,"course":"English","unit":"Unit Starter","lesson":null,"label":"May Academy · Grade 1 · Unit Starter","description":"Core colors, numbers 1–10, and sight words from the Unit Starter document."},
@@ -18,6 +18,7 @@
     {"id":"may-academy-g1-unit5-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 5","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 5 · Lesson 4-5-6","description":"Review and practice of Unit 5 food vocabulary through matching, crossword, wordsearch, and sentence-order activities."},
     {"id":"may-academy-g1-christmas","publisher":"May Academy","grade":1,"course":"English","unit":"Christmas","lesson":"Games","label":"May Academy · Grade 1 · Christmas · Games","description":"Christmas game vocabulary visible in the Unit 5 and Christmas material: Santa, elf, snowman, and reindeer."},
     {"id":"may-academy-g1-unit6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 6","lesson":"Unit 6","label":"May Academy · Grade 1 · Unit 6","description":"How are people and animals different? Body parts, animal actions, and animal vocabulary from Unit 6."},
-    {"id":"may-academy-g1-unit6-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 6","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 6 · Lesson 4-5-6","description":"Review and practice of Unit 6 animal actions and animal vocabulary, with speaking, flashcard, quiz, and phonics activities."}
+    {"id":"may-academy-g1-unit6-l4-5-6","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 6","lesson":"Lesson 4-5-6","label":"May Academy · Grade 1 · Unit 6 · Lesson 4-5-6","description":"Review and practice of Unit 6 animal actions and animal vocabulary, with speaking, flashcard, quiz, and phonics activities."},
+    {"id":"may-academy-g1-unit7","publisher":"May Academy","grade":1,"course":"English","unit":"Unit 7","lesson":"Unit 7","label":"May Academy · Grade 1 · Unit 7","description":"Clothes and appearance vocabulary from Unit 7: clothing items and hair/appearance descriptions."}
   ]
 }

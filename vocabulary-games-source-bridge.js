@@ -3,8 +3,17 @@ const page=(location.pathname.split('/').pop()||'').toLowerCase();
 if(page!=='english.html'&&page!=='voca-scramble.html')return;
 function load(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
 async function boot(){
-  if(!window.SUPABASE_URL||!window.SUPABASE_ANON_KEY)try{await load('supabase-config.js?v=20261006v2')}catch{}
-  try{await load('vocabulary-source-sync.js?v=20261006v1');await window.VocabularySourceSync.init();const data=await window.VocabularySourceSync.getData();const ids=new Set(window.VocabularySourceSync.getSelected());const selected=(data.words||[]).filter(w=>(w.sourceIds||[]).some(id=>ids.has(id))).map(w=>w.word).filter(Boolean);
+  try{
+    if(!window.SUPABASE_URL||!window.SUPABASE_ANON_KEY)await load('supabase-config.js?v=20261006v2');
+    if(!window.supabase?.createClient)await load('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+    await load('vocabulary-source-sync.js?v=20261006v1');
+    await load('vocabulary-db.js?v=20261006v1');
+    await window.VocabularySourceSync.init();
+    const sourceData=await window.VocabularySourceSync.getData();
+    const ids=new Set(window.VocabularySourceSync.getSelected());
+    await window.VocabularyDB.ensureSeed(sourceData.words||[],w=>'');
+    const dbWords=await window.VocabularyDB.list();
+    const selected=dbWords.filter(w=>(w.source_ids||[]).some(id=>ids.has(id))).map(w=>w.word).filter(Boolean);
     localStorage.setItem('grade1EnglishSelectedWords',JSON.stringify(selected));
     if(page==='english.html'){
       const sub=document.querySelector('.subtitle');if(sub)sub.textContent='Luyện từ vựng thuộc các nguồn đã chọn';

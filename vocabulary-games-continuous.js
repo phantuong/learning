@@ -11,6 +11,22 @@
     }catch(e){return[]}
   }
 
+  function shuffleRound(words,previousFirst){
+    const source=[...words];
+    if(source.length<2)return source;
+    let result=shuffle(source),guard=0;
+    while(previousFirst&&result[0]===previousFirst&&guard<8){result=shuffle(source);guard++}
+    return result;
+  }
+
+  function hideProgress(){
+    if(document.getElementById('vocab-games-no-progress'))return;
+    const style=document.createElement('style');
+    style.id='vocab-games-no-progress';
+    style.textContent='.progress,#progressBar{display:none!important}';
+    (document.head||document.documentElement).appendChild(style);
+  }
+
   function patchEnglish(){
     if(typeof window.nextQuestion!=='function')return false;
     window.nextQuestion=function(){
@@ -22,7 +38,8 @@
       }
       // Đã đi hết toàn bộ từ được chọn: bắt đầu vòng mới với thứ tự mới.
       // Không giới hạn 10 câu và không reset điểm.
-      state.queue=shuffle(state.words);
+      const previousFirst=state.queue[0];
+      state.queue=shuffleRound(state.words,previousFirst);
       state.index=0;
       renderQuestion();
     };
@@ -31,7 +48,6 @@
 
   function patchScramble(){
     if(typeof window.start!=='function')return false;
-    const originalStart=window.start;
     window.start=function(){
       const words=getWords();
       if(!words.length){
@@ -57,7 +73,8 @@
 
     // Mỗi vòng đi qua toàn bộ từ được chọn đúng 1 lần, sau đó tự xáo trộn và chạy vòng mới.
     window.make=function(){
-      const p=shuffle(allWords);
+      const previousFirst=questions[0]?.word;
+      const p=shuffleRound(allWords,previousFirst);
       questions=p.map(w=>({word:String(w).toLowerCase(),letters:shuffle(String(w).toLowerCase().split(''))}));
     };
     const next=document.getElementById('nextBtn');
@@ -98,6 +115,7 @@
   }
 
   function patch(){
+    hideProgress();
     if(page==='english.html')patchEnglish();
     if(page==='voca-scramble.html')patchScramble();
     applyScrambleTotal();

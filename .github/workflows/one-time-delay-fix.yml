@@ -1,0 +1,24 @@
+name: One-time math delay fix
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-delay-fix.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reduce delay
+        run: |
+          sed -i 's/setTimeout(render,2000)/setTimeout(render,1000)/g' cong-tru-v3.html
+          sed -i 's/setTimeout(render,2000)/setTimeout(render,1000)/g' tach-gop.html
+      - name: Commit changes and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cong-tru-v3.html tach-gop.html
+          git rm .github/workflows/one-time-delay-fix.yml
+          git commit -m "Reduce correct-answer delay to 1 second"
+          git push

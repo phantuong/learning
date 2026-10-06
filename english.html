@@ -52,6 +52,20 @@ function checkMissing(c){if(state.answered)return;const answer=current()[state.m
 function fitTarget(){requestAnimationFrame(()=>{const target=$('target'),word=current();const available=target.parentElement.clientWidth-8;const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');let size=Math.min(42,Math.max(20,available/Math.max(1,word.length)*1.45));ctx.font=`800 ${size}px ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif`;while(size>18&&ctx.measureText(word).width>available){size-=.5;ctx.font=`800 ${size}px ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif`}target.style.fontSize=size+'px'})}
 function nextQuestion(){if(!state.answered)return;if(state.index<state.queue.length-1){state.index++;renderQuestion()}else{state.queue=shuffle(state.words);state.index=0;state.score=0;renderQuestion()}}
 $('nextBtn').onclick=nextQuestion;$('speakBtn').onclick=()=>speak(current());window.addEventListener('resize',fitTarget);renderNav();remember();loadVocabulary();
+
+/* vocabulary-meaning-fallback-v1 */
+Object.assign(meaning, {
+  "I":"tôi / mình", "you":"bạn / các bạn", "we":"chúng tôi / chúng ta",
+  "they":"họ / chúng", "he":"anh ấy / cậu ấy", "she":"cô ấy / bạn ấy",
+  "it":"nó / vật đó", "a":"một", "an":"một", "the":"cái / con / vật đó",
+  "am":"là (dùng với I)", "are":"là / ở / thì (dùng với you, we, they)",
+  "is":"là / ở / thì", "and":"và", "or":"hoặc", "to":"đến / để",
+  "have":"có", "has":"có (dùng với he, she, it)", "can":"có thể",
+  "can't":"không thể", "not":"không", "in":"trong", "on":"trên",
+  "under":"bên dưới", "next to":"bên cạnh", "behind":"phía sau",
+  "between":"ở giữa", "front":"phía trước", "set":"đặt / bộ", "see":"nhìn thấy",
+  "my":"của tôi", "your":"của bạn / các bạn"
+});
 </script>
 <script src="app-nav.js"></script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body>
 </html>

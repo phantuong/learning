@@ -8,8 +8,6 @@
   async function fetchSelectedWords(selectedIds){
     if(!selectedIds.size)return [];
     const map=new Map();
-    // Keep vocabulary that exists in the original JSON, including sources that have
-    // not yet been migrated to Supabase.
     try{
       const r=await fetch('data/grade1/english/vocabulary.json',{cache:'no-store'});
       if(r.ok){
@@ -20,7 +18,6 @@
         });
       }
     }catch(e){console.warn('Vocabulary JSON fallback unavailable',e)}
-    // Add/merge vocabulary that exists only in Supabase, such as IOE_Test entries.
     if(window.SUPABASE_URL&&window.SUPABASE_ANON_KEY){
       const url=`${window.SUPABASE_URL}/rest/v1/vocabulary_entries?select=word,source_ids,vietnamese_meaning,ipa,image_url&order=word`;
       const r=await fetch(url,{cache:'no-store',headers:{apikey:window.SUPABASE_ANON_KEY,Accept:'application/json'}});
@@ -38,10 +35,35 @@
   function wordList(items){return items.map(x=>norm(x)).filter(Boolean)}
   function applyScramble(words){
     if(page!=='voca-scramble.html')return;
-    try{allWords=[...words]}catch(e){}
     window.__cloudVocabularyWords=[...words];
+    try{allWords=[...words]}catch(e){}
     const setup=document.querySelector('#setupText');
     if(setup)setup.textContent=words.length?`Đã chọn ${words.length} từ.`:'Chưa có từ thuộc nguồn đã chọn.';
+    // The original page's start() reads localStorage again and can therefore
+    // overwrite the cloud list with the old JSON-only selection. Patch both
+    // start and restart so the cloud-resolved list is authoritative.
+    if(typeof window.start==='function'&&!window.__scrambleStartPatched){
+      const originalStart=window.start;
+      window.start=function(){
+        const cloud=Array.isArray(window.__cloudVocabularyWords)?window.__cloudVocabularyWords:[];
+        if(!cloud.length){allWords=[];const el=document.querySelector('#setupText');if(el)el.textContent='Chưa có từ thuộc nguồn đã chọn.';return;}
+        allWords=[...cloud];
+        score=0;qi=0;make();
+        document.getElementById('setup')?.classList.add('hidden');
+        document.getElementById('game')?.classList.remove('hidden');
+        render();
+      };
+      window.__scrambleStartPatched=true;
+      const restart=document.getElementById('restartBtn');
+      if(restart){restart.onclick=function(){
+        const cloud=Array.isArray(window.__cloudVocabularyWords)?window.__cloudVocabularyWords:[];
+        if(!cloud.length)return;
+        allWords=[...cloud];score=0;qi=0;make();
+        document.getElementById('done')?.classList.add('hidden');
+        document.getElementById('game')?.classList.remove('hidden');
+        render();
+      }}
+    }
   }
   function patchEnglishLoader(){
     if(page!=='english.html'||typeof renderQuestion!=='function'||typeof $!=='function'||window.__cloudEnglishLoaderInstalled)return;

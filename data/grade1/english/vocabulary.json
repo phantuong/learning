@@ -1,9 +1,9 @@
 {
-  "version": 19,
+  "version": 20,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 3 · Review",
+  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 4 · Lesson 1-2-3",
   "words": [
     {"word":"stand up","sourceIds":["may-academy-g1-welcome"]},
     {"word":"sit down","sourceIds":["may-academy-g1-welcome"]},
@@ -129,6 +129,17 @@
     {"word":"glue","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
     {"word":"stars","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
     {"word":"counters","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
-    {"word":"paper","sourceIds":["may-academy-g1-unit3-l4-5-6"]}
+    {"word":"paper","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"cat","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"dog","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"hamster","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"bird","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"snake","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"spider","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"tortoise","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"fish","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"mouse","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"rabbit","sourceIds":["may-academy-g1-unit4-l1-2-3"]},
+    {"word":"pet","sourceIds":["may-academy-g1-unit4-l1-2-3"]}
   ]
 }

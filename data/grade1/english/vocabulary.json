@@ -1,9 +1,9 @@
 {
-  "version": 10,
+  "version": 11,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Grade 1 · Unit Starter",
+  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 1 · Lesson 1-2-3",
   "words": [
     {"word":"stand up","sourceIds":["may-academy-g1-welcome"]},
     {"word":"sit down","sourceIds":["may-academy-g1-welcome"]},
@@ -42,10 +42,10 @@
     {"word":"eight","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
     {"word":"nine","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
     {"word":"ten","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
-    {"word":"I","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
-    {"word":"see","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
+    {"word":"I","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
+    {"word":"see","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
     {"word":"the","sourceIds":["may-academy-g1-welcome"]},
-    {"word":"my","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter"]},
+    {"word":"my","sourceIds":["may-academy-g1-welcome","may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
     {"word":"am","sourceIds":["may-academy-g1-welcome"]},
     {"word":"and","sourceIds":["may-academy-g1-welcome"]},
     {"word":"it","sourceIds":["may-academy-g1-welcome"]},
@@ -62,8 +62,18 @@
     {"word":"white","sourceIds":["may-academy-g1-unit-starter"]},
     {"word":"brown","sourceIds":["may-academy-g1-unit-starter"]},
     {"word":"gray","sourceIds":["may-academy-g1-unit-starter"]},
-    {"word":"like","sourceIds":["may-academy-g1-unit-starter"]},
-    {"word":"a","sourceIds":["may-academy-g1-unit-starter"]},
-    {"word":"have","sourceIds":["may-academy-g1-unit-starter"]}
+    {"word":"like","sourceIds":["may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
+    {"word":"a","sourceIds":["may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
+    {"word":"have","sourceIds":["may-academy-g1-unit-starter","may-academy-g1-unit1-l1-2-3"]},
+    {"word":"window","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"door","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"chair","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"desk","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"bin","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"poster","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"board","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"bag","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"book","sourceIds":["may-academy-g1-unit1-l1-2-3"]},
+    {"word":"cupboard","sourceIds":["may-academy-g1-unit1-l1-2-3"]}
   ]
 }

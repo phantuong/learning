@@ -99,7 +99,7 @@
 (function(){'use strict';
   const PAGE=/tach-gop\.html$/i;
   const KEY='grade1TachGopPreferencesV1';
-  let client=null,user=null,ready=null;
+  let client=null,user=null,ready=null,suppress=false;
   function localRead(){try{return JSON.parse(localStorage.getItem(KEY)||'null')||{}}catch{return{}}}
   function localWrite(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch{}}
   function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
@@ -108,8 +108,8 @@
   function apply(v){const p=clean(v);try{if(typeof window.pickLevel==='function')window.pickLevel(p.level);if(typeof window.pickRange==='function')window.pickRange(p.number_range);if(typeof window.pickType==='function')window.pickType(p.question_type)}catch(e){console.warn('Could not apply Tách Gộp preferences',e)}return p}
   async function persist(v){const p=clean(v);localWrite(p);try{if(await ensure()){const r=await client.from('tach_gop_preferences').upsert({user_id:user.id,...p,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(r.error)throw r.error}}catch(e){console.warn('Tách Gộp cloud sync unavailable',e)}}
   function current(){return{level:typeof level!=='undefined'?level:2,number_range:typeof range!=='undefined'?range:10,question_type:typeof type!=='undefined'?type:'split'}}
-  async function load(){if(!PAGE.test(location.pathname))return;const local=clean(localRead());apply(local);if(!(await ensure()))return;try{const r=await client.from('tach_gop_preferences').select('level,number_range,question_type').eq('user_id',user.id).maybeSingle();if(r.error)throw r.error;if(r.data){apply(r.data);localWrite(clean(r.data))}else await persist(current())}catch(e){console.warn('Tách Gộp preferences could not be loaded',e)}}
-  function wrap(){if(window.__tachGopPrefsWrapped)return;window.__tachGopPrefsWrapped=true;const wrapFn=(name,field)=>{const original=window[name];if(typeof original!=='function')return;window[name]=function(v){const r=original(v);const p=current();p[field]=field==='level'?Number(v):field==='number_range'?Number(v):String(v);persist(p);return r}};wrapFn('pickLevel','level');wrapFn('pickRange','number_range');wrapFn('pickType','question_type')}
+  async function load(){if(!PAGE.test(location.pathname))return;const local=clean(localRead());suppress=true;apply(local);suppress=false;if(!(await ensure()))return;try{const r=await client.from('tach_gop_preferences').select('level,number_range,question_type').eq('user_id',user.id).maybeSingle();if(r.error)throw r.error;if(r.data){const cloud=clean(r.data);suppress=true;apply(cloud);suppress=false;localWrite(cloud)}else await persist(current())}catch(e){suppress=false;console.warn('Tách Gộp preferences could not be loaded',e)}}
+  function wrap(){if(window.__tachGopPrefsWrapped)return;window.__tachGopPrefsWrapped=true;const wrapFn=(name,field)=>{const original=window[name];if(typeof original!=='function')return;window[name]=function(v){const r=original(v);if(!suppress){const p=current();p[field]=field==='level'?Number(v):field==='number_range'?Number(v):String(v);persist(p)}return r}};wrapFn('pickLevel','level');wrapFn('pickRange','number_range');wrapFn('pickType','question_type')}
   function boot(){if(!PAGE.test(location.pathname))return;wrap();load();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();

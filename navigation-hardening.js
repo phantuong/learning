@@ -19,7 +19,7 @@
     document.head.appendChild(s);
   }
   function moveReadingSyncStatus(){
-    if(!/doc-hieu(?:-v7)?\.html$/i.test(location.pathname)) return;
+    if(!/doc-hieu(?:-v7|-v8)?\.html$/i.test(location.pathname)) return;
     const controls=document.querySelector('.controls');
     const readerStatus=document.getElementById('syncStatus');
     if(!controls)return;
@@ -72,7 +72,7 @@
     add('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2').then(()=>add('supabase-config.js?v=20261005')).then(()=>add('auth-guard.js?v=20261005')).catch(e=>console.warn('Authentication scripts could not be loaded:',e));
   }
   function loadProgressSync(){
-    if(!/doc-hieu(?:-v7)?\.html$/i.test(location.pathname))return;
+    if(!/doc-hieu(?:-v7|-v8)?\.html$/i.test(location.pathname))return;
     if(window.__learningProgressSyncLoader)return;
     window.__learningProgressSyncLoader=true;
     const s=document.createElement('script');
@@ -97,4 +97,44 @@
 })();
 (function(){'use strict';function moveUsefulWebsiteToTop(){const grade=document.getElementById('nv-g-1');if(!grade)return false;const item=grade.querySelector('.nv-special[href="website-huu-ich.html"]');if(!item)return false;const firstSubject=grade.querySelector('.nv-subject');if(firstSubject&&item.nextElementSibling!==firstSubject)grade.insertBefore(item,firstSubject);return true}function bootOrder(){if(moveUsefulWebsiteToTop())return;setTimeout(moveUsefulWebsiteToTop,50);setTimeout(moveUsefulWebsiteToTop,250)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootOrder,{once:true});else bootOrder()})();
 (function(){'use strict';function load(){if(window.__mathNavExtraLoaded)return;window.__mathNavExtraLoaded=true;const s=document.createElement('script');s.src='navigation-math-extra.js?v=20261006';s.async=false;document.head.appendChild(s)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load()})();
+(function(){
+  'use strict';
+  const KEY='docHieuFontSizeV2';
+  const PREFERRED='docHieuFontSizePreferredV1';
+  const SIZES=[20,23,26,28,30];
+  function isReadingPage(){return /doc-hieu(?:-v7|-v8)?\.html$/i.test(location.pathname)}
+  function rememberSelection(){
+    if(!isReadingPage())return;
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest?.('.size-btn');
+      if(!btn)return;
+      const m=String(btn.textContent||'').match(/(20|23|26|28|30)\s*px/i);
+      if(!m)return;
+      const size=Number(m[1]);
+      if(SIZES.includes(size)){localStorage.setItem(PREFERRED,String(size));localStorage.setItem(KEY,String(size));}
+    },true);
+  }
+  function restoreSelection(){
+    if(!isReadingPage())return;
+    const preferred=Number(localStorage.getItem(PREFERRED));
+    if(!SIZES.includes(preferred))return;
+    const buttons=[...document.querySelectorAll('.size-btn')];
+    if(!buttons.length)return;
+    const target=buttons.find(b=>Number(String(b.textContent||'').replace(/[^0-9]/g,''))===preferred);
+    if(!target)return;
+    const active=buttons.find(b=>b.classList.contains('active'));
+    if(active!==target)target.click();
+  }
+  function boot(){
+    if(!isReadingPage())return;
+    rememberSelection();
+    let tries=0;
+    const timer=setInterval(()=>{
+      restoreSelection();
+      tries++;
+      if(tries>=40)clearInterval(timer);
+    },500);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
 // Shared navigation hardening and Grade 1 math navigation extensions.

@@ -1,9 +1,9 @@
 {
-  "version": 17,
+  "version": 18,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 3 · Lesson 1-2-3",
+  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 3 · Lesson 4-5-6",
   "words": [
     {"word":"stand up","sourceIds":["may-academy-g1-welcome"]},
     {"word":"sit down","sourceIds":["may-academy-g1-welcome"]},
@@ -116,6 +116,19 @@
     {"word":"skateboard","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
     {"word":"kite","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
     {"word":"yoyo","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
-    {"word":"teddy","sourceIds":["may-academy-g1-unit3-l1-2-3"]}
+    {"word":"teddy","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"play football","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"play tennis","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"run","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"ride a horse","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"ride a bike","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"rollerblade","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"can","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"can't","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"football game","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"glue","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"stars","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"counters","sourceIds":["may-academy-g1-unit3-l4-5-6"]},
+    {"word":"paper","sourceIds":["may-academy-g1-unit3-l4-5-6"]}
   ]
 }

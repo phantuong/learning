@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "sources": [
     {
       "id": "may-academy-g1-welcome",
@@ -50,6 +50,16 @@
       "lesson": "Lesson 6-7-8 · Review 1",
       "label": "May Academy · Grade 1 · Unit 1 · Lesson 6-7-8 · Review 1",
       "description": "Review of school things, colors, and numbers, plus feelings vocabulary: happy, sad, tired, angry, scared."
+    },
+    {
+      "id": "may-academy-g1-unit2-l1-2-3",
+      "publisher": "May Academy",
+      "grade": 1,
+      "course": "English",
+      "unit": "Unit 2",
+      "lesson": "Lesson 1-2-3",
+      "label": "May Academy · Grade 1 · Unit 2 · Lesson 1-2-3",
+      "description": "Family members vocabulary and review of numbers 1–10 from the Unit 2 Lessons 1-2-3 material."
     }
   ]
 }

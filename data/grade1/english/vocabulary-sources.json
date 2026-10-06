@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "may-academy-g1-welcome",
+      "publisher": "May Academy",
+      "grade": 1,
+      "course": "English",
+      "unit": "Welcome",
+      "lesson": null,
+      "label": "May Academy · Grade 1 · Welcome",
+      "description": "Vocabulary and sight-word foundation materials from the Grade 1 Welcome document."
+    }
+  ]
+}

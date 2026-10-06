@@ -48,5 +48,4 @@ $('search').oninput=render;$('sourceTrigger').onclick=()=>$('sourceMenu').classL
 (async function init(){try{$('status').textContent='Đang tải danh sách...';const base=await loadBase();words=base.v.words||[];sources=base.s.sources||[];try{if(window.VocabularyDB){const dbRows=await VocabularyDB.list();dbRows.forEach(r=>dbByWord.set(String(r.word).toLowerCase(),r))}}catch(e){console.warn('Vocabulary DB unavailable',e)}try{if(window.VocabularySourceSync){await VocabularySourceSync.init();selected=new Set(VocabularySourceSync.getSelected().filter(id=>sources.some(s=>s.id===id)))}}catch(e){console.warn('Source cloud sync unavailable',e)}if(!selected.size)selected=new Set(sources.map(s=>s.id));renderSources();render();$('status').textContent='';}catch(e){$('status').textContent='Không thể tải danh sách từ vựng: '+(e.message||e);$('list').innerHTML='<div class="empty">Vui lòng thử tải lại trang.</div>';console.error(e)}})();
 })();
 </script>
-<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script>
-</body></html>
+<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

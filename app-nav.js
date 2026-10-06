@@ -8,6 +8,12 @@
     nav.innerHTML=`<div><button type="button" class="grade-toggle grade" data-grade="1">📂 <span>Lớp 1</span><span class="chev">⌃</span></button><div class="subnav sub open" id="shared-grade-1">${course('english.html','Tiếng Anh','🔤🌈')}<div class="course-list courses">${course('vocabulary-list.html','Vocabulary List','↳')}${course('voca-scramble.html','Sắp xếp chữ cái','↳')}</div>${course('math.html','Toán','🔢')}<div class="course-list courses">${course('cong-tru-10.html','Cộng Trừ','↳')}${course('so-sanh.html','So sánh','↳')}${course('hinh-phang.html','Hình phẳng','↳')}${course('coming-soon.html?grade=1&subject=To%C3%A1n&course=H%C3%ACnh%20Kh%E1%BB%91i','Hình khối','↳')}${course('toan-tu-duy.html','Toán Tư Duy','🧠')}<div class="course-list courses">${course('ttd-ngan-hang.html','Ngân hàng câu hỏi','📚')}${course('ttd-quy-luat-so.html','Quy luật số','↳')}${course('ttd-quy-luat-hinh.html','Quy luật hình','↳')}${course('ttd-logic.html','Logic','↳')}${course('ttd-hinh-hoc.html','Hình học','↳')}${course('ttd-bang-so.html','Bảng số','↳')}${course('ttd-khong-gian.html','Không gian 3D','↳')}${course('ttd-quan-sat.html','Quan sát & Đếm','↳')}${course('ttd-thu-thach.html','Thử thách tổng hợp','↳')}</div></div>${course('doc-hieu.html','Tiếng Việt · Đọc Hiểu','📖')}<a href="class.html?grade=1" class="${current==='class.html'?'active':''}">📚 Các môn học</a></div></div>${Array.from({length:11},(_,i)=>{const g=i+2;return `<div><a href="class.html?grade=${g}">📁 Lớp ${g}</a></div>`}).join('')}`;
     nav.querySelector('[data-grade]')?.addEventListener('click',()=>document.getElementById('shared-grade-1')?.classList.toggle('open'));
   }
+  function loadVocabularyGameScripts(){
+    if(current!=='english.html'&&current!=='voca-scramble.html')return;
+    const load=(src)=>{if(document.querySelector(`script[data-vocab-game="${src}"]`))return;const s=document.createElement('script');s.src=src;s.dataset.vocabGame=src;s.async=false;document.head.appendChild(s)};
+    load('vocabulary-games-source-bridge.js?v=20261006v10');
+    load('vocabulary-games-continuous.js?v=20261006v1');
+  }
   function removeVocabularyGamesBackLink(){if(current!=='voca-scramble.html')return;document.querySelector('.back[href="english.html"]')?.remove()}
   function initFeedbackSounds(){
     if(window.__learningFeedbackSounds)return;
@@ -31,6 +37,6 @@
   function patchSortFlow(){if(typeof window.checkSort!=='function'||window.checkSort.__patched)return;const original=window.checkSort;const patched=function(){if(!document.querySelector('.sort-area'))return original();if(sortState.some(x=>x===null)||answered)return;answered=true;const q=qs[pos],ok=sortState.join(',')===q.answer,fb=document.querySelector('#fb');if(ok){score++;fb.textContent='🎉 Chính xác!';fb.style.color='#087443'}else{fb.textContent=`💪 Chưa đúng. Đáp án là: ${q.answer.split(',').join(' → ')}`;fb.style.color='#b4232e'}showLevel5Next()};patched.__patched=true;window.checkSort=patched}
   function watchLevel5(){const quiz=document.querySelector('#quiz');if(!quiz)return;const observer=new MutationObserver(()=>{if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow()}});observer.observe(quiz,{childList:true,subtree:true});if(document.querySelector('.sort-area')){enhanceLevel5();patchSortFlow();enforceLevel5Button()}}
   function initDocHieuProgress(){if(current!=='doc-hieu.html')return;const advance=()=>{let n=Number(localStorage.getItem('docHieuNextStory')||1);if(!Number.isInteger(n)||n<1||n>500)n=1;localStorage.setItem('docHieuNextStory',n===500?1:n+1)};advance();document.getElementById('nextBtn')?.addEventListener('click',advance)}
-  function init(){build();removeVocabularyGamesBackLink();initFeedbackSounds();ensureFlatShapeLevels();loadFlatShapesRuntime();watchLevel5();initDocHieuProgress()}
+  function init(){build();removeVocabularyGamesBackLink();initFeedbackSounds();ensureFlatShapeLevels();loadFlatShapesRuntime();watchLevel5();initDocHieuProgress();loadVocabularyGameScripts()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

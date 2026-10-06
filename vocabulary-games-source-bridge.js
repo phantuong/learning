@@ -12,6 +12,7 @@ async function boot(){
       const emptyText=document.querySelector('#emptyPanel p');if(emptyText)emptyText.textContent='Hãy vào Danh sách Từ Vựng và chọn ít nhất một nguồn để bắt đầu.';
       if(typeof window.loadVocabulary==='function')window.loadVocabulary();
     }else{
+      const heading=document.querySelector('#setup h2');if(heading)heading.textContent='📚 Từ thuộc các nguồn đã chọn';
       const setup=document.querySelector('#setupText');if(setup)setup.textContent=selected.length?`Có ${selected.length} từ thuộc các nguồn đã chọn.`:'Chưa có từ thuộc nguồn đã chọn.';
       if(typeof window.allWords!=='undefined')window.allWords=selected;
     }

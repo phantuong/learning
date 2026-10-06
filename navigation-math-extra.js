@@ -113,3 +113,22 @@
   function boot(){if(!PAGE.test(location.pathname))return;wrap();load();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+(function(){'use strict';
+  const PAGE=/cong-tru(?:-v3|-v2|-10)?\.html$/i;
+  const KEY='learning_math_add_sub_preferences_v5';
+  let client=null,user=null,ready=null,suppress=false;
+  function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+  function localRead(){try{return JSON.parse(localStorage.getItem(KEY)||'null')||{}}catch{return{}}}
+  function localWrite(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch{}}
+  async function ensure(){if(ready)return ready;ready=(async()=>{if(!window.supabase?.createClient)await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js');if(!window.SUPABASE_URL||!window.SUPABASE_ANON_KEY)await loadScript('supabase-config.js?v=20261006v2');if(!window.supabase?.createClient||!window.SUPABASE_URL||!window.SUPABASE_ANON_KEY)return false;client=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);const r=await client.auth.getUser();user=r.data?.user||null;return !!user})().catch(()=>false);return ready}
+  function clean(v){const ranges=['10','50','100','1000','inf','result10'];return{level:['no-carry','carry','three','four','sequential'].includes(String(v.level))?String(v.level):'no-carry',range:ranges.includes(String(v.range))?String(v.range):'10',operation:['add','sub','mixed'].includes(String(v.operation))?String(v.operation):'add',mode:['choice','write','speak'].includes(String(v.mode))?String(v.mode):'choice'}}
+  function getLocal(){return clean(localRead())}
+  function apply(p){const v=clean(p);try{if(typeof window.pickLevel==='function')window.pickLevel(v.level);if(typeof window.pickRange==='function')window.pickRange(v.range);if(typeof window.pickOperation==='function')window.pickOperation(v.operation);if(typeof window.pickMode==='function')window.pickMode(v.mode)}catch(e){console.warn('Could not apply Cộng Trừ preferences',e)}return v}
+  async function persist(p){const v=clean(p);localWrite(v);try{if(await ensure()){const r=await client.from('cong_tru_preferences').upsert({user_id:user.id,level:v.level,number_range:v.range,operation:v.operation,answer_mode:v.mode,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(r.error)throw r.error}}catch(e){console.warn('Cộng Trừ cloud sync unavailable',e)}}
+  function current(){return getLocal()}
+  async function load(){if(!PAGE.test(location.pathname))return;const local=getLocal();suppress=true;apply(local);suppress=false;if(!(await ensure()))return;try{const r=await client.from('cong_tru_preferences').select('level,number_range,operation,answer_mode').eq('user_id',user.id).maybeSingle();if(r.error)throw r.error;if(r.data){const cloud=clean({level:r.data.level,range:r.data.number_range,operation:r.data.operation,mode:r.data.answer_mode});suppress=true;apply(cloud);suppress=false;localWrite(cloud)}else await persist(current())}catch(e){suppress=false;console.warn('Cộng Trừ preferences could not be loaded',e)}}
+  function wrap(){if(window.__congTruPrefsWrapped)return;window.__congTruPrefsWrapped=true;const wrapFn=(name,field,normalize)=>{const original=window[name];if(typeof original!=='function')return;window[name]=function(v){const normalized=normalize(v);const r=original(normalized);if(!suppress){const p=current();p[field]=normalized;persist(p)}return r}};wrapFn('pickLevel','level',v=>String(v));wrapFn('pickRange','range',v=>String(v));wrapFn('pickOperation','operation',v=>String(v));wrapFn('pickMode','mode',v=>String(v))}
+  function boot(){if(!PAGE.test(location.pathname))return;wrap();load()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();

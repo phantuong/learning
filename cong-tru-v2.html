@@ -41,5 +41,4 @@ function soundWrong(){try{const c=new(window.AudioContext||window.webkitAudioCon
 function fireworks(){const wrap=document.createElement('div');wrap.className='fireworks';const fw=document.createElement('div');fw.className='firework';fw.innerHTML=['🌟','✨','🎊','✨','🌟','✨','🎉','✨','🌟','🎊'].map((x,i)=>`<span class="spark s${i+1}">${x}</span>`).join('');wrap.appendChild(fw);document.body.appendChild(wrap);setTimeout(()=>wrap.remove(),2050)}
 function submit(value,button){if(answered)return;if(Number(value)===Number(current.answer)){answered=true;score++;soundCorrect();fireworks();if(button&&button.classList)button.classList.add('correct');const f=$('feedback');f.className='feedback good';f.textContent='🎉 Chính xác!';setTimeout(()=>{pos++;render()},120)}else{soundWrong();if(button&&button.classList)button.classList.add('wrong');const f=$('feedback');f.className='feedback bad';f.textContent='✗ Chưa đúng — thử lại nhé!';setTimeout(()=>{if(button&&button.classList)button.classList.remove('wrong')},500)}}
 $('startBtn').onclick=start;renderChoices();</script>
-<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script>
-</body></html>
+<script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

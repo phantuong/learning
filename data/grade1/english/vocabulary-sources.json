@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "sources": [
     {
       "id": "may-academy-g1-welcome",
@@ -20,6 +20,16 @@
       "lesson": null,
       "label": "May Academy · Grade 1 · Unit Starter",
       "description": "Core colors, numbers 1–10, and sight words from the Unit Starter document."
+    },
+    {
+      "id": "may-academy-g1-unit1-l1-2-3",
+      "publisher": "May Academy",
+      "grade": 1,
+      "course": "English",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1-2-3",
+      "label": "May Academy · Grade 1 · Unit 1 · Lesson 1-2-3",
+      "description": "School things vocabulary and reviewed sight words from the Unit 1 Lessons 1-2-3 material."
     }
   ]
 }

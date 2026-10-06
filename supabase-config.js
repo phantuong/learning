@@ -10,7 +10,7 @@ window.SUPABASE_ANON_KEY='sb_publishable_3WEpXJJe1HEgNJ4mfwmhUw_4jV9pQqg';
   if(window.__vocabularyGamesBridgeLoader)return;
   window.__vocabularyGamesBridgeLoader=true;
   const s=document.createElement('script');
-  s.src='vocabulary-games-source-bridge.js?v=20261006v3';
+  s.src='vocabulary-games-source-bridge.js?v=20261006v4';
   s.async=false;
   s.onerror=e=>console.warn('Vocabulary game source bridge could not be loaded:',e);
   document.head.appendChild(s);

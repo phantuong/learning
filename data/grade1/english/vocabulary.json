@@ -1,9 +1,9 @@
 {
-  "version": 16,
+  "version": 17,
   "grade": 1,
   "subject": "english",
   "course": "vocabulary-games",
-  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 2 · Review 1",
+  "lastUpdatedFrom": "May Academy · Grade 1 · Unit 3 · Lesson 1-2-3",
   "words": [
     {"word":"stand up","sourceIds":["may-academy-g1-welcome"]},
     {"word":"sit down","sourceIds":["may-academy-g1-welcome"]},
@@ -106,6 +106,16 @@
     {"word":"baby","sourceIds":["may-academy-g1-unit2-l4-5-6","may-academy-g1-unit2-review1"]},
     {"word":"father","sourceIds":["may-academy-g1-unit2-review1"]},
     {"word":"mother","sourceIds":["may-academy-g1-unit2-review1"]},
-    {"word":"parents","sourceIds":["may-academy-g1-unit2-review1"]}
+    {"word":"parents","sourceIds":["may-academy-g1-unit2-review1"]},
+    {"word":"doll","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"skipping rope","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"ball","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"robot","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"boat","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"scooter","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"skateboard","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"kite","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"yoyo","sourceIds":["may-academy-g1-unit3-l1-2-3"]},
+    {"word":"teddy","sourceIds":["may-academy-g1-unit3-l1-2-3"]}
   ]
 }

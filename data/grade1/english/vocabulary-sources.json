@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "sources": [
     {
       "id": "may-academy-g1-welcome",
@@ -40,6 +40,16 @@
       "lesson": "Lesson 4-5",
       "label": "May Academy · Grade 1 · Unit 1 · Lesson 4-5",
       "description": "School stationery vocabulary from Unit 1 Lessons 4-5, plus review of school things, colors, and numbers."
+    },
+    {
+      "id": "may-academy-g1-unit1-l6-7-8-review1",
+      "publisher": "May Academy",
+      "grade": 1,
+      "course": "English",
+      "unit": "Unit 1",
+      "lesson": "Lesson 6-7-8 · Review 1",
+      "label": "May Academy · Grade 1 · Unit 1 · Lesson 6-7-8 · Review 1",
+      "description": "Review of school things, colors, and numbers, plus feelings vocabulary: happy, sad, tired, angry, scared."
     }
   ]
 }

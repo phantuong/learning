@@ -33,22 +33,23 @@
 const $=id=>document.getElementById(id);
 const PREF='learning_math_add_sub_preferences_v2';
 const LEVELS=[['no-carry','Không Nhớ','Cộng/trừ theo từng hàng, không cần nhớ hoặc mượn'],['carry','Có Nhớ','Có ít nhất một lần nhớ hoặc mượn'],['three','3 Số','Biểu thức gồm 3 số'],['four','4 Số','Biểu thức gồm 4 số']];
-const RANGES=[10,50,100,1000,Infinity];
-const RANGE_LABELS=['0–10','0–50','0–100','0–1000','Không giới hạn'];
+const RANGES=[10,50,100,1000,Infinity,'result10'];
+const RANGE_LABELS=['0–10','0–50','0–100','0–1000','Không giới hạn','Kết quả 0 - 10'];
 const OPS=[['add','Cộng'],['sub','Trừ'],['mixed','Cộng - Trừ']];
 const MODES=[['choice','Chọn Đáp Án'],['write','Viết Đáp Án'],['speak','Nói Đáp Án']];
 let level='no-carry',range=10,operation='add',mode='choice',questions=[],pos=0,score=0,answered=false,recognition=null;
-try{const p=JSON.parse(localStorage.getItem(PREF)||'{}');if(LEVELS.some(x=>x[0]===p.level))level=p.level;if([10,50,100,1000,'inf'].includes(p.range))range=p.range==='inf'?Infinity:p.range;if(OPS.some(x=>x[0]===p.operation))operation=p.operation;if(MODES.some(x=>x[0]===p.mode))mode=p.mode}catch(e){}
-function save(){try{localStorage.setItem(PREF,JSON.stringify({level,range:Number.isFinite(range)?range:'inf',operation,mode}))}catch(e){}}
+try{const p=JSON.parse(localStorage.getItem(PREF)||'{}');if(LEVELS.some(x=>x[0]===p.level))level=p.level;if([10,50,100,1000,'inf','result10'].includes(p.range))range=p.range==='inf'?Infinity:p.range;if(OPS.some(x=>x[0]===p.operation))operation=p.operation;if(MODES.some(x=>x[0]===p.mode))mode=p.mode}catch(e){}
+function save(){try{localStorage.setItem(PREF,JSON.stringify({level,range:Number.isFinite(range)?range:(range==='result10'?'result10':'inf'),operation,mode}))}catch(e){}}
 function renderChoices(){
  $('levels').innerHTML=LEVELS.map(x=>`<button class="choice ${x[0]===level?'on':''}" onclick="pickLevel('${x[0]}')">${x[1]}<br><small>${x[2]}</small></button>`).join('');
  $('ranges').innerHTML=RANGES.map((x,i)=>`<button class="choice ${x===range?'on':''}" onclick="pickRange(${i})">${RANGE_LABELS[i]}</button>`).join('');
  $('operations').innerHTML=OPS.map(x=>`<button class="choice ${x[0]===operation?'on':''}" onclick="pickOperation('${x[0]}')">${x[1]}</button>`).join('');
  $('modes').innerHTML=MODES.map(x=>`<button class="choice ${x[0]===mode?'on':''}" onclick="pickMode('${x[0]}')">${x[1]}</button>`).join('');
 }
-function pickLevel(v){level=v;save();renderChoices()}function pickRange(i){range=RANGES[i];save();renderChoices()}function pickOperation(v){operation=v;save();renderChoices()}function pickMode(v){mode=v;save();renderChoices()}
+function pickLevel(v){level=v;save();renderChoices()}function pickRange(i){range=RANGES[i];save();renderChoices()}function pickOperation(v){operation=v;save();renderChoices()}
+function pickMode(v){mode=v;save();renderChoices()}
 function rand(max){return Math.floor(Math.random()*(max+1))}
-function maxOperand(){if(Number.isFinite(range))return range;return 9999}
+function maxOperand(){if(range==='result10')return 10;if(Number.isFinite(range))return range;return 9999}
 function digits(n){return String(Math.abs(n)).split('').reverse().map(Number)}
 function noCarryPair(max,sub=false){for(let i=0;i<5000;i++){let a=rand(max),b=rand(max);if(sub&&a<b)[a,b]=[b,a];if(sub&&a===b)continue;const da=digits(a),db=digits(b),len=Math.max(da.length,db.length);let ok=true;for(let j=0;j<len;j++){const x=da[j]??0,y=db[j]??0;if(sub?x<y:x+y>9){ok=false;break}}if(ok&&(sub?a!==b:true))return[a,b]}return sub?[9,1]:[11,22]}
 function carryPair(max,sub=false){for(let i=0;i<8000;i++){let a=rand(max),b=rand(max);if(sub&&a<b)[a,b]=[b,a];if(sub&&a===b)continue;const da=digits(a),db=digits(b),len=Math.max(da.length,db.length);let carry=false;for(let j=0;j<len;j++){const x=da[j]??0,y=db[j]??0;if(sub?x<y:x+y>=10){carry=true;break}}if(carry)return[a,b]}return sub?[20,15]:[6,7]}
@@ -56,8 +57,13 @@ function pairFor(levelKey,op){const max=maxOperand(),sub=op==='sub';if(levelKey=
 function validExpression(numbers,ops){let value=numbers[0];for(let i=0;i<ops.length;i++)value=ops[i]==='+'?value+numbers[i+1]:value-numbers[i+1];return value}
 function makeMulti(count){const max=maxOperand();for(let attempt=0;attempt<5000;attempt++){const nums=[],ops=[];let value=operation==='sub'&&max>0?rand(max-1)+1:rand(max);nums.push(value);for(let i=1;i<count;i++){const op=operation==='add'?'+':operation==='sub'?'−':(Math.random()<.5?'+':'−');const n=op==='−'?rand(value):rand(max);nums.push(n);ops.push(op);value=op==='+'?value+n:value-n}if(value>=0)return{nums,ops,value}}const nums=Array(count).fill(1);const ops=Array(count-1).fill('+');return{nums,ops,value:count} }
 function makeQuestion(){
- if(level==='three'||level==='four'){const count=level==='three'?3:4;const q=makeMulti(count);return{display:q.nums.map((n,i)=>i?` ${q.ops[i-1]} ${n}`:String(n)).join(''),answer:q.value,nums:q.nums,ops:q.ops};}
- const op=operation==='add'?'+':operation==='sub'?'−':(Math.random()<.5?'+':'−');const [a,b]=pairFor(level,op==='−'?'sub':'add');const value=op==='+'?a+b:a-b;return{display:`${a} ${op} ${b}`,answer:value,nums:[a,b],ops:[op]};
+ for(let attempt=0;attempt<10000;attempt++){
+  let q;
+  if(level==='three'||level==='four'){const count=level==='three'?3:4;const m=makeMulti(count);q={display:m.nums.map((n,i)=>i?` ${m.ops[i-1]} ${n}`:String(n)).join(''),answer:m.value,nums:m.nums,ops:m.ops};}
+  else {const op=operation==='add'?'+':operation==='sub'?'−':(Math.random()<.5?'+':'−');const [a,b]=pairFor(level,op==='−'?'sub':'add');const value=op==='+'?a+b:a-b;q={display:`${a} ${op} ${b}`,answer:value,nums:[a,b],ops:[op]};}
+  if(range!=='result10'||(q.answer>=0&&q.answer<=10))return q;
+ }
+ return {display:'5 + 5',answer:10,nums:[5,5],ops:['+']};
 }
 function build(){questions=[];const seen=new Set();while(questions.length<10){const q=makeQuestion();const key=q.display;if(!seen.has(key)){seen.add(key);questions.push(q)}}pos=0;score=0}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}

@@ -33,3 +33,37 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+(function(){'use strict';
+  function applyReadingFont(){
+    if(!/doc-hieu(?:-v7)?(?:-v8)?(?:-v9)?\.html$/i.test(location.pathname))return;
+    const text=document.getElementById('storyText');
+    const reader=document.getElementById('readerView');
+    if(!text||!reader)return;
+    const size=parseFloat(text.style.fontSize||getComputedStyle(text).fontSize);
+    if(!Number.isFinite(size))return;
+    const body=reader.querySelector('.story-body');
+    if(body)body.style.fontSize=size+'px';
+    reader.querySelectorAll('.story-title').forEach(el=>el.style.fontSize=(size*1.15)+'px');
+    reader.querySelectorAll('.story-meta').forEach(el=>el.style.fontSize=(size*.72)+'px');
+    reader.querySelectorAll('.questions h2').forEach(el=>el.style.fontSize=(size*.9)+'px');
+    reader.querySelectorAll('.q-text,.option').forEach(el=>el.style.fontSize=size+'px');
+    reader.querySelectorAll('.q-result').forEach(el=>el.style.fontSize=(size*.72)+'px');
+  }
+  function watch(){
+    if(!/doc-hieu(?:-v7)?(?:-v8)?(?:-v9)?\.html$/i.test(location.pathname))return;
+    applyReadingFont();
+    const text=document.getElementById('storyText');
+    if(text&&!text.__readingFontObserver){
+      text.__readingFontObserver=new MutationObserver(applyReadingFont);
+      text.__readingFontObserver.observe(text,{attributes:true,attributeFilter:['style']});
+    }
+    const options=document.getElementById('sizeOptions');
+    if(options&&!options.__readingFontListener){
+      options.__readingFontListener=true;
+      options.addEventListener('click',()=>setTimeout(applyReadingFont,0));
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch,{once:true});else watch();
+  setTimeout(watch,100);setTimeout(watch,500);
+})();

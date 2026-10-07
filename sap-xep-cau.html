@@ -20,12 +20,14 @@ function bind(el){el.addEventListener('click',e=>{if(el.__dragged){el.__dragged=
 function place(value,from,original,x,y){const answer=$('answer');let el=original;const movingFromAnswer=from.classList.contains('answer');if(!movingFromAnswer){el=renderTile(value,'answer');original?.remove()}else if(el){el.remove();el.dataset.where='answer'}else el=renderTile(value,'answer');let before=null;if(Number.isFinite(x)&&Number.isFinite(y)){const target=document.elementFromPoint(x,y)?.closest('.answer .tile');if(target&&target!==el){const r=target.getBoundingClientRect();if(x<r.left+r.width/2)before=target;else{const next=target.nextElementSibling;if(next)before=next}}}answer.insertBefore(el,before);check()}
 function returnPool(value,original){const el=original||[...$('answer').children].find(x=>x.dataset.value===value);if(!el)return;el.remove();$('pool').appendChild(renderTile(value,'pool'));$('feedback').textContent=''}
 async function saveProgress(){
+  const state={exercise_index:(index+1)%qs.length,score,total};
+  try{localStorage.setItem(PROGRESS_KEY+'_state',JSON.stringify(state))}catch(e){}
   try{
     const deviceId=getDeviceId();
     await fetch(CLOUD_URL+'/rest/v1/grade1_sentence_sort_progress?on_conflict=device_id',{
       method:'POST',
       headers:{'apikey':CLOUD_KEY,'Authorization':'Bearer '+CLOUD_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({device_id:deviceId,exercise_index:(index+1)%qs.length,score,total,updated_at:new Date().toISOString()})
+      body:JSON.stringify({device_id:deviceId,...state,updated_at:new Date().toISOString()})
     });
   }catch(e){}
 }
@@ -35,6 +37,9 @@ function getDeviceId(){
   return id;
 }
 async function loadProgress(){
+  let local=null;
+  try{local=JSON.parse(localStorage.getItem(PROGRESS_KEY+'_state')||'null')}catch(e){}
+  if(local){resumeIndex=Math.max(0,Math.min(Number(local.exercise_index)||0,qs.length-1));score=Number(local.score)||0;total=Number(local.total)||0}
   try{
     const r=await fetch(CLOUD_URL+'/rest/v1/grade1_sentence_sort_progress?select=exercise_index,score,total&device_id=eq.'+encodeURIComponent(getDeviceId()),{
       headers:{'apikey':CLOUD_KEY,'Authorization':'Bearer '+CLOUD_KEY}
@@ -45,11 +50,12 @@ async function loadProgress(){
         resumeIndex=Math.max(0,Math.min(Number(rows[0].exercise_index)||0,qs.length-1));
         score=Number(rows[0].score)||0;
         total=Number(rows[0].total)||0;
+        try{localStorage.setItem(PROGRESS_KEY+'_state',JSON.stringify({exercise_index:resumeIndex,score,total}))}catch(e){}
       }
     }
   }catch(e){}
 }
-function check(){if(answered)return;const vals=[...document.querySelector('#answer').children].map(x=>x.dataset.value);if(vals.length!==qs[index].answer.length)return;if(vals.join('|')===qs[index].answer.join('|')){answered=true;score++;total++;$('score').textContent=score;$('total').textContent=total;correctSound();fireworks();saveProgress();setTimeout(newQ,2000)}else{wrongSound();$('feedback').textContent='✗ Chưa đúng — hãy sắp xếp lại nhé!';$('feedback').className='feedback bad';setTimeout(()=>{$('feedback').textContent=''},900)}}
+function check(){if(answered)return;const vals=[...document.querySelector('#answer').children].map(x=>x.dataset.value);if(vals.length!==qs[index].answer.length)return;if(vals.join('|')===qs[index].answer.join('|')){answered=true;score++;total++;$('score').textContent=score;$('total').textContent=total;correctSound();fireworks();saveProgress().finally(()=>setTimeout(newQ,2000))}else{wrongSound();$('feedback').textContent='✗ Chưa đúng — hãy sắp xếp lại nhé!';$('feedback').className='feedback bad';setTimeout(()=>{$('feedback').textContent=''},900)}}
 async function start(){try{const r=await fetch(DATA_URL,{cache:'no-store'});qs=await r.json();if(!Array.isArray(qs)||!qs.length)throw new Error('empty');await loadProgress();newQ()}catch(e){$('feedback').textContent='Không tải được ngân hàng câu hỏi. Vui lòng tải lại trang.';$('feedback').className='feedback bad'}}
 document.addEventListener('pointerdown',initAudio,{once:true});start();
 </script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

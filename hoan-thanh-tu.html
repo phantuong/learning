@@ -10,52 +10,87 @@
 <div class="question" id="question"></div><div class="choices" id="choices"></div><div class="feedback" id="feedback"></div><div class="hint" id="hint"></div></section></div></main><div class="fire" id="fire"></div>
 <script>
 const DATA=[
-["c / k / q","__on cá",["c","k","q"],"Con cá","khi dùng k trước e, ê, i; c thường dùng trước a, o, ô, ơ, u, ư"],
-["c / k / q","__ái kéo",["c","k","q"],"Cái kéo",""],
-["c / k / q","__uả cam",["c","k","q"],"Quả cam","q thường đi với u trong qu"],
-["c / k / q","__im khâu",["c","k","q"],"Kim khâu",""],
-["c / k / q","__ia đình",["c","k","q"],"Gia đình",""],
-["g / gh","__ế gỗ",["g","gh"],"Ghế gỗ","gh dùng trước e, ê, i"],
-["g / gh","__à trống",["g","gh"],"Gà trống","g dùng trước a, o, ô, ơ, u, ư"],
-["g / gh","__i nhớ",["g","gh"],"Ghi nhớ",""],
-["g / gh","__i bàn",["g","gh"],"Ghi bàn",""],
-["g / gh","__ọn gàng",["g","gh"],"Gọn gàng",""],
-["ng / ngh","__ếch con",["ng","ngh"],"Nghếch con","ngh dùng trước e, ê, i"],
-["ng / ngh","__ỉ hè",["ng","ngh"],"Nghỉ hè",""],
-["ng / ngh","__ôi nhà",["ng","ngh"],"Ngôi nhà","ng dùng trước a, o, ô, ơ, u, ư"],
-["ng / ngh","__he nhạc",["ng","ngh"],"Nghe nhạc",""],
-["l / n","__á cây",["l","n"],"Lá cây",""],
-["l / n","__ồi cơm",["l","n"],"Nồi cơm",""],
-["l / n","__àm bài",["l","n"],"Làm bài",""],
-["l / n","__ắng nghe",["l","n"],"Lắng nghe",""],
-["ch / tr","__ường học",["ch","tr"],"Trường học",""],
-["ch / tr","__im sẻ",["ch","tr"],"Chim sẻ",""],
-["ch / tr","__ơi bóng",["ch","tr"],"Chơi bóng",""],
-["s / x","__ách vở",["s","x"],"Sách vở",""],
-["s / x","__e đạp",["s","x"],"Xe đạp",""],
-["s / x","__inh đẹp",["s","x"],"Xinh đẹp",""],
-["d / gi / r","__a đình",["d","gi","r"],"Gia đình",""],
-["d / gi / r","__ổ hoa",["d","gi","r"],"Giỏ hoa",""],
-["d / gi / r","__ừng cây",["d","gi","r"],"Rừng cây",""],
-["an / ang","b__ tay",["an","ang"],"bàn tay",""],
-["an / ang","m__g non",["an","ang"],"măng non",""],
-["on / ong","c__g viên",["on","ong"],"công viên",""],
-["on / ong","c__ mèo",["on","ong"],"con mèo",""],
-["in / inh","x__h đẹp",["in","inh"],"xinh đẹp",""],
-["in / inh","quả t__",["in","inh"],"quả tin",""]
+["c / k / q","__on cá",["c","k","q"],"c","Con cá"],
+["c / k / q","__ái kéo",["c","k","q"],"c","Cái kéo"],
+["c / k / q","__uả cam",["c","k","q"],"q","Quả cam"],
+["c / k / q","__im khâu",["c","k","q"],"k","Kim khâu"],
+["c / k / q","__éo",["c","k","q"],"k","Kéo"],
+["g / gh","__ế gỗ",["g","gh"],"gh","Ghế gỗ"],
+["g / gh","__à trống",["g","gh"],"g","Gà trống"],
+["g / gh","__i nhớ",["g","gh"],"gh","Ghi nhớ"],
+["g / gh","__i bàn",["g","gh"],"gh","Ghi bàn"],
+["g / gh","__ọn gàng",["g","gh"],"g","Gọn gàng"],
+["ng / ngh","__ỉ hè",["ng","ngh"],"ngh","Nghỉ hè"],
+["ng / ngh","__ôi nhà",["ng","ngh"],"ng","Ngôi nhà"],
+["ng / ngh","__he nhạc",["ng","ngh"],"ng","Nghe nhạc"],
+["ng / ngh","__ếch",["ng","ngh"],"ngh","Nghếch"],
+["l / n","__á cây",["l","n"],"l","Lá cây"],
+["l / n","__ồi cơm",["l","n"],"n","Nồi cơm"],
+["l / n","__àm bài",["l","n"],"l","Làm bài"],
+["l / n","__ắng nghe",["l","n"],"l","Lắng nghe"],
+["ch / tr","__ường học",["ch","tr"],"tr","Trường học"],
+["ch / tr","__im sẻ",["ch","tr"],"ch","Chim sẻ"],
+["ch / tr","__ơi bóng",["ch","tr"],"ch","Chơi bóng"],
+["s / x","__ách vở",["s","x"],"s","Sách vở"],
+["s / x","__e đạp",["s","x"],"x","Xe đạp"],
+["s / x","__inh đẹp",["s","x"],"x","Xinh đẹp"],
+["d / gi / r","__a đình",["d","gi","r"],"gi","Gia đình"],
+["d / gi / r","__ỏ hoa",["d","gi","r"],"gi","Giỏ hoa"],
+["d / gi / r","__ừng cây",["d","gi","r"],"r","Rừng cây"],
+["an / ang","b__",["an","ang"],"an","Bàn"],
+["an / ang","m__",["an","ang"],"an","Man"],
+["on / ong","c__",["on","ong"],"on","Con"],
+["on / ong","c__ viên",["on","ong"],"ong","Công viên"],
+["in / inh","x__",["in","inh"],"inh","Xinh"],
+["in / inh","t__",["in","inh"],"in","Tin"],
+["iên / iêng","ch__",["iên","iêng"],"iêng","Chiêng"],
+["iên / iêng","ti__",["iên","iêng"],"iên","Tiên"],
+["ôn / ông","c__",["ôn","ông"],"ông","Công"],
+["ôn / ông","m__",["ôn","ông"],"ôn","Môn"],
+["uôn / uông","chu__",["uôn","uông"],"uông","Chuông"],
+["uôn / uông","mu__",["uôn","uông"],"uôn","Muôn"]
 ];
 const examples=[
-["c / k / q","__éo",["c","k","q"],"kéo","k đứng trước e, ê, i"],
-["g / gh","__i",["g","gh"],"ghi","gh đứng trước e, ê, i"],
-["ng / ngh","__ỉ",["ng","ngh"],"nghỉ","ngh đứng trước e, ê, i"],
-["l / n","__á",["l","n"],"lá",""],
-["ch / tr","__ái cây",["ch","tr"],"trái cây",""],
-["s / x","__e",["s","x"],"xe",""]
+["c / k / q","__éo",["c","k","q"],"k","Kéo"],
+["g / gh","__i",["g","gh"],"gh","Ghi"],
+["ng / ngh","__ỉ",["ng","ngh"],"ngh","Nghỉ"],
+["l / n","__á",["l","n"],"l","Lá"],
+["ch / tr","__ái cây",["ch","tr"],"tr","Trái cây"],
+["s / x","__e",["s","x"],"x","Xe"]
 ];
 let items=[...DATA,...examples],i=0,score=0,locked=false;
 function esc(s){return s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
-function render(){locked=false;const d=items[i%items.length],prefix=d[1],rule=d[0];ruleEl= document.getElementById("rule");ruleEl.textContent="Quy tắc: "+rule;document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";let parts=prefix.split("__");document.getElementById("question").innerHTML=esc(parts[0])+'<span class="blank">___</span>'+esc(parts[1]||"");const box=document.getElementById("choices");box.innerHTML=d[2].map(x=>'<button class="choice" data-v="'+esc(x)+'">'+esc(x)+'</button>').join("");document.getElementById("feedback").textContent="";document.getElementById("hint").textContent="Chọn phần chữ còn thiếu để hoàn thành từ.";box.querySelectorAll("button").forEach(b=>b.onclick=()=>answer(b,d))}
-function answer(btn,d){if(locked)return;locked=true;const val=btn.dataset.v,correct=d[3].toLowerCase().startsWith(val.toLowerCase());document.querySelectorAll(".choice").forEach(b=>b.disabled=true);if(correct){score++;i++;document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";document.getElementById("feedback").textContent="🎉 Chính xác!";document.getElementById("hint").textContent=d[4]?"Mẹo nhớ: "+d[4]:"";fireworks();setTimeout(render,1800)}else{document.getElementById("feedback").textContent="🔊 Chưa đúng — thử lại nhé!";document.getElementById("hint").textContent="Hãy đọc lại từ và chọn phần chữ phù hợp.";setTimeout(()=>{locked=false;document.querySelectorAll(".choice").forEach(b=>b.disabled=false)},700)}}
+function render(){
+  locked=false;
+  const d=items[i%items.length],prefix=d[1],rule=d[0];
+  document.getElementById("rule").textContent="Quy tắc: "+rule;
+  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";
+  const parts=prefix.split("__");
+  document.getElementById("question").innerHTML=esc(parts[0])+'<span class="blank">___</span>'+esc(parts[1]||"");
+  const box=document.getElementById("choices");
+  box.innerHTML=d[2].map(x=>'<button class="choice" data-v="'+esc(x)+'">'+esc(x)+"</button>").join("");
+  document.getElementById("feedback").textContent="";
+  document.getElementById("hint").textContent="Chọn phần chữ còn thiếu để hoàn thành từ.";
+  box.querySelectorAll("button").forEach(b=>b.onclick=()=>answer(b,d));
+}
+function answer(btn,d){
+  if(locked)return;
+  const correct=btn.dataset.v===d[3];
+  if(!correct){
+    document.getElementById("feedback").textContent="🔊 Chưa đúng — thử lại nhé!";
+    document.getElementById("hint").textContent="Hãy đọc lại từ và chọn phần chữ phù hợp.";
+    btn.disabled=true;
+    return;
+  }
+  locked=true;
+  score++;i++;
+  document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
+  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";
+  document.getElementById("feedback").textContent="🎉 Chính xác!";
+  document.getElementById("hint").textContent="Từ đúng: "+d[4];
+  fireworks();
+  setTimeout(render,1800);
+}
 function fireworks(){const f=document.getElementById("fire");f.innerHTML="";for(let n=0;n<22;n++){const s=document.createElement("span");s.className="spark";s.textContent=["🎉","✨","⭐","🎊"][n%4];s.style.left="50%";s.style.top="42%";s.style.setProperty("--x",(Math.random()*360-180)+"px");s.style.setProperty("--y",(Math.random()*300-150)+"px");f.appendChild(s)}setTimeout(()=>f.innerHTML="",1000)}
 render();
 </script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

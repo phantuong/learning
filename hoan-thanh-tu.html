@@ -57,13 +57,53 @@ const examples=[
 ["s / x","__e",["s","x"],"x","Xe"],
 ["d / gi / r","__ừng",["d","gi","r"],"r","Rừng"]
 ];
-let items=[...DATA,...examples],i=0,score=0,locked=false;
+const CLOUD_URL='https://ksqfcwjcijflvzzopkko.supabase.co';
+const CLOUD_KEY='sb_publishable_3WEpXJJe1HEgNJ4mfwmhUw_4jV9pQqg';
+const PROGRESS_KEY='grade1_spelling_device_id_v1';
+let items=[...DATA,...examples],i=0,score=0,locked=false,totalAnswered=0,deviceId="";
+function getDeviceId(){
+  try{
+    let id=localStorage.getItem(PROGRESS_KEY);
+    if(!id){id=(crypto.randomUUID?crypto.randomUUID():'dev-'+Date.now()+'-'+Math.random().toString(16).slice(2));localStorage.setItem(PROGRESS_KEY,id)}
+    return id;
+  }catch(e){return 'fallback-'+location.hostname}
+}
+async function loadProgress(){
+  deviceId=getDeviceId();
+  try{
+    const r=await fetch(CLOUD_URL+'/rest/v1/grade1_spelling_progress?device_id=eq.'+encodeURIComponent(deviceId)+'&select=exercise_index,score,total',{headers:{apikey:CLOUD_KEY,Authorization:'Bearer '+CLOUD_KEY}});
+    if(r.ok){
+      const rows=await r.json();
+      if(rows[0]){
+        i=Math.max(0,Math.min(Number(rows[0].exercise_index)||0,items.length));
+        score=Number(rows[0].score)||0;
+        totalAnswered=Number(rows[0].total)||0;
+        return;
+      }
+    }
+  }catch(e){}
+  try{
+    const local=JSON.parse(localStorage.getItem(PROGRESS_KEY+'_state')||'null');
+    if(local){i=Number(local.exercise_index)||0;score=Number(local.score)||0;totalAnswered=Number(local.total)||0}
+  }catch(e){}
+}
+async function saveProgress(){
+  const payload={device_id:deviceId,exercise_index:i,score,total:totalAnswered,updated_at:new Date().toISOString()};
+  try{localStorage.setItem(PROGRESS_KEY+'_state',JSON.stringify(payload))}catch(e){}
+  try{
+    await fetch(CLOUD_URL+'/rest/v1/grade1_spelling_progress',{
+      method:'POST',
+      headers:{apikey:CLOUD_KEY,Authorization:'Bearer '+CLOUD_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify(payload)
+    });
+  }catch(e){}
+}
 function esc(s){return s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
 function render(){
   locked=false;
   const d=items[i%items.length],prefix=d[1],rule=d[0];
   document.getElementById("rule").textContent="Quy tắc: "+rule;
-  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";
+  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+totalAnswered+" câu";
   const parts=prefix.split("__");
   document.getElementById("question").innerHTML=esc(parts[0])+'<span class="blank">___</span>'+esc(parts[1]||"");
   const box=document.getElementById("choices");
@@ -82,9 +122,9 @@ function answer(btn,d){
     return;
   }
   locked=true;
-  score++;i++;
+  score++;i++;totalAnswered++;
   document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
-  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+i+" câu";
+  document.getElementById("count").textContent="Đã làm đúng "+score+" / "+totalAnswered+" câu";
   document.getElementById("feedback").textContent="🎉 Chính xác!";
   document.getElementById("hint").textContent="Từ đúng: "+d[4];
   fireworks();

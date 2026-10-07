@@ -128,8 +128,9 @@ function answer(btn,d){
   document.getElementById("feedback").textContent="🎉 Chính xác!";
   document.getElementById("hint").textContent="Từ đúng: "+d[4];
   fireworks();
+  saveProgress();
   setTimeout(render,1800);
 }
 function fireworks(){const f=document.getElementById("fire");f.innerHTML="";for(let n=0;n<22;n++){const s=document.createElement("span");s.className="spark";s.textContent=["🎉","✨","⭐","🎊"][n%4];s.style.left="50%";s.style.top="42%";s.style.setProperty("--x",(Math.random()*360-180)+"px");s.style.setProperty("--y",(Math.random()*300-150)+"px");f.appendChild(s)}setTimeout(()=>f.innerHTML="",1000)}
-render();
+loadProgress().then(render);
 </script><script src="navigation-v2.js?v=20261005"></script><script src="navigation-hardening.js?v=20261003"></script></body></html>

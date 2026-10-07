@@ -1015,18 +1015,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
+      "Cái",
       "chén",
       "ở",
       "gần",
-      "Cái",
-      "nhau"
+      "bếp"
     ],
     "answer": [
       "Cái",
       "chén",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -4895,18 +4895,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
+      "Cái",
+      "bát",
       "ở",
       "gần",
-      "Cái",
-      "nhau",
-      "bát"
+      "bếp"
     ],
     "answer": [
       "Cái",
       "bát",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -5335,18 +5335,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "gần",
+      "Cái",
       "cốc",
-      "nhau",
       "ở",
-      "Cái"
+      "gần",
+      "bếp"
     ],
     "answer": [
       "Cái",
       "cốc",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -5371,18 +5371,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "gần",
-      "ở",
-      "muôi",
       "Cái",
-      "nhau"
+      "muôi",
+      "ở",
+      "gần",
+      "bếp"
     ],
     "answer": [
       "Cái",
       "muôi",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -5985,36 +5985,36 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "ở",
       "Cái",
-      "nhau",
       "hộp",
-      "gần"
+      "ở",
+      "gần",
+      "bếp"
     ],
     "answer": [
       "Cái",
       "hộp",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
+      "Cái",
+      "thìa",
       "ở",
       "gần",
-      "nhau",
-      "thìa",
-      "Cái"
+      "bếp"
     ],
     "answer": [
       "Cái",
       "thìa",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -9157,18 +9157,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
+      "Cái",
       "nồi",
       "ở",
-      "nhau",
       "gần",
-      "Cái"
+      "bếp"
     ],
     "answer": [
       "Cái",
       "nồi",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -10263,18 +10263,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "khay",
-      "gần",
       "Cái",
-      "nhau",
-      "ở"
+      "khay",
+      "ở",
+      "gần",
+      "bếp"
     ],
     "answer": [
       "Cái",
       "khay",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -10895,18 +10895,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "nhau",
+      "Cái",
       "khăn",
       "ở",
       "gần",
-      "Cái"
+      "bếp"
     ],
     "answer": [
       "Cái",
       "khăn",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
@@ -15977,18 +15977,18 @@
     "source": "Bộ câu biên soạn và kiểm duyệt lại · Đồ dùng trong nhà",
     "url": "",
     "pool": [
-      "gần",
-      "nhau",
       "Cái",
+      "đĩa",
       "ở",
-      "đĩa"
+      "gần",
+      "bếp"
     ],
     "answer": [
       "Cái",
       "đĩa",
       "ở",
       "gần",
-      "nhau"
+      "bếp"
     ]
   },
   {
